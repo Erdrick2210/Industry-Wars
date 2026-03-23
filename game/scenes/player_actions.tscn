@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dwi2l0fuc3o8o"]
+
+[ext_resource type="Script" uid="uid://djytjujufuedx" path="res://player.gd" id="1_tiopx"]
+[ext_resource type="Texture2D" uid="uid://4jor2sjd6axw" path="res://assets/art/sprites/characters/boy_run.png" id="2_gakuf"]
+
+[sub_resource type="TileSet" id="TileSet_1bvp3"]
+
+[node name="playerActions" type="Node2D" unique_id=1159889864]
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1131427261]
+script = ExtResource("1_tiopx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1767765848]
+position = Vector2(5, -1)
+texture = ExtResource("2_gakuf")
+hframes = 4
+vframes = 4
+frame = 1
+
+[node name="testMap" type="TileMapLayer" parent="." unique_id=701543399]
+tile_set = SubResource("TileSet_1bvp3")
