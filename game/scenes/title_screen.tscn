@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://c04b48udsm1pe"]
+
+[ext_resource type="Texture2D" uid="uid://c27ltqjr5csmm" path="res://ui/title_screen/background.png" id="1_0vna2"]
+[ext_resource type="Texture2D" uid="uid://c1573eyxjc5ub" path="res://ui/buttons/button1.png" id="2_6e4ah"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oeb76"]
+texture = ExtResource("2_6e4ah")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7lbcs"]
+texture = ExtResource("2_6e4ah")
+modulate_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6e4ah"]
+texture = ExtResource("2_6e4ah")
+modulate_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+
+[node name="Control" type="Control" unique_id=541155882]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=1053912629]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 650.0
+texture = ExtResource("1_0vna2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=753062160]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -80.0
+offset_right = 572.0
+offset_bottom = 84.91
+grow_vertical = 2
+theme_override_constants/separation = 50
+
+[node name="NewGame" type="Button" parent="VBoxContainer" unique_id=958085658]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxTexture_oeb76")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oeb76")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7lbcs")
+text = "Nueva Partida"
+
+[node name="LoadGame" type="Button" parent="VBoxContainer" unique_id=97015700]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxTexture_oeb76")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oeb76")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6e4ah")
+text = "Cargar Partida"
