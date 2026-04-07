@@ -1,21 +1,22 @@
 [gd_scene format=3 uid="uid://dwi2l0fuc3o8o"]
 
-[ext_resource type="Script" uid="uid://djytjujufuedx" path="res://player.gd" id="1_tiopx"]
-[ext_resource type="Texture2D" uid="uid://4jor2sjd6axw" path="res://assets/art/sprites/characters/boy_run.png" id="2_gakuf"]
+[ext_resource type="SpriteFrames" uid="uid://bgwkp1jjnxv22" path="res://game/entities/player/player.tres" id="1_b117v"]
+[ext_resource type="Script" uid="uid://c8ukys8frry6d" path="res://game/entities/player/player_actions.gd" id="1_tiopx"]
 
-[sub_resource type="TileSet" id="TileSet_1bvp3"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b117v"]
+size = Vector2(30, 37)
 
-[node name="playerActions" type="Node2D" unique_id=1159889864]
-
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1131427261]
+[node name="Player" type="CharacterBody2D" unique_id=1974727383 node_paths=PackedStringArray("PlayerAnimation")]
+collision_layer = 2
 script = ExtResource("1_tiopx")
+PlayerAnimation = NodePath("PlayerAnimation")
 
-[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1767765848]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=84274966]
+position = Vector2(6, 0.5)
+shape = SubResource("RectangleShape2D_b117v")
+
+[node name="PlayerAnimation" type="AnimatedSprite2D" parent="." unique_id=641431231]
+unique_name_in_owner = true
 position = Vector2(5, -1)
-texture = ExtResource("2_gakuf")
-hframes = 4
-vframes = 4
-frame = 1
-
-[node name="testMap" type="TileMapLayer" parent="." unique_id=701543399]
-tile_set = SubResource("TileSet_1bvp3")
+sprite_frames = ExtResource("1_b117v")
+animation = &"idle_right"
