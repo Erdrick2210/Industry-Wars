@@ -11,8 +11,25 @@ config_version=5
 [application]
 
 config/name="Industry Wars"
+run/main_scene="uid://kdyk1kbkfg2g"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+ItemDB="*uid://bw2aorum66xyr"
+Inventory="*uid://cvjuswphak6ot"
+
+[editor]
+
+version_control/autoload_on_startup=true
+
+[input]
+
+ui_dow={
+"deadzone": 0.2,
+"events": []
+}
 
 [physics]
 
