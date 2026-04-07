@@ -1,10 +1,10 @@
 extends Node
 
-# Estats del combat per al State Machine
+# Estats del combat
 enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, ENEMY_TURN, END_BATTLE }
 var current_state = CombatState.START
 
-# Variables pels robots (fent servir diccionaris amb les dades del teu GDD al Nivell 1)
+# Variables pels robots
 var player_robot = {
 	"name": "Chasis Asalto",
 	"hp": 80,
@@ -26,7 +26,7 @@ var enemy_robot = {
 }
 
 func _ready():
-	print("--- Iniciant Duelo en Industry Wars ---")
+	print("--- Iniciant Duel en Industry Wars ---")
 	setup_combat()
 
 func setup_combat():
