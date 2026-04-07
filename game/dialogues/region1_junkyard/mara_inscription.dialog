@@ -1,0 +1,15 @@
+mara_inscription:
+    Mara: ¡Listo! Ya estás inscrito oficialmente en Industry Wars.
+    Mara: Tu primera arena está en el Distrito Industrial (Región 2), pero antes explora bien Junkyard City.
+    Mara: Recoge componentes, resuelve pequeños problemas técnicos y mejora tu robot.
+    
+    - ¿Hay rivales fuertes por aquí?
+        Mara: Solo novatos como tú… y algún listillo con dinero. Nada que no puedas manejar con un buen núcleo.
+    
+    - ¿Qué son esos “accidentes” que mencionaste?
+        Mara: [seria] …Todavía es pronto para hablar de eso.
+        Mara: Solo recuerda: no confíes ciegamente en el sistema de arbitraje de la corporación.
+        set conspiracy_level = 2
+    
+    Mara: Cuando estés listo, la salida al Distrito Industrial está al norte del taller.
+    Mara: Y recuerda: tu robot no solo pelea… te cuenta quién eres como ingeniero.
