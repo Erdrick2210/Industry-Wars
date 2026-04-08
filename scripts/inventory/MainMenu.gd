@@ -13,12 +13,12 @@ extends Control
 # Sub-scenes to open
 const BAG_SCENE    = preload("res://game/scenes/inventory/BagMenu.tscn")
 const TALLER_SCENE = preload("res://game/scenes/inventory/TallerMenu.tscn")
-
+const ROBOT_SCENE = preload("res://game/scenes/inventory/RobotMenu.tscn")
 # ─── Menu entries ─────────────────────────────────────────────────────────────
 
 const ENTRIES = [
 	{"label": "Guardar",        "subtitle": "Guarda el progreso de tu partida.",         "scene": ""},
-	{"label": "Robots",         "subtitle": "Gestiona tu equipo de robots.",              "scene": ""},
+	{"label": "Robots",         "subtitle": "Gestiona tu equipo de robots.",              "scene": "ROBOT"},
 	{"label": "Taller",         "subtitle": "Construye módulos con componentes.",         "scene": "TALLER"},
 	{"label": "Bolsa",          "subtitle": "Revisa y usa los objetos que llevas.",       "scene": "BAG"},
 	{"label": "Coleccionables", "subtitle": "Objetos únicos recopilados en tu viaje.",    "scene": ""},
@@ -109,6 +109,10 @@ func _on_entry_pressed(idx: int) -> void:
 			var taller := TALLER_SCENE.instantiate()
 			get_tree().root.add_child(taller)
 			taller.closed.connect(func(): taller.queue_free())
+		"ROBOT":
+			var robots := ROBOT_SCENE.instantiate()
+			get_tree().root.add_child(robots)
+			robots.closed.connect(func(): robots.queue_free())
 		"":
 			# Stub — implement Guardar, Robots, Coleccionables separately
 			print("Menú '%s' no implementado aún." % ENTRIES[idx]["label"])

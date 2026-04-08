@@ -1,35 +1,59 @@
 [gd_scene format=3 uid="uid://bbsvxh7ldhr8l"]
 
 [ext_resource type="Script" uid="uid://bolbgsfcoxpse" path="res://scripts/inventory/TallerMenu.gd" id="1_xm6xl"]
+[ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_ftip5"]
 
 [node name="TallerMenu" type="Control" unique_id=122229508]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_xm6xl")
 
+[node name="TallerBg" type="TextureRect" parent="." unique_id=1111194596]
+layout_mode = 0
+offset_right = 1145.0
+offset_bottom = 649.0
+texture = ExtResource("2_ftip5")
+
 [node name="SplitContainer" type="SplitContainer" parent="." unique_id=1554580794]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 51.0
+offset_top = 164.0
+offset_right = 1115.0
+offset_bottom = 414.0
+split_offsets = PackedInt32Array(500, 512)
+split_offset = 500
 
 [node name="LeftPanel" type="Panel" parent="SplitContainer" unique_id=336030870]
+custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
 
 [node name="RecipeScroll" type="ScrollContainer" parent="SplitContainer/LeftPanel" unique_id=1349397535]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="RecipeList" type="VBoxContainer" parent="SplitContainer/LeftPanel/RecipeScroll" unique_id=898525582]
 layout_mode = 2
 
+[node name="MarginContainer" type="MarginContainer" parent="SplitContainer" unique_id=1847866107]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
 [node name="RightPanel" type="Panel" parent="SplitContainer" unique_id=197369965]
+custom_minimum_size = Vector2(750, 0)
 layout_mode = 2
 
 [node name="VBox" type="VBoxContainer" parent="SplitContainer/RightPanel" unique_id=936598867]
+custom_minimum_size = Vector2(350, 0)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 191.0
+offset_top = 43.0
+offset_right = 541.0
+offset_bottom = 159.0
 
 [node name="RecipeName" type="Label" parent="SplitContainer/RightPanel/VBox" unique_id=328494916]
 layout_mode = 2
@@ -42,6 +66,7 @@ layout_mode = 2
 
 [node name="CraftBtn" type="Button" parent="SplitContainer/RightPanel/VBox" unique_id=686798691]
 layout_mode = 2
+text = "Crear"
 
 [node name="FeedbackLabel" type="Label" parent="SplitContainer/RightPanel/VBox" unique_id=1093879514]
 layout_mode = 2
@@ -53,5 +78,6 @@ offset_bottom = 40.0
 
 [node name="CloseBtn" type="Button" parent="BottomBar" unique_id=1570360274]
 layout_mode = 2
+text = "X"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1326666990]
