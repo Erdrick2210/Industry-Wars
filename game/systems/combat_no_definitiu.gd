@@ -34,6 +34,8 @@ func setup_combat():
 	process_state()
 
 func process_state():
+	print("---------------------------------")
+	await get_tree().create_timer(2.0).timeout
 	match current_state:
 		CombatState.DETERMINE_TURN:
 			compare_velocidad()
@@ -46,6 +48,7 @@ func process_state():
 
 func compare_velocidad():
 	print("Calculant l'ordre de torn basat en la Velocitat...")
+	print("---------------------------------")
 	# Ordre de torn: Basat en estadística de Velocidad
 	if player_robot["velocidad"] >= enemy_robot["velocidad"]:
 		current_state = CombatState.PLAYER_TURN
@@ -92,7 +95,11 @@ func realizar_ataque(atacant, defensor, potencia):
 	var dany = (atacant["ataque"] * potencia / 100.0) - (defensor["defensa"] * 0.1)
 	dany = max(1, round(dany)) # Ens assegurem de fer mínim 1 de dany i arrodonim
 	
-	defensor["hp"] -= dany
+	if defensor["hp"] >= dany:
+		defensor["hp"] -= dany
+	else:
+		dany = defensor["hp"]
+		defensor["hp"] = 0
 	print("Dany causat: " + str(dany) + ". HP restant del defensor: " + str(defensor["hp"]))
 	
 	check_win_condition()
