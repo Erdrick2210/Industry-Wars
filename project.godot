@@ -1,4 +1,4 @@
-w; Engine configuration file.
+; Engine configuration file.
 ; It's best edited using the editor UI and not directly,
 ; since the parameters that go here are not all obvious.
 ;
@@ -48,7 +48,8 @@ shift={
 2d_physics/layer_1="Walls"
 2d_physics/layer_2="Entities"
 2d_physics/layer_3="Floor"
-2d_physics/layer_4="Collectables"
+2d_physics/layer_4="Enviroment"
+2d_physics/layer_5="Collectables"
 
 [physics]
 
