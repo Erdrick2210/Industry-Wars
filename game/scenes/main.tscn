@@ -4,6 +4,4 @@
 
 [node name="main" type="Node2D" unique_id=1103462682]
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=115684688]
-
 [node name="level" parent="." unique_id=881802809 instance=ExtResource("1_20rwd")]
