@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://daah7gi4hrn3t"]
+
+[ext_resource type="Script" uid="uid://bhfmu7nudd43v" path="res://scripts/RobotsMenu.gd" id="1_qxw5m"]
+[ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_jsftt"]
+
+[node name="RobotMenu" type="Control" unique_id=339448716]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qxw5m")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1029464443]
+layout_mode = 0
+offset_right = 1157.0
+offset_bottom = 652.0
+texture = ExtResource("2_jsftt")
+
+[node name="MainContainer" type="HBoxContainer" parent="." unique_id=742283408]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(12, 12)
+
+[node name="PartyPanel" type="VBoxContainer" parent="MainContainer" unique_id=1754347838]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="TitleLabel" type="Label" parent="MainContainer/PartyPanel" unique_id=1145555]
+layout_mode = 2
+text = "Robots"
+
+[node name="CardList" type="VBoxContainer" parent="MainContainer/PartyPanel" unique_id=1133342006]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RobotCard_1" type="Panel" parent="MainContainer/PartyPanel/CardList" unique_id=1762345232]
+layout_mode = 2
+
+[node name="RobotCard_0" type="Panel" parent="MainContainer/PartyPanel/CardList" unique_id=1015883959]
+layout_mode = 2
+
+[node name="RobotCard_2" type="Panel" parent="MainContainer/PartyPanel/CardList" unique_id=734321265]
+layout_mode = 2
+
+[node name="RobotCard_3" type="Panel" parent="MainContainer/PartyPanel/CardList" unique_id=907807336]
+layout_mode = 2
+
+[node name="DetailPanel" type="Panel" parent="MainContainer" unique_id=2004977408]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DetailScroll" type="ScrollContainer" parent="MainContainer/DetailPanel" unique_id=643166370]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 0)
+
+[node name="DetailVBox" type="VBoxContainer" parent="MainContainer/DetailPanel/DetailScroll" unique_id=781764606]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="DetailName" type="Label" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=798140851]
+layout_mode = 2
+
+[node name="DetailLevel" type="Label" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=1115242677]
+layout_mode = 2
+
+[node name="ExpBar" type="ProgressBar" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=989604797]
+layout_mode = 2
+
+[node name="ExpLabel" type="Label" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=1582930008]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=2033486370]
+layout_mode = 2
+
+[node name="StatsGrid" type="GridContainer" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=2124706587]
+layout_mode = 2
+columns = 2
+
+[node name="HSeparator2" type="HSeparator" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=897947091]
+layout_mode = 2
+
+[node name="AbilitiesTitle" type="Label" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=1227882897]
+layout_mode = 2
+
+[node name="AbilitiesList" type="VBoxContainer" parent="MainContainer/DetailPanel/DetailScroll/DetailVBox" unique_id=130854932]
+layout_mode = 2
+
+[node name="BottomBar" type="HBoxContainer" parent="." unique_id=848167594]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = -8.0
+grow_vertical = 0
+
+[node name="CloseBtn" type="Button" parent="BottomBar" unique_id=1937341781]
+layout_mode = 2
+text = "X"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1377296894]

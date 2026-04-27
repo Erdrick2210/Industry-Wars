@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://bl2xu7vceqsfu"]
+
+[ext_resource type="Texture2D" uid="uid://cd7ugsgbbbwwp" path="res://assets/art/ui/bagbg1.png" id="1_6e1fk"]
+[ext_resource type="Script" uid="uid://c37ol8s4d2w3e" path="res://scripts/inventory/BagMenu.gd" id="1_skg8j"]
+[ext_resource type="Texture2D" uid="uid://brf6ynwbc5m28" path="res://assets/art/ui/bag3.PNG" id="3_xlwhc"]
+
+[sub_resource type="Animation" id="Animation_6e1fk"]
+resource_name = "slide_in"
+
+[sub_resource type="Animation" id="Animation_skg8j"]
+resource_name = "slide_out"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xlwhc"]
+_data = {
+&"slide_in": SubResource("Animation_6e1fk"),
+&"slide_out": SubResource("Animation_skg8j")
+}
+
+[node name="BagMenu" type="Control" unique_id=1964109491]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -3.0
+offset_bottom = -3.0
+size_flags_vertical = 3
+script = ExtResource("1_skg8j")
+
+[node name="BagBG" type="TextureRect" parent="." unique_id=343070493]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 0
+offset_right = 1147.0
+offset_bottom = 642.0
+texture = ExtResource("1_6e1fk")
+
+[node name="MainContainer" type="HBoxContainer" parent="." unique_id=465114830]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 34.0
+offset_right = 1032.0
+offset_bottom = 461.0
+
+[node name="LeftPanel" type="Control" parent="MainContainer" unique_id=666916584]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="BagSprite" type="TextureRect" parent="MainContainer/LeftPanel" unique_id=2136558534]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.88
+anchor_bottom = 1.0
+offset_left = 82.0
+offset_top = -359.12
+offset_right = 122.880005
+offset_bottom = -372.12
+scale = Vector2(6, 6)
+localize_numeral_system = false
+texture = ExtResource("3_xlwhc")
+expand_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="MainContainer/LeftPanel" unique_id=67786481]
+layout_direction = 2
+layout_mode = 0
+offset_left = 40.0
+offset_top = 278.0
+offset_right = 368.0
+offset_bottom = 309.0
+
+[node name="ArrowLeft" type="Button" parent="MainContainer/LeftPanel/TopBar" unique_id=769741654]
+layout_mode = 2
+text = "<"
+
+[node name="CategoryLabel" type="Label" parent="MainContainer/LeftPanel/TopBar" unique_id=1416941784]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+
+[node name="ArrowRight" type="Button" parent="MainContainer/LeftPanel/TopBar" unique_id=27494295]
+layout_mode = 2
+text = ">"
+
+[node name="SortSelector" type="OptionButton" parent="MainContainer/LeftPanel/TopBar" unique_id=937500650]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+
+[node name="GoBackBtn" type="Button" parent="MainContainer/LeftPanel" unique_id=1325210211]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -2.0
+offset_right = 49.0
+offset_bottom = 29.0
+text = "<"
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer" unique_id=2010920198]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 0
+
+[node name="RightPanel" type="VBoxContainer" parent="MainContainer" unique_id=2142006658]
+custom_minimum_size = Vector2(585, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="ItemScroll" type="ScrollContainer" parent="MainContainer/RightPanel" unique_id=647319415]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemContainer" type="VBoxContainer" parent="MainContainer/RightPanel/ItemScroll" unique_id=1827106670]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="DetailsContainer" type="HBoxContainer" parent="." unique_id=1365403565]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 487.0
+offset_right = 1141.0
+offset_bottom = 630.0
+
+[node name="NameDescContainer" type="VBoxContainer" parent="DetailsContainer" unique_id=1841490317]
+custom_minimum_size = Vector2(500, 0)
+layout_direction = 2
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="DetailsContainer/NameDescContainer" unique_id=641961331]
+layout_mode = 2
+text = "ItemName
+"
+
+[node name="DescLabel" type="Label" parent="DetailsContainer/NameDescContainer" unique_id=1188802508]
+layout_mode = 2
+text = "Item Description"
+
+[node name="MarginContainer" type="MarginContainer" parent="DetailsContainer" unique_id=118031072]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 0
+
+[node name="QtyLabel" type="Label" parent="DetailsContainer" unique_id=1767982352]
+layout_direction = 2
+layout_mode = 2
+text = "x3"
+horizontal_alignment = 2
+
+[node name="ActionBtn" type="Button" parent="DetailsContainer" unique_id=1128732726]
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1173361980]
+libraries/ = SubResource("AnimationLibrary_xlwhc")
