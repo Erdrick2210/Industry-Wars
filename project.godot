@@ -11,16 +11,27 @@ config_version=5
 [application]
 
 config/name="Industry Wars"
+run/main_scene="uid://kdyk1kbkfg2g"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-DialogueManager="*uid://c3rodes2l3gxb"
+ItemDB="*uid://bw2aorum66xyr"
+Inventory="*uid://cvjuswphak6ot"
+RobotDB="*uid://efn7pc2bxa8q"
+RobotParty="*uid://b1goxu1anw7rw"
 
-[editor_plugins]
+[editor]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
+version_control/autoload_on_startup=true
+
+[input]
+
+ui_dow={
+"deadzone": 0.2,
+"events": []
+}
 
 [physics]
 
