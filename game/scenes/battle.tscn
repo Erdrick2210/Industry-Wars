@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://c4uonisff3hsc"]
+
+[ext_resource type="Script" uid="uid://2j5qstvd8wkq" path="res://game/systems/combat_no_definitiu.gd" id="1_srlwi"]
+[ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_q7dox"]
+[ext_resource type="Texture2D" uid="uid://btso4o28h1ko" path="res://assets/art/ui/battleCommand.png" id="3_1iry5"]
+[ext_resource type="Texture2D" uid="uid://dgox1aku3ssmd" path="res://assets/art/ui/enemybaseFieldGrass.png" id="4_ak62o"]
+[ext_resource type="Texture2D" uid="uid://tfcxeood8lkv" path="res://assets/art/ui/playerbaseFieldGrass.png" id="5_5cged"]
+[ext_resource type="Texture2D" uid="uid://dps4tvavaledi" path="res://assets/art/ui/battleCommandButtons.png" id="6_ak62o"]
+[ext_resource type="Texture2D" uid="uid://1nov76ixph06" path="res://assets/art/sprites/battlers/front/001.png" id="6_uuvcu"]
+[ext_resource type="Texture2D" uid="uid://ddxsculnpm4bf" path="res://assets/art/sprites/battlers/back/002.png" id="7_yl0ul"]
+
+[node name="Battle" type="Control" unique_id=2056252675]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_srlwi")
+
+[node name="Background" type="TextureRect" parent="." unique_id=744813657]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("2_q7dox")
+stretch_mode = 4
+
+[node name="BattleCommand" type="TextureRect" parent="." unique_id=226068794]
+layout_mode = 0
+offset_top = 432.0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("3_1iry5")
+stretch_mode = 4
+
+[node name="EnemyBaseField" type="TextureRect" parent="." unique_id=607502325]
+layout_mode = 0
+offset_left = 649.0
+offset_top = 109.0
+offset_right = 1061.0
+offset_bottom = 317.0
+texture = ExtResource("4_ak62o")
+stretch_mode = 4
+
+[node name="PlayerBaseField" type="TextureRect" parent="." unique_id=151644868]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 368.0
+offset_right = 554.0
+offset_bottom = 576.0
+texture = ExtResource("5_5cged")
+stretch_mode = 4
+
+[node name="EnemyRobot" type="Sprite2D" parent="." unique_id=411619326]
+position = Vector2(865, 167)
+scale = Vector2(2, 2)
+texture = ExtResource("6_uuvcu")
+
+[node name="PlayerRobot" type="Sprite2D" parent="." unique_id=1799485215]
+position = Vector2(304, 340)
+scale = Vector2(2, 2)
+texture = ExtResource("7_yl0ul")
+
+[node name="BoxContainer" type="BoxContainer" parent="." unique_id=1568217790]
+layout_mode = 0
+offset_left = 593.0
+offset_top = 452.0
+offset_right = 1122.0
+offset_bottom = 640.0
+
+[node name="Fight" type="Sprite2D" parent="BoxContainer" unique_id=875196596]
+position = Vector2(123, 47)
+scale = Vector2(2, 2)
+texture = ExtResource("6_ak62o")
+hframes = 2
+vframes = 9
+
+[node name="Button" type="Button" parent="BoxContainer/Fight" unique_id=97054732]
+offset_left = -65.0
+offset_top = -23.0
+offset_right = 65.0
+offset_bottom = 23.0
+
+[node name="Bag" type="Sprite2D" parent="BoxContainer" unique_id=2031748045]
+position = Vector2(407, 47)
+scale = Vector2(2, 2)
+texture = ExtResource("6_ak62o")
+hframes = 2
+vframes = 9
+frame = 4
+
+[node name="Robot" type="Sprite2D" parent="BoxContainer" unique_id=306472487]
+position = Vector2(123, 144)
+scale = Vector2(2, 2)
+texture = ExtResource("6_ak62o")
+hframes = 2
+vframes = 9
+frame = 2
+
+[node name="GiveUp" type="Sprite2D" parent="BoxContainer" unique_id=1881417255]
+position = Vector2(407.5, 144)
+scale = Vector2(2.0076923, 2)
+texture = ExtResource("6_ak62o")
+hframes = 2
+vframes = 9
+frame = 6
+
+[connection signal="pressed" from="BoxContainer/Fight/Button" to="." method="_on_boton_atacar_pressed"]
