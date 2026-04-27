@@ -1,0 +1,12 @@
+exit_region1:
+    Mara: ¿Ya te vas al Distrito Industrial?
+    Mara: Recuerda todo lo que te enseñé sobre núcleos y módulos.
+    Mara: Y si ves algo raro en los combates… ven a contármelo inmediatamente.
+    
+    - Entendido, gracias Mara.
+        Mara: Buena suerte, ingeniero. Nos vemos pronto.
+    
+    - ¿Qué es exactamente lo que no debo confiar?
+        Mara: [suspiro] Todavía es pronto… pero mantén la cabeza fría.
+        Mara: No todo lo que organiza la corporación es limpio.
+        set conspiracy_level = 2

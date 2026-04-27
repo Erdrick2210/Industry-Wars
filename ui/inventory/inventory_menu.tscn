@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://bl645n0nxm6iq"]
+
+[sub_resource type="GDScript" id="GDScript_lrrqf"]
+script/source = "extends Control
+
+@onready var item_list = $VBoxContainer/ItemList
+@onready var description = $VBoxContainer/Description
+
+var current_category = Inventory.Category.RECAMBIOS
+var filtered_ids = []
+
+func refresh_items():
+	item_list.clear()
+	filtered_ids.clear()
+	for item_id in Inventory.items:
+		var item = ItemDatabase.get_item(item_id)
+		if item.category != current_category:
+			continue
+				
+		filtered_ids.append(item_id)
+		
+		var amount = Inventory.items[item_id]
+		var text = item.name + \" x\" + str(amount)
+		
+		item_list.add_item(text, item.icon)
+		print(item_id)
+	
+	
+
+
+func _on_item_list_item_selected(index: int) -> void:
+	var item_id = filtered_ids[index]
+	var item = ItemDatabase.get_item(item_id)
+	
+	description.text = item.description
+
+
+func _on_recambios_pressed() -> void:
+	current_category = Inventory.Category.RECAMBIOS
+	refresh_items()
+
+func _on_energia_pressed() -> void:
+	current_category = Inventory.Category.ENERGIA
+	refresh_items()
+
+func _on_componentes_pressed() -> void:
+	current_category = Inventory.Category.COMPONENTES
+	refresh_items()
+
+func _on_modulos_pressed() -> void:
+	current_category = Inventory.Category.MODULOS
+	refresh_items()
+
+func _on_clave_pressed() -> void:
+	current_category = Inventory.Category.CLAVE
+	refresh_items()
+
+
+func _ready():
+	Inventory.inventory_changed.connect(Callable(self, \"refresh_items\"))
+	refresh_items()
+"
+
+[node name="InventoryMenu" type="Node2D" unique_id=2037552068]
+
+[node name="Control" type="Control" parent="." unique_id=2122959658]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_lrrqf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=2000735983]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Categories" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=948980617]
+layout_mode = 2
+
+[node name="Recambios" type="Button" parent="Control/VBoxContainer/Categories" unique_id=402140686]
+layout_mode = 2
+text = "Recambios"
+
+[node name="Energia" type="Button" parent="Control/VBoxContainer/Categories" unique_id=1295429375]
+layout_mode = 2
+text = "Energia"
+
+[node name="Componentes" type="Button" parent="Control/VBoxContainer/Categories" unique_id=653699564]
+layout_mode = 2
+text = "Componentes"
+
+[node name="Modulos" type="Button" parent="Control/VBoxContainer/Categories" unique_id=1991210401]
+layout_mode = 2
+text = "Modulos"
+
+[node name="Clave" type="Button" parent="Control/VBoxContainer/Categories" unique_id=188283463]
+layout_mode = 2
+text = "Clave"
+
+[node name="ItemList" type="ItemList" parent="Control/VBoxContainer" unique_id=1960225392]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="Control/VBoxContainer" unique_id=1974484248]
+layout_mode = 2
+
+[connection signal="ready" from="." to="." method="_on_ready"]
+[connection signal="pressed" from="Control/VBoxContainer/Categories/Recambios" to="." method="_on_recambios_pressed"]
+[connection signal="item_selected" from="Control/VBoxContainer/ItemList" to="." method="_on_item_list_item_selected"]

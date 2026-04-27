@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://kdyk1kbkfg2g"]
+
+[ext_resource type="Script" uid="uid://d2ovlh5766udh" path="res://scripts/inventory/MainMenu.gd" id="1_tkiuf"]
+[ext_resource type="Texture2D" uid="uid://0770xr672sft" path="res://assets/art/ui/bagSel.png" id="2_qrq22"]
+[ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_ys6o6"]
+[ext_resource type="Script" uid="uid://cxb2srtev0sxy" path="res://scripts/inventory/InventoryTester.gd" id="3_qrq22"]
+
+[node name="MainMenu" type="Control" unique_id=693169542]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_tkiuf")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1263226849]
+layout_mode = 0
+offset_right = 1155.0
+offset_bottom = 648.0
+texture = ExtResource("2_ys6o6")
+
+[node name="CursorSprite" type="Sprite2D" parent="." unique_id=667817114]
+texture = ExtResource("2_qrq22")
+centered = false
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=144864579]
+custom_minimum_size = Vector2(275, 0)
+layout_mode = 0
+offset_left = 400.0
+offset_top = 250.0
+offset_right = 670.0
+offset_bottom = 400.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=717456789]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1925197857]
+layout_mode = 2
+
+[node name="MenuList" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1834672310]
+layout_mode = 2
+
+[node name="SubtitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=441327024]
+layout_mode = 2
+
+[node name="InventoryTester" type="Node" parent="." unique_id=1463988733]
+script = ExtResource("3_qrq22")
