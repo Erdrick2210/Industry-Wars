@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bmjty1bwwvqoo"]
+
+[ext_resource type="SpriteFrames" uid="uid://b6j00r7swd3tr" path="res://scripts/entities/rival/rival.tres" id="1_3qtr1"]
+[ext_resource type="Script" uid="uid://oc0mqanya5jg" path="res://scripts/entities/rival/rival.gd" id="1_xujgx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qtr1"]
+size = Vector2(14, 14)
+
+[node name="Rival" type="CharacterBody2D" unique_id=1029693162 node_paths=PackedStringArray("RivalAnimation")]
+collision_layer = 4
+script = ExtResource("1_xujgx")
+RivalAnimation = NodePath("RivalAnimation")
+
+[node name="RivalAnimation" type="AnimatedSprite2D" parent="." unique_id=1876331028]
+position = Vector2(0, -2)
+sprite_frames = ExtResource("1_3qtr1")
+animation = &"idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1820209645]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_3qtr1")

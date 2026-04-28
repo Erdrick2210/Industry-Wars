@@ -22,9 +22,19 @@ Inventory="*uid://cvjuswphak6ot"
 RobotDB="*uid://efn7pc2bxa8q"
 RobotParty="*uid://b1goxu1anw7rw"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+
 [editor]
 
 version_control/autoload_on_startup=true
+
+[global_group]
+
+Player=""
 
 [input]
 
@@ -57,10 +67,10 @@ shift={
 [layer_names]
 
 2d_physics/layer_1="Walls"
-2d_physics/layer_2="Entities"
-2d_physics/layer_3="Floor"
-2d_physics/layer_4="Enviroment"
-2d_physics/layer_5="Collectables"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="NPC"
+2d_physics/layer_4="Floors"
+2d_physics/layer_5="Enviroment"
 
 [physics]
 

@@ -1,89 +1,88 @@
-[gd_scene format=3 uid="uid://dwi2l0fuc3o8o"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://bgwkp1jjnxv22"]
 
-[ext_resource type="Script" uid="uid://c8ukys8frry6d" path="res://scripts/entities/player/player_actions.gd" id="1_tiopx"]
-[ext_resource type="Texture2D" uid="uid://coccwt7n8mn86" path="res://assets/art/sprites/characters/mc.png" id="2_tiopx"]
+[ext_resource type="Texture2D" uid="uid://coccwt7n8mn86" path="res://assets/art/sprites/characters/mc.png" id="1_rnvoe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_utveb"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(0, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lscpw"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kcasg"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ilnab"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(0, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_20o7w"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(0, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4nbua"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(32, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_085w2"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(64, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auefh"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(96, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tb28n"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cisog"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(32, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ekvl7"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(64, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gfa21"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(96, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_elal0"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_myjcc"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(32, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tliof"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(64, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vpds5"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(96, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2pslq"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(0, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pjukr"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(32, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y18hr"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(64, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fd5y"]
-atlas = ExtResource("2_tiopx")
+atlas = ExtResource("1_rnvoe")
 region = Rect2(96, 144, 32, 48)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_gakuf"]
+[resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -185,23 +184,3 @@ animations = [{
 "name": &"run_up",
 "speed": 5.0
 }]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b117v"]
-size = Vector2(13, 13)
-
-[node name="Player" type="CharacterBody2D" unique_id=1974727383 node_paths=PackedStringArray("PlayerAnimation")]
-collision_layer = 2
-script = ExtResource("1_tiopx")
-PlayerAnimation = NodePath("PlayerAnimation")
-
-[node name="PlayerAnimation" type="AnimatedSprite2D" parent="." unique_id=641431231]
-unique_name_in_owner = true
-position = Vector2(0, -4)
-sprite_frames = SubResource("SpriteFrames_gakuf")
-animation = &"idle_down"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=84274966]
-position = Vector2(0, 11)
-shape = SubResource("RectangleShape2D_b117v")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=364516758]
