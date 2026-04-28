@@ -4,10 +4,43 @@
 [ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_q7dox"]
 [ext_resource type="Texture2D" uid="uid://btso4o28h1ko" path="res://assets/art/ui/battleCommand.png" id="3_1iry5"]
 [ext_resource type="Texture2D" uid="uid://dgox1aku3ssmd" path="res://assets/art/ui/enemybaseFieldGrass.png" id="4_ak62o"]
-[ext_resource type="Texture2D" uid="uid://tfcxeood8lkv" path="res://assets/art/ui/playerbaseFieldGrass.png" id="5_5cged"]
+[ext_resource type="Texture2D" uid="uid://dl45fl1uhlkin" path="res://assets/art/sprites/battlers/front/assault.png" id="5_5cged"]
 [ext_resource type="Texture2D" uid="uid://dps4tvavaledi" path="res://assets/art/ui/battleCommandButtons.png" id="6_ak62o"]
-[ext_resource type="Texture2D" uid="uid://1nov76ixph06" path="res://assets/art/sprites/battlers/front/001.png" id="6_uuvcu"]
-[ext_resource type="Texture2D" uid="uid://ddxsculnpm4bf" path="res://assets/art/sprites/battlers/back/002.png" id="7_yl0ul"]
+[ext_resource type="Texture2D" uid="uid://land53m4kkyp" path="res://assets/art/sprites/battlers/front/guardian.png" id="6_uuvcu"]
+[ext_resource type="Texture2D" uid="uid://hcdosd6c5t53" path="res://assets/art/ui/battlePlayerBoxS.png" id="8_yl0ul"]
+[ext_resource type="Texture2D" uid="uid://1eowrkwoxplh" path="res://assets/art/ui/battleFoeBoxS.png" id="9_871wd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cged"]
+atlas = ExtResource("6_ak62o")
+region = Rect2(0, 0, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl0ul"]
+atlas = ExtResource("6_ak62o")
+region = Rect2(130, 0, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uuvcu"]
+atlas = ExtResource("6_ak62o")
+region = Rect2(0, 92, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqqse"]
+atlas = ExtResource("6_ak62o")
+region = Rect2(130, 92, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stub7"]
+atlas = ExtResource("6_ak62o")
+region = Rect2(0, 46, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wd3if"]
+atlas = ExtResource("6_ak62o")
+region = Rect2(130, 46, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_871wd"]
+atlas = ExtResource("6_ak62o")
+region = Rect2(0, 138, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_meiey"]
+atlas = ExtResource("6_ak62o")
+region = Rect2(130, 138, 130, 46)
 
 [node name="Battle" type="Control" unique_id=2056252675]
 layout_mode = 3
@@ -35,74 +68,178 @@ stretch_mode = 4
 
 [node name="EnemyBaseField" type="TextureRect" parent="." unique_id=607502325]
 layout_mode = 0
-offset_left = 649.0
-offset_top = 109.0
-offset_right = 1061.0
-offset_bottom = 317.0
+offset_left = 636.0
+offset_top = 270.0
+offset_right = 1052.0
+offset_bottom = 478.0
 texture = ExtResource("4_ak62o")
 stretch_mode = 4
 
 [node name="PlayerBaseField" type="TextureRect" parent="." unique_id=151644868]
 layout_mode = 0
-offset_left = 42.0
-offset_top = 368.0
-offset_right = 554.0
-offset_bottom = 576.0
-texture = ExtResource("5_5cged")
+offset_left = 100.0
+offset_top = 270.0
+offset_right = 516.0
+offset_bottom = 478.0
+texture = ExtResource("4_ak62o")
 stretch_mode = 4
 
 [node name="EnemyRobot" type="Sprite2D" parent="." unique_id=411619326]
-position = Vector2(865, 167)
+position = Vector2(837, 294)
 scale = Vector2(2, 2)
-texture = ExtResource("6_uuvcu")
+texture = ExtResource("5_5cged")
 
 [node name="PlayerRobot" type="Sprite2D" parent="." unique_id=1799485215]
-position = Vector2(304, 340)
+position = Vector2(313, 297)
 scale = Vector2(2, 2)
-texture = ExtResource("7_yl0ul")
+texture = ExtResource("6_uuvcu")
+flip_h = true
 
-[node name="BoxContainer" type="BoxContainer" parent="." unique_id=1568217790]
+[node name="BattleCommands" type="GridContainer" parent="." unique_id=740667587]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -589.0
+offset_top = -203.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+columns = 2
+
+[node name="Fight" type="TextureButton" parent="BattleCommands" unique_id=505118603]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = SubResource("AtlasTexture_5cged")
+texture_hover = SubResource("AtlasTexture_yl0ul")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Bag" type="TextureButton" parent="BattleCommands" unique_id=249534053]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = SubResource("AtlasTexture_uuvcu")
+texture_hover = SubResource("AtlasTexture_uqqse")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Robots" type="TextureButton" parent="BattleCommands" unique_id=1302635476]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = SubResource("AtlasTexture_stub7")
+texture_hover = SubResource("AtlasTexture_wd3if")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="GiveUp" type="TextureButton" parent="BattleCommands" unique_id=2125694564]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = SubResource("AtlasTexture_871wd")
+texture_hover = SubResource("AtlasTexture_meiey")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CombatLog" type="RichTextLabel" parent="." unique_id=1270931477]
 layout_mode = 0
-offset_left = 593.0
-offset_top = 452.0
-offset_right = 1122.0
-offset_bottom = 640.0
+offset_left = 51.0
+offset_top = 473.0
+offset_right = 516.0
+offset_bottom = 616.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
 
-[node name="Fight" type="Sprite2D" parent="BoxContainer" unique_id=875196596]
-position = Vector2(123, 47)
-scale = Vector2(2, 2)
-texture = ExtResource("6_ak62o")
-hframes = 2
-vframes = 9
+[node name="PlayerPanel" type="Panel" parent="." unique_id=230929136]
+layout_mode = 1
+offset_right = 576.0
+offset_bottom = 150.0
 
-[node name="Button" type="Button" parent="BoxContainer/Fight" unique_id=97054732]
-offset_left = -65.0
-offset_top = -23.0
-offset_right = 65.0
-offset_bottom = 23.0
+[node name="BattleBox" type="Sprite2D" parent="PlayerPanel" unique_id=1869917375]
+position = Vector2(287.95, 76)
+scale = Vector2(2.2157693, 1.77)
+texture = ExtResource("8_yl0ul")
 
-[node name="Bag" type="Sprite2D" parent="BoxContainer" unique_id=2031748045]
-position = Vector2(407, 47)
-scale = Vector2(2, 2)
-texture = ExtResource("6_ak62o")
-hframes = 2
-vframes = 9
-frame = 4
+[node name="NameLabel" type="RichTextLabel" parent="PlayerPanel" unique_id=360053297]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 18.0
+offset_right = 313.0
+offset_bottom = 63.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "Name"
 
-[node name="Robot" type="Sprite2D" parent="BoxContainer" unique_id=306472487]
-position = Vector2(123, 144)
-scale = Vector2(2, 2)
-texture = ExtResource("6_ak62o")
-hframes = 2
-vframes = 9
-frame = 2
+[node name="LevelLabel" type="RichTextLabel" parent="PlayerPanel" unique_id=580433949]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 18.0
+offset_right = 557.0
+offset_bottom = 63.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "Lv"
 
-[node name="GiveUp" type="Sprite2D" parent="BoxContainer" unique_id=1881417255]
-position = Vector2(407.5, 144)
-scale = Vector2(2.0076923, 2)
-texture = ExtResource("6_ak62o")
-hframes = 2
-vframes = 9
-frame = 6
+[node name="HPLabel" type="RichTextLabel" parent="PlayerPanel" unique_id=948723619]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 57.0
+offset_right = 235.0
+offset_bottom = 102.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 26
+text = "HP: 0 / 0"
 
-[connection signal="pressed" from="BoxContainer/Fight/Button" to="." method="_on_boton_atacar_pressed"]
+[node name="HPBar" type="ProgressBar" parent="PlayerPanel" unique_id=58250828]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 71.0
+offset_right = 514.0
+offset_bottom = 81.0
+show_percentage = false
+
+[node name="EnemyPanel" type="Panel" parent="." unique_id=1758111822]
+layout_mode = 0
+offset_left = 576.0
+offset_right = 1152.0
+offset_bottom = 150.0
+
+[node name="BattleBox" type="Sprite2D" parent="EnemyPanel" unique_id=2137752590]
+position = Vector2(287.95, 68.49999)
+scale = Vector2(2.2157693, 2.2419355)
+texture = ExtResource("9_871wd")
+
+[node name="NameLabel" type="RichTextLabel" parent="EnemyPanel" unique_id=1469550954]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 18.0
+offset_right = 313.0
+offset_bottom = 63.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "Name"
+
+[node name="LevelLabel" type="RichTextLabel" parent="EnemyPanel" unique_id=461375484]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 18.0
+offset_right = 521.0
+offset_bottom = 63.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "Lv"
+
+[node name="HPBar" type="ProgressBar" parent="EnemyPanel" unique_id=1680298660]
+layout_mode = 0
+offset_left = 261.0
+offset_top = 89.0
+offset_right = 474.0
+offset_bottom = 102.0
+show_percentage = false
+
+[connection signal="pressed" from="BattleCommands/Fight" to="." method="_on_fight_pressed"]
