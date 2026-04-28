@@ -6,6 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qtr1"]
 size = Vector2(14, 14)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xujgx"]
+size = Vector2(325, 261)
+
 [node name="Rival" type="CharacterBody2D" unique_id=1029693162 node_paths=PackedStringArray("RivalAnimation")]
 collision_layer = 4
 script = ExtResource("1_xujgx")
@@ -19,3 +22,14 @@ animation = &"idle_down"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1820209645]
 position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_3qtr1")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1682603960]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Area" type="CollisionShape2D" parent="DetectionArea" unique_id=519865747]
+position = Vector2(-137.5, 0.5)
+shape = SubResource("RectangleShape2D_xujgx")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

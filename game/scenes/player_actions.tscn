@@ -4,10 +4,11 @@
 [ext_resource type="Script" uid="uid://c8ukys8frry6d" path="res://scripts/entities/player/player_actions.gd" id="1_tiopx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b117v"]
-size = Vector2(13, 13)
+size = Vector2(18, 16)
 
 [node name="Player" type="CharacterBody2D" unique_id=1974727383 node_paths=PackedStringArray("PlayerAnimation")]
 collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_tiopx")
 PlayerAnimation = NodePath("PlayerAnimation")
 
@@ -18,7 +19,7 @@ sprite_frames = ExtResource("1_b117v")
 animation = &"idle_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=84274966]
-position = Vector2(0, 11)
+position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_b117v")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=364516758]
