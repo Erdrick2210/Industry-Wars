@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dl45fl1uhlkin" path="res://assets/art/sprites/battlers/front/assault.png" id="5_5cged"]
 [ext_resource type="Texture2D" uid="uid://dps4tvavaledi" path="res://assets/art/ui/battleCommandButtons.png" id="6_ak62o"]
 [ext_resource type="Texture2D" uid="uid://land53m4kkyp" path="res://assets/art/sprites/battlers/front/guardian.png" id="6_uuvcu"]
+[ext_resource type="Texture2D" uid="uid://hcdosd6c5t53" path="res://assets/art/ui/battlePlayerBoxS.png" id="8_yl0ul"]
+[ext_resource type="Texture2D" uid="uid://1eowrkwoxplh" path="res://assets/art/ui/battleFoeBoxS.png" id="9_871wd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5cged"]
 atlas = ExtResource("6_ak62o")
@@ -152,5 +154,92 @@ offset_right = 516.0
 offset_bottom = 616.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/normal_font_size = 32
+
+[node name="PlayerPanel" type="Panel" parent="." unique_id=230929136]
+layout_mode = 1
+offset_right = 576.0
+offset_bottom = 150.0
+
+[node name="BattleBox" type="Sprite2D" parent="PlayerPanel" unique_id=1869917375]
+position = Vector2(287.95, 76)
+scale = Vector2(2.2157693, 1.77)
+texture = ExtResource("8_yl0ul")
+
+[node name="NameLabel" type="RichTextLabel" parent="PlayerPanel" unique_id=360053297]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 18.0
+offset_right = 313.0
+offset_bottom = 63.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "Name"
+
+[node name="LevelLabel" type="RichTextLabel" parent="PlayerPanel" unique_id=580433949]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 18.0
+offset_right = 557.0
+offset_bottom = 63.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "Lv"
+
+[node name="HPLabel" type="RichTextLabel" parent="PlayerPanel" unique_id=948723619]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 57.0
+offset_right = 235.0
+offset_bottom = 102.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 26
+text = "HP: 0 / 0"
+
+[node name="HPBar" type="ProgressBar" parent="PlayerPanel" unique_id=58250828]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 71.0
+offset_right = 514.0
+offset_bottom = 81.0
+show_percentage = false
+
+[node name="EnemyPanel" type="Panel" parent="." unique_id=1758111822]
+layout_mode = 0
+offset_left = 576.0
+offset_right = 1152.0
+offset_bottom = 150.0
+
+[node name="BattleBox" type="Sprite2D" parent="EnemyPanel" unique_id=2137752590]
+position = Vector2(287.95, 68.49999)
+scale = Vector2(2.2157693, 2.2419355)
+texture = ExtResource("9_871wd")
+
+[node name="NameLabel" type="RichTextLabel" parent="EnemyPanel" unique_id=1469550954]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 18.0
+offset_right = 313.0
+offset_bottom = 63.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "Name"
+
+[node name="LevelLabel" type="RichTextLabel" parent="EnemyPanel" unique_id=461375484]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 18.0
+offset_right = 521.0
+offset_bottom = 63.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
+text = "Lv"
+
+[node name="HPBar" type="ProgressBar" parent="EnemyPanel" unique_id=1680298660]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 89.0
+offset_right = 474.0
+offset_bottom = 102.0
+show_percentage = false
 
 [connection signal="pressed" from="BattleCommands/Fight" to="." method="_on_fight_pressed"]

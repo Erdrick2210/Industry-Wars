@@ -22,6 +22,11 @@ Inventory="*uid://cvjuswphak6ot"
 RobotDB="*uid://efn7pc2bxa8q"
 RobotParty="*uid://b1goxu1anw7rw"
 
+[display]
+
+window/size/mode=3
+window/stretch/mode="viewport"
+
 [editor]
 
 version_control/autoload_on_startup=true

@@ -52,6 +52,73 @@ func _process_log() -> void:
 	is_writing = false
 
 # ─────────────────────────────────────────────────────────────
+# UI BATTLEBOX UPDATE
+# ─────────────────────────────────────────────────────────────
+
+@onready var player_name = $PlayerPanel/NameLabel
+@onready var player_level = $PlayerPanel/LevelLabel
+@onready var player_hpbar = $PlayerPanel/HPBar
+@onready var player_hp_text = $PlayerPanel/HPLabel
+
+@onready var enemy_name = $EnemyPanel/NameLabel
+@onready var enemy_level = $EnemyPanel/LevelLabel
+@onready var enemy_hpbar = $EnemyPanel/HPBar
+
+func init_battle_boxes():
+	# PLAYER
+	player_name.text = player_robot.display_name()
+	player_level.text = "Lv " + str(player_robot.level)
+
+	player_hpbar.max_value = player_robot.max_hp
+	player_hpbar.value = player_robot.current_hp
+	update_hp_color(player_hpbar, player_robot.current_hp, player_robot.max_hp)
+	update_player_hp_ui()
+
+	# ENEMY
+	enemy_name.text = enemy_robot.display_name()
+	enemy_level.text = "Lv " + str(enemy_robot.level)
+
+	enemy_hpbar.max_value = enemy_robot.max_hp
+	enemy_hpbar.value = enemy_robot.current_hp
+	update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
+	
+func animate_hp(bar: ProgressBar, target_value: int):
+	var start = bar.value
+	var duration = 0.5
+	var steps = 20
+
+	for i in range(steps):
+		bar.value = lerp(start, float(target_value), float(i) / steps)
+		await get_tree().create_timer(duration / steps).timeout
+
+	bar.value = int(target_value)
+	
+func update_hp_color(bar: ProgressBar, current: int, max: int):
+
+	var ratio = float(current) / max
+	var style = bar.get_theme_stylebox("fill")
+
+	if style == null:
+		return
+
+	style = style.duplicate() # MUY IMPORTANTE
+	bar.add_theme_stylebox_override("fill", style)
+
+	if ratio > 0.5:
+		style.bg_color = Color.GREEN
+	elif ratio > 0.25:
+		style.bg_color = Color.YELLOW
+	else:
+		style.bg_color = Color.RED
+
+func update_player_hp_ui():
+	player_hpbar.value = player_robot.current_hp
+	player_hp_text.text = "%d / %d" % [
+		player_robot.current_hp,
+		player_robot.max_hp
+	]
+
+# ─────────────────────────────────────────────────────────────
 # INIT
 # ─────────────────────────────────────────────────────────────
 
@@ -60,13 +127,15 @@ func _ready():
 
 func _init_battle() -> void:
 	if RobotParty.party.size() == 0:
-		push_error("El jugador no tiene robots en el party")
+		push_error("El jugador no tiene robots en el equipo!")
 		return
 	
 	player_robot = RobotParty.party[0]
 	enemy_robot = RobotParty.party[1] # Cogemos un robot de la party, esto se debe cambiar
 	
 	print_robot_stats()
+	
+	init_battle_boxes()
 	
 	print("Iniciando duelo...")
 	await log_and_wait("Iniciando duelo...")
@@ -155,14 +224,15 @@ func attack(atk, def, power: int) -> void:
 	damage = max(1, round(damage))
 
 	def.current_hp = max(def.current_hp - damage, 0)
+	if def == player_robot:
+		await animate_hp(player_hpbar, player_robot.current_hp)
+		update_hp_color(player_hpbar, player_robot.current_hp, player_robot.max_hp)
+		update_player_hp_ui()
+	else:
+		await animate_hp(enemy_hpbar, enemy_robot.current_hp)
+		update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
 	
 	print("Daño: " + str(damage) + " | HP: " + str(def.current_hp))
-	await log_and_wait("Daño: %d | HP: %d" % [
-		damage,
-		def.current_hp
-	])
-
-	await get_tree().create_timer(1.0).timeout
 
 	await check_win_condition()
 	
@@ -200,7 +270,9 @@ func check_win_condition() -> bool:
 
 	return false
 
-
+# ─────────────────────────────────────────────────────────────
+# ROBOT STATS
+# ─────────────────────────────────────────────────────────────
 
 func print_robot_stats():
 	print("========== COMBAT STATS ==========")
