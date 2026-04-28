@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dsb4t2aaxcu56"]
+
+[ext_resource type="Texture2D" uid="uid://coccwt7n8mn86" path="res://assets/art/sprites/characters/mc.png" id="1_m6h2w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6h2w"]
+size = Vector2(13, 13)
+
+[node name="MinigamePlayer" type="CharacterBody2D" unique_id=1406835435]
+
+[node name="PlayerMovement" type="Sprite2D" parent="." unique_id=1444092587]
+texture = ExtResource("1_m6h2w")
+hframes = 4
+vframes = 4
+frame = 12
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1320828610]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=592101480]
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_m6h2w")
