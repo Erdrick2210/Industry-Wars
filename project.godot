@@ -15,6 +15,17 @@ run/main_scene="uid://c04b48udsm1pe"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ItemDB="*uid://bw2aorum66xyr"
+Inventory="*uid://cvjuswphak6ot"
+RobotDB="*uid://efn7pc2bxa8q"
+RobotParty="*uid://b1goxu1anw7rw"
+
+[editor]
+
+version_control/autoload_on_startup=true
+
 [display]
 
 window/size/viewport_width=1920
