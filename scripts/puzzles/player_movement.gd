@@ -33,12 +33,11 @@ func _physics_process(_delta):
 	move_and_slide()
 
 
+# --- Catching Logic ---
 func _on_catch_area_area_entered(area: Area2D) -> void:
-	# Check if the Area2D that entered our hose is in the "fireballs" group
 	if area.is_in_group("fireballs"):
+		# Tell the parent node (MinigameLevel) to increase the score
+		get_parent().fireball_caught()
 		
-		# Optional: Print to the console so you know it worked
-		print("Caught a fireball!")
-		
-		# This is the exact command that eliminates/deletes the fireball
+		# Destroy the fireball
 		area.queue_free()
