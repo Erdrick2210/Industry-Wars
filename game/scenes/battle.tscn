@@ -144,14 +144,13 @@ texture_hover = SubResource("AtlasTexture_meiey")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="CombatLog" type="Label" parent="." unique_id=1844471995]
+[node name="CombatLog" type="RichTextLabel" parent="." unique_id=1270931477]
 layout_mode = 0
 offset_left = 51.0
 offset_top = 473.0
 offset_right = 516.0
 offset_bottom = 616.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 32
-autowrap_mode = 3
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 32
 
 [connection signal="pressed" from="BattleCommands/Fight" to="." method="_on_fight_pressed"]
