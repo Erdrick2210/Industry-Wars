@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://djjixhm2ucult"]
 
 [ext_resource type="Script" uid="uid://d264fi2oniy5t" path="res://scripts/puzzles/fireball.gd" id="1_86nm4"]
-[ext_resource type="Texture2D" uid="uid://dqe356p83jh6e" path="res://assets/art/textures/puzzle1-fire.png" id="2_e1viv"]
+[ext_resource type="Texture2D" uid="uid://bf1ea8yhq6kc5" path="res://assets/art/textures/puzzle1-fire.png" id="2_e1viv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnrw3"]
 size = Vector2(16, 20)
 
-[node name="Fireball" type="Area2D" unique_id=1962399184]
+[node name="Fireball" type="Area2D" unique_id=1962399184 groups=["fireballs"]]
+scale = Vector2(2.5, 2.5)
 script = ExtResource("1_86nm4")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=99614973]
@@ -16,6 +17,6 @@ texture = ExtResource("2_e1viv")
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_cnrw3")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=848654220 groups=["fireballs"]]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=848654220]
 position = Vector2(0, 5)
 rect = Rect2(-8, -10, 16, 20)

@@ -1,20 +1,37 @@
 [gd_scene format=3 uid="uid://dsb4t2aaxcu56"]
 
 [ext_resource type="Texture2D" uid="uid://coccwt7n8mn86" path="res://assets/art/sprites/characters/mc.png" id="1_m6h2w"]
+[ext_resource type="Script" uid="uid://de6loe8vn3xuu" path="res://scripts/puzzles/player_movement.gd" id="3_3y812"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6h2w"]
-size = Vector2(13, 13)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3teo"]
+size = Vector2(13, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3y812"]
+size = Vector2(20, 78.32)
 
 [node name="MinigamePlayer" type="CharacterBody2D" unique_id=1406835435]
+scale = Vector2(2.5, 2.5)
+script = ExtResource("3_3y812")
 
 [node name="PlayerMovement" type="Sprite2D" parent="." unique_id=1444092587]
+scale = Vector2(2.5, 2.5)
 texture = ExtResource("1_m6h2w")
 hframes = 4
 vframes = 4
 frame = 12
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1320828610]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1036632674]
+position = Vector2(0, 31.199999)
+scale = Vector2(2.5, 2.5)
+shape = SubResource("RectangleShape2D_g3teo")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=592101480]
-position = Vector2(0, 15)
-shape = SubResource("RectangleShape2D_m6h2w")
+[node name="CatchArea" type="Area2D" parent="." unique_id=1734586501]
+position = Vector2(0, -30.25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea" unique_id=332150139]
+position = Vector2(0, -66.84998)
+scale = Vector2(2.4999998, 2.4999998)
+shape = SubResource("RectangleShape2D_3y812")
+
+[connection signal="area_entered" from="CatchArea" to="." method="_on_catch_area_area_entered"]
+[connection signal="body_entered" from="CatchArea" to="." method="_on_catch_area_body_entered"]
