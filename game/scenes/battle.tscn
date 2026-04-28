@@ -236,7 +236,7 @@ text = "Lv"
 
 [node name="HPBar" type="ProgressBar" parent="EnemyPanel" unique_id=1680298660]
 layout_mode = 0
-offset_left = 262.0
+offset_left = 261.0
 offset_top = 89.0
 offset_right = 474.0
 offset_bottom = 102.0
