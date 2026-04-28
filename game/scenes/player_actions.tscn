@@ -1,24 +1,25 @@
 [gd_scene format=3 uid="uid://dwi2l0fuc3o8o"]
 
-[ext_resource type="SpriteFrames" uid="uid://bgwkp1jjnxv22" path="res://game/entities/player/player.tres" id="1_b117v"]
-[ext_resource type="Script" uid="uid://c8ukys8frry6d" path="res://game/entities/player/player_actions.gd" id="1_tiopx"]
+[ext_resource type="SpriteFrames" uid="uid://bgwkp1jjnxv22" path="res://scripts/entities/player/player.tres" id="1_b117v"]
+[ext_resource type="Script" uid="uid://c8ukys8frry6d" path="res://scripts/entities/player/player_actions.gd" id="1_tiopx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b117v"]
-size = Vector2(13, 13)
+size = Vector2(18, 16)
 
 [node name="Player" type="CharacterBody2D" unique_id=1974727383 node_paths=PackedStringArray("PlayerAnimation")]
 collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_tiopx")
 PlayerAnimation = NodePath("PlayerAnimation")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=84274966]
-position = Vector2(2.5, 12.5)
-shape = SubResource("RectangleShape2D_b117v")
-
 [node name="PlayerAnimation" type="AnimatedSprite2D" parent="." unique_id=641431231]
 unique_name_in_owner = true
-position = Vector2(5, -1)
+position = Vector2(0, -4)
 sprite_frames = ExtResource("1_b117v")
-animation = &"idle_right"
+animation = &"idle_up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=84274966]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_b117v")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=364516758]
