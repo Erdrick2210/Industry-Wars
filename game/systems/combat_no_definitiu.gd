@@ -1,5 +1,7 @@
 extends Node
 
+@onready var combat_log = $CombatLog
+
 # Estats del combat
 enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, ENEMY_TURN, END_BATTLE }
 var current_state = CombatState.START
@@ -25,8 +27,18 @@ var enemy_robot = {
 	"velocidad": 30
 }
 
+func log_text(texto: String):
+	combat_log.text = ""
+	for c in texto:
+		combat_log.text += c
+		await get_tree().create_timer(0.02).timeout
+	combat_log.text += "\n"
+	
+func clear_log():
+	combat_log.text = ""
+
 func _ready():
-	print("--- Iniciant Duel en Industry Wars ---")
+	log_text("Iniciando duelo...")
 	setup_combat()
 
 func setup_combat():
@@ -34,7 +46,6 @@ func setup_combat():
 	process_state()
 
 func process_state():
-	print("---------------------------------")
 	await get_tree().create_timer(2.0).timeout
 	match current_state:
 		CombatState.DETERMINE_TURN:
@@ -44,11 +55,10 @@ func process_state():
 		CombatState.ENEMY_TURN:
 			execute_enemy_ai()
 		CombatState.END_BATTLE:
-			print("El combat ha acabat. Tornant al Overworld...")
+			log_text("El combate ha acabado. Volviendo al overworld...")
 
 func compare_velocidad():
-	print("Calculant l'ordre de torn basat en la Velocitat...")
-	print("---------------------------------")
+	log_text("Calculando orden de turno basado en la velocidad...")
 	# Ordre de torn: Basat en estadística de Velocidad
 	if player_robot["velocidad"] >= enemy_robot["velocidad"]:
 		current_state = CombatState.PLAYER_TURN
@@ -57,13 +67,12 @@ func compare_velocidad():
 	process_state()
 
 func prompt_player_action():
-	print("Torn del jugador! Què farà el robot? (Esperant input de la UI)")
+	log_text("¡Turno del jugador! ¿Què hará el robot?")
 	# El codi s'atura aquí i espera que el jugador premi un botó
 
 # --- FUNCIONS CONNECTADES A LA INTERFÍCIE (UI) ---
-# Aquestes funcions s'han de connectar al senyal "pressed()" dels teus botons a Godot
 
-func _on_boton_atacar_pressed():
+func _on_fight_pressed():
 	if current_state == CombatState.PLAYER_TURN:
 		# Exemple d'atac bàsic: Impacto Industrial (Potència 60)
 		realizar_ataque(player_robot, enemy_robot, 60) 
@@ -71,18 +80,18 @@ func _on_boton_atacar_pressed():
 
 func _on_boton_bolsa_pressed():
 	if current_state == CombatState.PLAYER_TURN:
-		print("Obrint l'inventari per buscar recambis o cargadors...")
+		print("Abriendo el inventario...")
 		# Aquí aniria la lògica per restaurar HP o EP
 		# finalizar_turno() # Descomentar quan s'utilitzi un objecte
 
 func _on_boton_robot_pressed():
 	if current_state == CombatState.PLAYER_TURN:
-		print("Mostrant les estadístiques i l'estat dels mòduls...")
+		print("Mostrando los robots...")
 		# Això normalment no gasta el torn, només mostra informació
 
 func _on_boton_rendirse_pressed():
 	if current_state == CombatState.PLAYER_TURN:
-		print("T'has rendit. Abandonant el combat...")
+		log_text("Te has rendido. Abandonando el combate...")
 		current_state = CombatState.END_BATTLE
 		process_state()
 
@@ -100,12 +109,12 @@ func realizar_ataque(atacant, defensor, potencia):
 	else:
 		dany = defensor["hp"]
 		defensor["hp"] = 0
-	print("Dany causat: " + str(dany) + ". HP restant del defensor: " + str(defensor["hp"]))
+	print("Daño causado: " + str(dany) + ". HP restante del defensor: " + str(defensor["hp"]))
 	
 	check_win_condition()
 
 func execute_enemy_ai():
-	print("Torn de l'enemic!")
+	log_text("¡Turno del enemigo!")
 	# Intel·ligència artificial molt bàsica: sempre fa un atac estàndard
 	realizar_ataque(enemy_robot, player_robot, 50) 
 	finalizar_turno()
@@ -125,8 +134,8 @@ func finalizar_turno():
 
 func check_win_condition():
 	if enemy_robot["hp"] <= 0:
-		print("Has guanyat el duel! S'ha rebut EXP i peces per craftejar.")
+		log_text("¡Has ganado el combate! Has recibido EXP i piezas.")
 		current_state = CombatState.END_BATTLE
 	elif player_robot["hp"] <= 0:
-		print("Cortocircuit crític... Has perdut el combat.")
+		log_text("Has perdido el combate.")
 		current_state = CombatState.END_BATTLE
