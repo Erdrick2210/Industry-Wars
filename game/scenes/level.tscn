@@ -5,9 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://bmjty1bwwvqoo" path="res://game/scenes/rival.tscn" id="3_huo5n"]
 [ext_resource type="PackedScene" uid="uid://dff6hymdg42hp" path="res://game/scenes/puzzle1/npc_puzzle1.tscn" id="3_iddtf"]
 [ext_resource type="Script" uid="uid://07u7aredxr01" path="res://scripts/entities/rival/spawn_rival_trigger.gd" id="4_ycpq3"]
+[ext_resource type="Resource" uid="uid://ciypdqcp5qba7" path="res://game/dialogues/region1_junkyard/first_small_rival.dialogue" id="6_upydp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iddtf"]
-size = Vector2(293, 176)
+size = Vector2(42, 176)
 
 [node name="level_1" type="Node2D" unique_id=881802809]
 
@@ -43,9 +44,10 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("4_ycpq3")
 rival = NodePath("../Rival")
+dialogue_resource = ExtResource("6_upydp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnRivalTrigger" unique_id=1974720308]
-position = Vector2(1304.5, 16)
+position = Vector2(1430, 16)
 shape = SubResource("RectangleShape2D_iddtf")
 
 [connection signal="body_entered" from="SpawnRivalTrigger" to="SpawnRivalTrigger" method="_on_body_entered"]

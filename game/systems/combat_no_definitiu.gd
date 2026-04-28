@@ -166,7 +166,9 @@ func process_state() -> void:
 			await enemy_turn()
 
 		CombatState.END_BATTLE:
-			await log_and_wait("Combate terminado")
+			await log_and_wait("Combate terminado.")
+			await get_tree().create_timer(1.0).timeout
+			GameManager.return_to_previous_scene()
 
 # ─────────────────────────────────────────────────────────────
 # TURN LOGIC
@@ -244,9 +246,8 @@ func attack(atk, def, power: int) -> void:
 func end_turn() -> void:
 
 	if state == CombatState.END_BATTLE:
-		return
-
-	if state == CombatState.PLAYER_TURN:
+		change_state(CombatState.END_BATTLE)
+	elif state == CombatState.PLAYER_TURN:
 		change_state(CombatState.ENEMY_TURN)
 	else:
 		change_state(CombatState.PLAYER_TURN)

@@ -1,0 +1,10 @@
+~ rival_novato
+
+Novato: ¡Eh! Tú eres el nuevo de Mara, ¿verdad?
+Novato: Llevo dos semanas aquí y ya gané tres duelos. ¿Te atreves a un combate rápido?
+
+- Claro, vamos a probar mi robot.
+	Novato: ¡Esa es la actitud! ¡Prepárate para morder el polvo!
+	do GameManager.start_battle()
+- Ahora no, estoy configurando módulos.
+	Novato: ¡Bah, qué aburrido! Cuando dejes de tener miedo me encontrarás cerca del taller.

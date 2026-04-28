@@ -1,16 +1,48 @@
 extends Area2D
 
-@export var rival : CharacterBody2D # Arrastra tu rival aquí en el inspector
+@export var rival : CharacterBody2D
+@export var dialogue_resource : DialogueResource
+@export var dialogue_title : String = "rival_novato"
 
-func _on_body_entered(body):
-	if body.is_in_group("Player"):
+func _on_body_entered(body: Node2D) -> void:
+	if not body.is_in_group("Player"):
+		return
+	
+	# Evitar que se active más de una vez
+	monitoring = false
+	monitorable = false
+	
+	# Mostrar al rival
+	if rival:
 		rival.global_position = Vector2(2600, 16)
-		if body.has_method("set_frozen"):
-			body.set_frozen(true)
-		
-		
 		rival.visible = true
-		rival.process_mode = Node.PROCESS_MODE_INHERIT # Lo "despierta"
+		rival.process_mode = Node.PROCESS_MODE_INHERIT
+	
+	# Congelar al jugador
+	if body.has_method("set_frozen"):
+		body.set_frozen(true)
+	
+	# Iniciar el diálogo
+	if dialogue_resource:
+		# Esperamos a que termine el diálogo usando await
+		await DialogueManager.show_dialogue_balloon(dialogue_resource, dialogue_title)
 		
-		
-		queue_free()
+		# Cuando el diálogo termine, descongelamos al jugador
+		if body.has_method("set_frozen"):
+			body.set_frozen(false)
+	else:
+		push_error("¡Error! No se ha asignado el dialogue_resource en el trigger")
+		if body.has_method("set_frozen"):
+			body.set_frozen(false)
+	
+	# Eliminar el trigger (ya no lo necesitamos)
+	queue_free()
+
+
+# Opcional: Para debuggear en el editor
+func _on_body_exited(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		monitoring = true  # Reactivar si el jugador sale (útil para pruebas)
+
+func _start_battle() -> void:
+	get_tree().change_scene_to_file("res://game/scenes/battle.tscn")

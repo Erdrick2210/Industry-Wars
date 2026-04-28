@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://ciypdqcp5qba7"
+path="res://.godot/imported/first_small_rival.dialogue-f2fb4b6d5cdc9a7ba2833356f0d79088.tres"
+
+[deps]
+
+source_file="res://game/dialogues/region1_junkyard/first_small_rival.dialogue"
+dest_files=["res://.godot/imported/first_small_rival.dialogue-f2fb4b6d5cdc9a7ba2833356f0d79088.tres"]
+
+[params]
+
+defaults=true

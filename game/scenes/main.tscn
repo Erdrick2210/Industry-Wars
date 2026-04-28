@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://c1prdeq2ye1nu"]
 
 [ext_resource type="PackedScene" uid="uid://bv5w1ciuecak4" path="res://game/scenes/level.tscn" id="1_20rwd"]
+[ext_resource type="Script" uid="uid://cxamtr0bb3ij1" path="res://scripts/core/main.gd" id="1_jbjdl"]
 
 [node name="main" type="Node2D" unique_id=1103462682]
+script = ExtResource("1_jbjdl")
 
 [node name="level" parent="." unique_id=881802809 instance=ExtResource("1_20rwd")]
 position = Vector2(109, -5)
