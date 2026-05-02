@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c36yjnmj7mgao"
-path="res://.godot/imported/puzzle1-background.png-62dbbf3a3b18b4773fa6c20fbbb1ed24.ctex"
+uid="uid://bkwy2xww2rx6g"
+path="res://.godot/imported/puzzle1_skyblue.png-ec410b06f5742f4c72148b66fa071eee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/textures/puzzles/puzzle1-background.png"
-dest_files=["res://.godot/imported/puzzle1-background.png-62dbbf3a3b18b4773fa6c20fbbb1ed24.ctex"]
+source_file="res://assets/art/textures/puzzles/puzzle1_skyblue.png"
+dest_files=["res://.godot/imported/puzzle1_skyblue.png-ec410b06f5742f4c72148b66fa071eee.ctex"]
 
 [params]
 

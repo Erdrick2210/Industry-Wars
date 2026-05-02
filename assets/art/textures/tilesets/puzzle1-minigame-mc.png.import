@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4sp3ineh7kjf"
-path="res://.godot/imported/puzzle1-tileset.png-a15a0b33c688ee809253b5c263792ac4.ctex"
+uid="uid://b1m7fvyj5lm0"
+path="res://.godot/imported/puzzle1-minigame-mc.png-4dc806993bef8b5d74e6d395b60d3ba4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/textures/tilesets/puzzle1-tileset.png"
-dest_files=["res://.godot/imported/puzzle1-tileset.png-a15a0b33c688ee809253b5c263792ac4.ctex"]
+source_file="res://assets/art/textures/tilesets/puzzle1-minigame-mc.png"
+dest_files=["res://.godot/imported/puzzle1-minigame-mc.png-4dc806993bef8b5d74e6d395b60d3ba4.ctex"]
 
 [params]
 

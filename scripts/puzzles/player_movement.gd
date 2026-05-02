@@ -2,28 +2,29 @@ extends CharacterBody2D
 
 const SPEED = 500.0
 
-# Grab the Sprite2D node so we can flip it (optional)
-@onready var sprite = $PlayerMovement
+@onready var animated_sprite = $PlayerMovement2
 
 var last_direction = "up"
 
 func _physics_process(_delta):
 	
 	if Input.is_action_pressed("left"):
-		# Use the built-in velocity.x!
 		velocity.x = -SPEED
 		last_direction = "left"
-		sprite.flip_h = true # Optional: mirrors the sprite to face left
+		# Just play the animation, no flipping!
+		animated_sprite.play("default")
 		
 	elif Input.is_action_pressed("right"):
-		# Use the built-in velocity.x!
 		velocity.x = SPEED
 		last_direction = "right"
-		sprite.flip_h = false # Optional: keeps the sprite facing right
-		
+		# Just play the animation, no flipping!
+		animated_sprite.play("default")
+
 	else:
 		# SLOW DOWN AND STOP when no keys are pressed
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		# Stop the animation when standing still
+	
 
 	# Prevent the player from walking off the screen
 	var screen_width = get_viewport_rect().size.x
@@ -32,12 +33,8 @@ func _physics_process(_delta):
 	# move_and_slide uses the built-in Vector2 velocity automatically
 	move_and_slide()
 
-
 # --- Catching Logic ---
 func _on_catch_area_area_entered(area: Area2D) -> void:
 	if area.is_in_group("fireballs"):
-		# Tell the parent node (MinigameLevel) to increase the score
 		get_parent().fireball_caught()
-		
-		# Destroy the fireball
 		area.queue_free()
