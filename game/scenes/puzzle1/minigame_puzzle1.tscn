@@ -68,6 +68,6 @@ wait_time = 0.75
 autostart = true
 
 [node name="MinigamePlayer" parent="." unique_id=1406835435 instance=ExtResource("3_eqtrf")]
-position = Vector2(7.1054274e-15, 389.00003)
+position = Vector2(1, 397)
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
