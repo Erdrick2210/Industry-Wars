@@ -4,12 +4,12 @@
 [ext_resource type="SpriteFrames" uid="uid://cs0cco35okpev" path="res://scripts/entities/mentor/mentor.tres" id="1_fri8o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5tgon"]
-size = Vector2(12, 11)
+size = Vector2(16, 6)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3k55v"]
 radius = 155.00322
 
-[node name="Mentor" type="CharacterBody2D" unique_id=1470311325 node_paths=PackedStringArray("MentoraAnimation")]
+[node name="Mentor" type="CharacterBody2D" unique_id=1470311325 node_paths=PackedStringArray("MentoraAnimation") groups=["Interactable"]]
 collision_layer = 4
 script = ExtResource("1_5tgon")
 MentoraAnimation = NodePath("AnimatedSprite2D")
@@ -19,15 +19,14 @@ sprite_frames = ExtResource("1_fri8o")
 animation = &"idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=3131609]
-position = Vector2(0, 15.5)
+position = Vector2(0, 19)
 shape = SubResource("RectangleShape2D_5tgon")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=981694413]
-collision_layer = 0
+collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1746287254]
-position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_3k55v")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

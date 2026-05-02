@@ -1,12 +1,13 @@
-extends CharacterBody2D
+extends Interactable
 
 const SPEED = 50.0
+
 @export var MentoraAnimation : AnimatedSprite2D
 var target_player : Node2D = null
 var is_moving : bool = false
 
-func _ready() -> void:
 
+func _ready() -> void:
 	visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 	
@@ -46,6 +47,10 @@ func _process(_delta: float) -> void:
 				MentoraAnimation.play("idle_up")
 	else:
 		MentoraAnimation.play("idle_down")
+
+func interact() -> void:
+	print("¡Hola! Soy la mentora.")
+
 
 # --- SEÑALES ---
 func _on_area_2d_body_entered(body: Node2D) -> void:

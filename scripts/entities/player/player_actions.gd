@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var PlayerAnimation: AnimatedSprite2D
 
+var interactable = null
 var _walking_speed : float = 120
 var _running_speed : float = _walking_speed * 2
 var last_direction = "down"
@@ -50,6 +51,20 @@ func _physics_process(delta: float) -> void:
 	else:
 		PlayerAnimation.play("idle_" + last_direction)
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact"):
+		if interactable and interactable.has_method("interact"):
+			interactable.interact()
+
+
 # Función pública para que el NPC pueda llamarla
 func set_frozen(value: bool):
 	is_frozen = value
+
+
+func _on_interaction_area_area_entered(area: Area2D) -> void:
+	interactable = area.get_parent()
+
+
+func _on_interaction_area_area_exited(area: Area2D) -> void:
+	interactable = null # Replace with function body.
