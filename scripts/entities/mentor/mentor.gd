@@ -49,7 +49,10 @@ func _process(_delta: float) -> void:
 		MentoraAnimation.play("idle_down")
 
 func interact() -> void:
-	print("¡Hola! Soy la mentora.")
+	target_player.set_frozen(true)
+	print("¡Hola! Soy la mentora.") # Cambiar por el dialogo pertinente
+	await get_tree().create_timer(1.0).timeout # Cambiar por el dialogo pertinente
+	target_player.set_frozen(false)
 
 
 # --- SEÑALES ---

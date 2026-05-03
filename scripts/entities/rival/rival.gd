@@ -51,5 +51,10 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 	# Asegúrate de que el jugador esté en el grupo "Player"
 	if body.is_in_group("Player"): 
 		_change_state(State.IDLE)
-		body.set_frozen(false)
+		body.set_frozen(true)
 		
+
+
+func _on_detection_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		body.set_frozen(false)
