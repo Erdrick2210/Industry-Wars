@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 500.0
+const SPEED = 300.0
 
 @onready var animated_sprite = $PlayerMovement2
 
@@ -28,7 +28,7 @@ func _physics_process(_delta):
 
 	# Prevent the player from walking off the screen
 	var screen_width = get_viewport_rect().size.x
-	position.x = clamp(position.x, -960, 960)
+	position.x = clamp(position.x, -546, 546)
 
 	# move_and_slide uses the built-in Vector2 velocity automatically
 	move_and_slide()

@@ -1,6 +1,6 @@
 extends Area2D
 
-var fall_speed: float = 300.0
+var fall_speed: float = 200.0
 
 func _process(delta):
 	position.y += fall_speed * delta
