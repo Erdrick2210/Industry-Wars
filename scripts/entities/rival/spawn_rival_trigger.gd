@@ -25,7 +25,9 @@ func _on_body_entered(body: Node2D) -> void:
 	# Iniciar el diálogo
 	if dialogue_resource:
 		# Esperamos a que termine el diálogo usando await
-		await DialogueManager.show_dialogue_balloon(dialogue_resource, dialogue_title)
+		await DialogueManager.show_dialogue_balloon(dialogue_resource, dialogue_title) 
+		# // Arreglar // No se congela al jugador más de 1 frame
+		# El congelar lo he cambiado al rival.gd, así si funciona
 		
 		# Cuando el diálogo termine, descongelamos al jugador
 		if body.has_method("set_frozen"):
