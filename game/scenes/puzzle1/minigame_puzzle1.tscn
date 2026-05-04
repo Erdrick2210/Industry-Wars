@@ -38,7 +38,6 @@ animations = [{
 }]
 
 [node name="MinigamePuzzle1" type="Node2D" unique_id=1161513789]
-position = Vector2(962, 542)
 script = ExtResource("1_hp4eq")
 fireball_scene = ExtResource("2_eqtrf")
 
