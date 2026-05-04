@@ -67,5 +67,8 @@ func _on_minigame_ended(win: bool, minigame_node: Node):
 		owner.visible = true
 		owner.process_mode = Node.PROCESS_MODE_INHERIT
 	
+	if area_int.has_node("CollisionShape2D"):
+		area_int.get_node("CollisionShape2D").set_deferred("disabled", true)
+	
 func repair_lab():
 	damaged_lab.visible = false
