@@ -1,0 +1,89 @@
+[gd_scene format=4 uid="uid://0jry1qjnsmfy"]
+
+[ext_resource type="Script" uid="uid://2bf5fp4mbqqr" path="res://scripts/puzzles/player_minigame.gd" id="1_hp4eq"]
+[ext_resource type="PackedScene" uid="uid://djjixhm2ucult" path="res://game/scenes/puzzle1/fireball.tscn" id="2_eqtrf"]
+[ext_resource type="TileSet" uid="uid://c5dgjo5qhvc34" path="res://assets/art/textures/tilesets/first_zone.tres" id="3_6gd31"]
+[ext_resource type="Texture2D" uid="uid://cmuu40bylctnx" path="res://assets/art/textures/puzzles/puzzle1_black.png" id="3_6p65t"]
+[ext_resource type="PackedScene" uid="uid://dsb4t2aaxcu56" path="res://game/scenes/puzzle1/player_minigame.tscn" id="3_eqtrf"]
+[ext_resource type="Texture2D" uid="uid://drasxwyq12oaw" path="res://assets/art/textures/puzzles/puzzle1_animated_background.png" id="3_tt8cq"]
+[ext_resource type="Texture2D" uid="uid://bkwy2xww2rx6g" path="res://assets/art/textures/puzzles/puzzle1_skyblue.png" id="5_awe4l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqtrf"]
+atlas = ExtResource("3_tt8cq")
+region = Rect2(0, 0, 512, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p65t"]
+atlas = ExtResource("3_tt8cq")
+region = Rect2(512, 0, 512, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gd31"]
+atlas = ExtResource("3_tt8cq")
+region = Rect2(1024, 0, 512, 288)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_awe4l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqtrf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6p65t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gd31")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MinigamePuzzle1" type="Node2D" unique_id=1161513789]
+script = ExtResource("1_hp4eq")
+fireball_scene = ExtResource("2_eqtrf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=377550677]
+position = Vector2(5.722046e-05, -35.499977)
+scale = Vector2(3.7500002, 1.9707031)
+texture = ExtResource("3_6p65t")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=129175481]
+position = Vector2(-798.99994, -34.99999)
+scale = Vector2(0.31457138, 1.3116884)
+texture = ExtResource("5_awe4l")
+
+[node name="AnimatedBackground" type="AnimatedSprite2D" parent="." unique_id=2057612870]
+position = Vector2(0, -35)
+scale = Vector2(3.5, 3.5)
+sprite_frames = SubResource("SpriteFrames_awe4l")
+autoplay = "default"
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1745551494]
+tile_map_data = PackedByteArray("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")
+tile_set = ExtResource("3_6gd31")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=477203798]
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=1375561003]
+wait_time = 0.75
+autostart = true
+
+[node name="MinigamePlayer" parent="." unique_id=1406835435 instance=ExtResource("3_eqtrf")]
+position = Vector2(1, 397)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=277366359]
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=1280961249]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 15.0
+offset_right = -76.0
+offset_bottom = 42.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+max_value = 60.0
+step = 1.0
+metadata/_edit_use_anchors_ = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

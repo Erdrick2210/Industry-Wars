@@ -1,21 +1,55 @@
 [gd_scene format=3 uid="uid://djjixhm2ucult"]
 
 [ext_resource type="Script" uid="uid://d264fi2oniy5t" path="res://scripts/puzzles/fireball.gd" id="1_86nm4"]
-[ext_resource type="Texture2D" uid="uid://dqe356p83jh6e" path="res://assets/art/textures/puzzle1-fire.png" id="2_e1viv"]
+[ext_resource type="Texture2D" uid="uid://brngd5ikkb5jo" path="res://assets/art/textures/puzzles/puzzle1_animated_fireball.png" id="2_86nm4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1viv"]
+atlas = ExtResource("2_86nm4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnrw3"]
+atlas = ExtResource("2_86nm4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyhgc"]
+atlas = ExtResource("2_86nm4")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_it52i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1viv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnrw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pyhgc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnrw3"]
-size = Vector2(16, 20)
+size = Vector2(17.999998, 30)
 
-[node name="Fireball" type="Area2D" unique_id=1962399184]
+[node name="Fireball" type="Area2D" unique_id=1962399184 groups=["fireballs"]]
+scale = Vector2(2.5, 2.5)
 script = ExtResource("1_86nm4")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=99614973]
-texture = ExtResource("2_e1viv")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994434744]
+scale = Vector2(0.99999994, 0.99999994)
+sprite_frames = SubResource("SpriteFrames_it52i")
+autoplay = "default"
+frame_progress = 0.41348433
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1717814205]
-position = Vector2(0, 5)
+position = Vector2(-0.9999998, -0.9999996)
+scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_cnrw3")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=848654220 groups=["fireballs"]]
-position = Vector2(0, 5)
-rect = Rect2(-8, -10, 16, 20)
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=848654220]
+position = Vector2(-2.000002, 4)
+rect = Rect2(-8, -19.999998, 18, 29.999998)
