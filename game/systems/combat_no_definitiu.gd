@@ -32,6 +32,26 @@ func _on_back_pressed() -> void:
 	battle_commands.visible = true
 	for child in ability_buttons.get_children():
 		child.queue_free()
+		
+# ─────────────────────────────────────────────────────────────
+# ABILITY INFO PANEL
+# ─────────────────────────────────────────────────────────────
+
+@onready var ability_info = $AbilityInfoPanel
+
+@onready var ability_name_label = $AbilityInfoPanel/NameLabel
+@onready var ability_power_label = $AbilityInfoPanel/PowerLabel
+@onready var ability_accuracy_label = $AbilityInfoPanel/AccuracyLabel
+@onready var ability_ep_label = $AbilityInfoPanel/EPLabel
+@onready var ability_description_label = $AbilityInfoPanel/DescriptionLabel
+
+func show_ability_info(ability):
+	ability_info.visible = true
+	ability_name_label.text = ability.name
+	ability_power_label.text = "POT: %d" % ability.power
+	ability_accuracy_label.text = "ACC: %d" % ability.accuracy
+	ability_ep_label.text = "EP: %d" % ability.ep_cost
+	ability_description_label.text = ability.effect
 
 # ─────────────────────────────────────────────────────────────
 # UI LOG SYSTEM
@@ -154,6 +174,7 @@ func update_player_ep_ui():
 
 func _ready():
 	ability_container.visible = false
+	ability_info.visible = false
 	_init_battle()
 
 func _init_battle() -> void:
@@ -295,11 +316,18 @@ func show_player_abilities():
 
 		var btn = AbilityButtonScene.instantiate()
 
-		btn.text = "%s (%d EP)" % [
-			ability.name,
-			ability.ep_cost
+		btn.text = "%s" % [
+			ability.name
 		]
-
+		
+		btn.mouse_entered.connect(func():
+			show_ability_info(ability)
+		)
+		
+		btn.mouse_exited.connect(func():
+			ability_info.visible = false
+		)
+		
 		btn.pressed.connect(func():
 			await use_ability(ability)
 		)

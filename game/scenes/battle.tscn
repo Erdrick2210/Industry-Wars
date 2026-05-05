@@ -308,5 +308,57 @@ offset_bottom = 73.0
 texture_normal = SubResource("AtlasTexture_shju3")
 texture_hover = SubResource("AtlasTexture_imxk3")
 
+[node name="AbilityInfoPanel" type="Panel" parent="." unique_id=139032601]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 154.0
+offset_right = 838.0
+offset_bottom = 429.0
+
+[node name="NameLabel" type="RichTextLabel" parent="AbilityInfoPanel" unique_id=1797606398]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 514.0
+offset_bottom = 44.0
+theme_override_font_sizes/normal_font_size = 24
+text = "Ability Name"
+
+[node name="PowerLabel" type="RichTextLabel" parent="AbilityInfoPanel" unique_id=877978821]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 68.0
+offset_right = 517.0
+offset_bottom = 105.0
+theme_override_font_sizes/normal_font_size = 24
+text = "POT"
+
+[node name="AccuracyLabel" type="RichTextLabel" parent="AbilityInfoPanel" unique_id=284736122]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 105.0
+offset_right = 505.0
+offset_bottom = 139.0
+theme_override_font_sizes/normal_font_size = 24
+text = "ACC"
+
+[node name="EPLabel" type="RichTextLabel" parent="AbilityInfoPanel" unique_id=1722102033]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 139.0
+offset_right = 505.0
+offset_bottom = 179.0
+theme_override_font_sizes/normal_font_size = 24
+text = "EP"
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="AbilityInfoPanel" unique_id=269419948]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 195.0
+offset_right = 514.0
+offset_bottom = 271.0
+theme_override_font_sizes/normal_font_size = 24
+text = "Description"
+
 [connection signal="pressed" from="BattleCommands/Fight" to="." method="_on_fight_pressed"]
 [connection signal="pressed" from="AbilityContainer/Back" to="." method="_on_back_pressed"]
