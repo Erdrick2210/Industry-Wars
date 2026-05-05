@@ -144,7 +144,7 @@ func update_hp_color(bar: ProgressBar, current: int, max: int):
 	if style == null:
 		return
 
-	style = style.duplicate() # MUY IMPORTANTE
+	style = style.duplicate()
 	bar.add_theme_stylebox_override("fill", style)
 
 	if ratio > 0.5:
@@ -263,9 +263,38 @@ func _on_giveup_pressed() -> void:
 func enemy_turn() -> void:
 	await log_and_wait("¡Turno del enemigo!")
 
-	await attack(enemy_robot, player_robot, 50)
+	var ability = get_enemy_ability()
+	
+	# Spend EP
+	enemy_robot.current_ep -= ability.ep_cost
+
+	await log_and_wait(
+		"%s usa %s." % [
+			enemy_robot.display_name(),
+			ability.name
+		]
+	)
+
+	await attack(enemy_robot, player_robot, ability.power)
 
 	await end_turn()
+	
+func get_enemy_ability():
+	var available_abilities = []
+
+	for ability_id in enemy_robot.learned_abilities:
+		var ability = AbilityDB.get_ability(ability_id)
+
+		if ability == null:
+			continue
+
+		if enemy_robot.current_ep >= ability.ep_cost:
+			available_abilities.append(ability)
+
+	if available_abilities.is_empty():
+		return null
+
+	return available_abilities.pick_random() # We choose a random ability for the moment
 
 # ─────────────────────────────────────────────────────────────
 # ATTACK SYSTEM
@@ -303,11 +332,10 @@ func show_player_abilities():
 	battle_commands.visible = false
 	ability_container.visible = true
 	
-	# Limpiar botones viejos
 	for child in ability_buttons.get_children():
 		child.queue_free()
 
-	# Crear botones
+	# Create buttons
 	for ability_id in player_robot.learned_abilities:
 
 		var ability = AbilityDB.get_ability(ability_id)
@@ -336,13 +364,13 @@ func show_player_abilities():
 
 func use_ability(ability):
 	
-	# Ocultar menú
+	# Hide ability_menu
 	battle_commands.visible = true
 	ability_container.visible = false
 	for child in ability_buttons.get_children():
 		child.queue_free()
 
-	# Verificar EP
+	# Verify EP
 	if player_robot.current_ep < ability.ep_cost:
 		await log_and_wait("No hay suficiente EP.")
 		show_player_abilities()
@@ -350,12 +378,11 @@ func use_ability(ability):
 	
 	player_can_act = false
 
-	# Gastar EP
+	# Spend EP
 	player_robot.current_ep -= ability.ep_cost
 	await animate_bar(player_epbar, player_robot.current_ep)
 	update_player_ep_ui()
 	
-	# Mensaje
 	await log_and_wait(
 		"%s usa %s." % [
 			player_robot.display_name(),
@@ -363,7 +390,6 @@ func use_ability(ability):
 		]
 	)
 
-	# Ejecutar ataque
 	await attack(player_robot, enemy_robot, ability.power)
 	
 	await end_turn()
