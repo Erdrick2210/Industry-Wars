@@ -63,8 +63,12 @@ func set_frozen(value: bool):
 
 
 func _on_interaction_area_area_entered(area: Area2D) -> void:
-	interactable = area.get_parent()
+	if area.has_method("interact"):
+		interactable = area
+	elif area.get_parent().has_method("interact"):
+		interactable = area.get_parent()
 
 
 func _on_interaction_area_area_exited(area: Area2D) -> void:
-	interactable = null # Replace with function body.
+	if interactable == area or interactable == area.get_parent():
+		interactable = null # Replace with function body.
