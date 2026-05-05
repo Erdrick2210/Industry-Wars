@@ -28,7 +28,7 @@ custom_minimum_size = Vector2(275, 0)
 layout_mode = 0
 offset_left = 400.0
 offset_top = 250.0
-offset_right = 670.0
+offset_right = 675.0
 offset_bottom = 400.0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=717456789]

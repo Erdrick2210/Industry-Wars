@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf1ea8yhq6kc5"
-path="res://.godot/imported/puzzle1-fire.png-2005b6a674bc76df7419aacae78bf22a.ctex"
+uid="uid://bkwy2xww2rx6g"
+path="res://.godot/imported/puzzle1_skyblue.png-ec410b06f5742f4c72148b66fa071eee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/textures/puzzle1-fire.png"
-dest_files=["res://.godot/imported/puzzle1-fire.png-2005b6a674bc76df7419aacae78bf22a.ctex"]
+source_file="res://assets/art/textures/puzzles/puzzle1_skyblue.png"
+dest_files=["res://.godot/imported/puzzle1_skyblue.png-ec410b06f5742f4c72148b66fa071eee.ctex"]
 
 [params]
 

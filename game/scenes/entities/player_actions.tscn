@@ -6,6 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b117v"]
 size = Vector2(18, 16)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1eu2y"]
+radius = 23.021729
+
 [node name="Player" type="CharacterBody2D" unique_id=1974727383 node_paths=PackedStringArray("PlayerAnimation")]
 collision_layer = 2
 collision_mask = 5
@@ -14,12 +17,22 @@ PlayerAnimation = NodePath("PlayerAnimation")
 
 [node name="PlayerAnimation" type="AnimatedSprite2D" parent="." unique_id=641431231]
 unique_name_in_owner = true
-position = Vector2(0, -4)
 sprite_frames = ExtResource("1_b117v")
-animation = &"idle_up"
+animation = &"idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=84274966]
-position = Vector2(0, 10)
+position = Vector2(0, 13)
 shape = SubResource("RectangleShape2D_b117v")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=364516758]
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=558048473]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1072812274]
+position = Vector2(0, 13)
+shape = SubResource("CircleShape2D_1eu2y")
+
+[connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_area_entered"]
+[connection signal="area_exited" from="InteractionArea" to="." method="_on_interaction_area_area_exited"]

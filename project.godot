@@ -23,6 +23,7 @@ RobotDB="*uid://efn7pc2bxa8q"
 RobotParty="*uid://b1goxu1anw7rw"
 DialogueManager="*uid://c3rodes2l3gxb"
 GameManager="*uid://yvpde1r6fa41"
+AbilityDB="*uid://c0d6c31s5jptb"
 
 [display]
 
