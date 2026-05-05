@@ -149,7 +149,8 @@ func _input(event: InputEvent) -> void:
 # ─── Close ────────────────────────────────────────────────────────────────────
 
 func _close() -> void:
-	if anim_player:
+	if anim_player and anim_player.has_animation("slide_out"):
 		anim_player.play("slide_out")
 		await anim_player.animation_finished
 	closed.emit()
+	queue_free()
