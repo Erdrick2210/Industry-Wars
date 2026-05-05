@@ -1,60 +1,60 @@
-[IMPULSOVECTORIAL]
+[IMPULSO_VECTORIAL]
 Name=Impulso Vectorial
 Power=50
 Accuracy=100
 EPCost=0
 Effect=Tiene prioridad.
 
-[RAFAGASINCRONICA]
+[RAFAGA_SINCRONICA]
 Name=Ráfaga Sincrónica
 Power=45
 Accuracy=95
 EPCost=0
 Effect=Golpea 2 veces.
 
-[DESFASELUMINICO]
+[DESFASE_LUMINICO]
 Name=Desfase Lumínico
 Power=40
 Accuracy=90
 EPCost=20
 Effect=Aumenta la evasión 10%.
 
-[ACELERACIONTACTICA]
+[ACELERACION_TACTICA]
 Name=Aceleración Táctica
 Power=0
 Accuracy=85
 EPCost=25
 Effect=Aumenta la velocidad 20%.
 
-[ECOCINETICO]
+[ECO_CINETICO]
 Name=Eco Cinético
 Power=80
 Accuracy=100
 EPCost=30
 Effect=Repite 50% del daño infligido en el turno siguiente.
 
-[IMPACTOINDUSTRIAL]
+[IMPACTO_INDUSTRIAL]
 Name=Impacto Industrial
 Power=60
 Accuracy=95
 EPCost=0
 Effect=Sin efectos.
 
-[FURIAMECANICA]
+[FURIA_MECANICA]
 Name=Furia Mecánica
 Power=55
 Accuracy=90
 EPCost=0
 Effect=+10% ataque.
 
-[FORJABRUTAL]
+[FORJA_BRUTAL]
 Name=Forja Brutal
 Power=100
 Accuracy=80
 EPCost=35
 Effect=-10% defensa.
 
-[EMBATEDEACERO]
+[EMBATE_DE_ACERO]
 Name=Embate de Acero
 Power=90
 Accuracy=85
@@ -68,70 +68,70 @@ Accuracy=75
 EPCost=40
 Effect=Ignora 20% defensa.
 
-[REPROCESAMIENTOVITAL]
+[REPROCESAMIENTO_VITAL]
 Name=Reprocesamiento Vital
 Power=40
 Accuracy=100
 EPCost=0
 Effect=Cura 20% del daño hecho.
 
-[ABSORCIONCIRCULAR]
+[ABSORCION_CIRCULAR]
 Name=Absorción Circular
 Power=45
 Accuracy=95
 EPCost=0
 Effect=Recupera 10 EP.
 
-[DRENAJEREVERSIBLE]
+[DRENAJE_REVERSIBLE]
 Name=Drenaje Reversible
 Power=70
 Accuracy=90
 EPCost=25
 Effect=Cura 30% del daño hecho.
 
-[CONVERSIONRESIDUAL]
+[CONVERSION_RESIDUAL]
 Name=Conversión Residual
 Power=0
 Accuracy=100
 EPCost=30
 Effect=Convierte el 50% del daño recibido en HP.
 
-[PULSORESTAURADOR]
+[PULSO_RESTAURADOR]
 Name=Pulso Restaurador
 Power=0
 Accuracy=100
 EPCost=35
 Effect=Cura 40% HP.
 
-[EXPANSIONDEREACTOR]
+[EXPANSION_DE_REACTOR]
 Name=Expansión de Reactor
 Power=45
 Accuracy=100
 EPCost=0
 Effect=Recupera 5 EP.
 
-[CAMPODEPOTENCIAL]
+[CAMPO_DE_POTENCIAL]
 Name=Campo de Potencial
 Power=40
 Accuracy=100
 EPCost=0
 Effect=Reduce coste EP siguiente habilidad un 10%.
 
-[AMPLIFICACIONINTERNA]
+[AMPLIFICACION_INTERNA]
 Name=Amplificación Interna
 Power=80
 Accuracy=90
 EPCost=25
 Effect=+20% daño.
 
-[PULSODEALTOVOLTAJE]
+[PULSO_DE_ALTO_VOLTAJE]
 Name=Pulso de Alto Voltaje
 Power=90
 Accuracy=85
 EPCost=30
 Effect=Aplica cortocircuito.
 
-[MATRIZENERGETICA]
+[MATRIZ_ENERGETICA]
 Name=Matriz Energética
 Power=0
 Accuracy=100

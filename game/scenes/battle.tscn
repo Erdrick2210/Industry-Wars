@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://land53m4kkyp" path="res://assets/art/sprites/battlers/front/guardian.png" id="6_uuvcu"]
 [ext_resource type="Texture2D" uid="uid://hcdosd6c5t53" path="res://assets/art/ui/battlePlayerBoxS.png" id="8_yl0ul"]
 [ext_resource type="Texture2D" uid="uid://1eowrkwoxplh" path="res://assets/art/ui/battleFoeBoxS.png" id="9_871wd"]
+[ext_resource type="Texture2D" uid="uid://315ijfabr044" path="res://assets/art/ui/back_button.png" id="10_871wd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5cged"]
 atlas = ExtResource("6_ak62o")
@@ -41,6 +42,25 @@ region = Rect2(0, 138, 130, 46)
 [sub_resource type="AtlasTexture" id="AtlasTexture_meiey"]
 atlas = ExtResource("6_ak62o")
 region = Rect2(130, 138, 130, 46)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqqse"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stub7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_871wd"]
+bg_color = Color(0.89678955, 1, 0.3046875, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wd3if"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_meiey"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shju3"]
+atlas = ExtResource("10_871wd")
+region = Rect2(0, 0, 84, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imxk3"]
+atlas = ExtResource("10_871wd")
+region = Rect2(84, 0, 84, 72)
 
 [node name="Battle" type="Control" unique_id=2056252675]
 layout_mode = 3
@@ -190,10 +210,20 @@ layout_mode = 0
 offset_left = 99.0
 offset_top = 57.0
 offset_right = 235.0
-offset_bottom = 102.0
+offset_bottom = 93.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/normal_font_size = 26
 text = "HP: 0 / 0"
+
+[node name="EPLabel" type="RichTextLabel" parent="PlayerPanel" unique_id=1477426377]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 89.0
+offset_right = 235.0
+offset_bottom = 125.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 26
+text = "EP: 0 / 0"
 
 [node name="HPBar" type="ProgressBar" parent="PlayerPanel" unique_id=58250828]
 layout_mode = 0
@@ -201,6 +231,17 @@ offset_left = 301.0
 offset_top = 71.0
 offset_right = 514.0
 offset_bottom = 81.0
+theme_override_styles/background = SubResource("StyleBoxFlat_uqqse")
+theme_override_styles/fill = SubResource("StyleBoxFlat_stub7")
+show_percentage = false
+
+[node name="EPBar" type="ProgressBar" parent="PlayerPanel" unique_id=2095315526]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 103.0
+offset_right = 514.0
+offset_bottom = 113.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_871wd")
 show_percentage = false
 
 [node name="EnemyPanel" type="Panel" parent="." unique_id=1758111822]
@@ -240,6 +281,32 @@ offset_left = 261.0
 offset_top = 89.0
 offset_right = 474.0
 offset_bottom = 102.0
+theme_override_styles/background = SubResource("StyleBoxFlat_wd3if")
+theme_override_styles/fill = SubResource("StyleBoxFlat_meiey")
 show_percentage = false
 
+[node name="AbilityContainer" type="Control" parent="." unique_id=1496680190]
+anchors_preset = 0
+offset_left = 563.0
+offset_top = 354.0
+offset_right = 1147.0
+offset_bottom = 643.0
+
+[node name="AbilityButtons" type="GridContainer" parent="AbilityContainer" unique_id=2032904806]
+layout_mode = 0
+offset_top = 91.0
+offset_right = 584.0
+offset_bottom = 289.0
+columns = 2
+
+[node name="Back" type="TextureButton" parent="AbilityContainer" unique_id=386151108]
+layout_mode = 0
+offset_left = 498.0
+offset_top = 1.0
+offset_right = 582.0
+offset_bottom = 73.0
+texture_normal = SubResource("AtlasTexture_shju3")
+texture_hover = SubResource("AtlasTexture_imxk3")
+
 [connection signal="pressed" from="BattleCommands/Fight" to="." method="_on_fight_pressed"]
+[connection signal="pressed" from="AbilityContainer/Back" to="." method="_on_back_pressed"]

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bsj17n4lmynec"]
+
+[node name="AbilityButton" type="Button" unique_id=250939009]
+custom_minimum_size = Vector2(290, 97)
+offset_right = 8.0
+offset_bottom = 8.0
