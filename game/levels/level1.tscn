@@ -30,6 +30,8 @@ tile_set = ExtResource("1_rfis5")
 [node name="playerActions" parent="." unique_id=1974727383 groups=["Player"] instance=ExtResource("2_rfis5")]
 position = Vector2(-53, -43)
 
+[node name="Camera2D" type="Camera2D" parent="playerActions" unique_id=1168548357]
+
 [node name="NpcPuzzle1" parent="." unique_id=1060618669 instance=ExtResource("3_iddtf")]
 position = Vector2(956, -619)
 
