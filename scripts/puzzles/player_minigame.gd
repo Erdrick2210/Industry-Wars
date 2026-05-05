@@ -42,23 +42,18 @@ func fireball_caught():
 func check_game_over():
 	fireballs_resolved += 1
 	
+	# 1. CHECK FOR IMMEDIATE WIN: Did they just hit 60?
 	if fireballs_caught >= fireballs_needed_to_win:
 		print("LEVEL PASSED!")
-		$SpawnTimer.stop() 
+		$SpawnTimer.stop() # Stop spawning fireballs immediately
 		
-		# ¡AQUÍ ESTÁ LA MAGIA!
-		# 1. Quitamos la pausa para que el Nivel Principal vuelva a moverse
-		get_tree().paused = false 
-		
-		# 2. Destruimos este minijuego. Como el Nivel Principal está "detrás",
-		# el jugador lo volverá a ver exactamente como estaba.
-		queue_free() 
-		
-		return 
+		# Load the ending scene! 
+		# get_tree().change_scene_to_file("res://game/scenes/puzzle1/victory_screen.tscn")		
+		return # This stops the rest of the code below from running
 	
+	# 2. CHECK FOR LOSS: Did all 100 fireballs fall without them reaching 60?
 	if fireballs_resolved >= max_fireballs:
-		print("LEVEL FAILED.")
-		# Si pierden, también puedes quitar la pausa y destruir el minijuego
-		# para que lo vuelvan a intentar desde el mapa principal.
-		get_tree().paused = false
-		queue_free()
+		print("LEVEL FAILED. Score: ", fireballs_caught, "/", fireballs_needed_to_win)
+		
+		# Optional: You can load a different "Game Over" scene here, or reload the current minigame!
+		# get_tree().change_scene_to_file("res://game/scenes/puzzle1/game_over_screen.tscn")
