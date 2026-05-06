@@ -1,6 +1,9 @@
 extends Node2D
 
 @onready var player = $Player
+@export var next_level : int
+@export var spawn_name : String
+@onready var WarpZoneLvl1 = $WarpZoneLevel1
 @export_file("res://game/levels/level1.tscn") var level_1 : String
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,9 +29,11 @@ func _finish_entry():
 	
 	player.set_physics_process(true)
 	
-	
+	WarpZoneLvl1.monitorable = true
+	WarpZoneLvl1.monitoring = true
 
 
 func _on_warp_zone_level_1_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
-		get_tree().change_scene_to_file(level_1)
+		print("Changing to level 1")
+		GameEvents.emit_signal("change_level_requested", next_level, spawn_name)

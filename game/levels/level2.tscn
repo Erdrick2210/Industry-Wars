@@ -75,6 +75,8 @@ position = Vector2(1776, 1122)
 position = Vector2(-398, 79)
 collision_layer = 4
 collision_mask = 2
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpZoneLevel1" unique_id=57955219]
 position = Vector2(-182.5, 41)
