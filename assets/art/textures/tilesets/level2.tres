@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://ddu8ye6120dtr"]
 
 [ext_resource type="Texture2D" uid="uid://c7a42tinbla3t" path="res://assets/art/textures/tilesets/level2_tileset.png" id="1_b0tbk"]
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/Sign.tscn" id="2_67iy5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_67iy5"]
 texture = ExtResource("1_b0tbk")
@@ -112,6 +113,7 @@ texture_region_size = Vector2i(32, 32)
 4:8/0 = 0
 4:8/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 5:8/0 = 0
+5:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 9.6, 16, 9.6, 16, 16, -16, 16)
 5:8/0/physics_layer_2/polygon_0/points = PackedVector2Array(-16, 3.50494, 16, 3.50494, 16, 16, -16, 16)
 0:9/0 = 0
 0:9/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -351,6 +353,9 @@ texture_region_size = Vector2i(32, 32)
 4:20/0 = 0
 4:20/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 9.6, 3.2000008, -16, -16, -16)
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_b0tbk"]
+scenes/1/scene = ExtResource("2_67iy5")
+
 [resource]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
@@ -360,3 +365,4 @@ physics_layer_1/collision_mask = 0
 physics_layer_2/collision_layer = 16
 physics_layer_2/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_67iy5")
+sources/1 = SubResource("TileSetScenesCollectionSource_b0tbk")
