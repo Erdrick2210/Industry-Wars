@@ -10,6 +10,17 @@ var last_direction = "down"
 # Variable para controlar el estado
 var is_frozen : bool = false 
 
+func _ready() -> void:
+	if GameManager.target_spawn_name != "":
+		var spawn_point = get_tree().current_scene.find_child(GameManager.target_spawn_name, true, false)
+		if spawn_point:
+			global_position = spawn_point.global_position
+			print("Jugador posicionado en: ", GameManager.target_spawn_name)
+			
+			GameManager.target_spawn_name = ""
+		else:
+			print("No se encontró el punto de spawn: ", GameManager.target_spawn_name)
+		
 func _physics_process(delta: float) -> void:
 	# --- LÓGICA DE CONGELAMIENTO ---
 	if is_frozen:

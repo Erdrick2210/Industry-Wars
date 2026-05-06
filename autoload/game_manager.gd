@@ -11,8 +11,8 @@ const BATTLE_SCENE := "res://game/scenes/battle.tscn"
 # MEMORIA DE ESCENA
 # ─────────────────────────────────────────────
 
+var target_spawn_name: String = ""
 var previous_scene: String = ""
-
 # ─────────────────────────────────────────────
 # NAVEGACIÓN
 # ─────────────────────────────────────────────

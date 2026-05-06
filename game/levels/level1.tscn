@@ -15,9 +15,16 @@ size = Vector2(252, 86.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iddtf"]
 size = Vector2(42, 176)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e7nd3"]
+size = Vector2(33, 440.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_asq6h"]
+size = Vector2(6, 668)
+
 [node name="level_1" type="Node2D" unique_id=881802809]
 y_sort_enabled = true
 script = ExtResource("1_e7nd3")
+spawn_name = "FromLevel1"
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=942611497]
 z_index = -3
@@ -43,7 +50,7 @@ position = Vector2(-53, -43)
 [node name="Camera2D" type="Camera2D" parent="playerActions" unique_id=1341228411]
 limit_left = -1000
 limit_top = -1250
-limit_right = 2145
+limit_right = 1834
 limit_bottom = 1000
 
 [node name="NpcPuzzle1" parent="." unique_id=1060618669 instance=ExtResource("3_iddtf")]
@@ -86,4 +93,23 @@ y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAeAOX/CAAAAAAAAAAeAOb/CAAAAAEAAAAeAOf/CAAAAAIAAAAeAOj/CAAAAAMAAAAeAOn/CAAAAAQAAAAeAOr/CAAAAAUAAAAeAOv/CAAAAAYAAAAeAOz/CAAAAAcAAAAfAOX/CAABAAAAAAAfAOb/CAABAAEAAAAfAOf/CAABAAIAAAAfAOj/CAABAAMAAAAfAOn/CAABAAQAAAAfAOr/CAABAAUAAAAfAOv/CAABAAYAAAAfAOz/CAABAAcAAAAgAOX/CAACAAAAAAAgAOb/CAACAAEAAAAgAOf/CAACAAIAAAAgAOj/CAACAAMAAAAgAOn/CAACAAQAAAAgAOr/CAACAAUAAAAgAOv/CAACAAYAAAAgAOz/CAACAAcAAAAhAOX/CAADAAAAAAAhAOb/CAADAAEAAAAhAOf/CAADAAIAAAAhAOj/CAADAAMAAAAhAOn/CAADAAQAAAAhAOr/CAADAAUAAAAhAOv/CAADAAYAAAAhAOz/CAADAAcAAAAiAOb/CAAEAAEAAAAiAOf/CAAEAAIAAAAiAOj/CAAEAAMAAAAiAOn/CAAEAAQAAAAiAOr/CAAEAAUAAAAiAOv/CAAEAAYAAAAiAOz/CAAEAAcAAAAjAOb/CAAFAAEAAAAjAOf/CAAFAAIAAAAjAOj/CAAFAAMAAAAjAOn/CAAFAAQAAAAjAOr/CAAFAAUAAAAjAOv/CAAFAAYAAAAjAOz/CAAFAAcAAAAkAOb/CAAGAAEAAAAkAOf/CAAGAAIAAAAkAOj/CAAGAAMAAAAkAOn/CAAGAAQAAAAkAOr/CAAGAAUAAAAkAOv/CAAGAAYAAAAkAOz/CAAGAAcAAAAlAOb/CAAHAAEAAAAlAOf/CAAHAAIAAAAlAOj/CAAHAAMAAAAlAOn/CAAHAAQAAAAlAOr/CAAHAAUAAAAlAOv/CAAHAAYAAAA=")
 tile_set = ExtResource("1_rfis5")
 
+[node name="WorldBorder" type="StaticBody2D" parent="." unique_id=1089799847]
+collision_mask = 0
+
+[node name="Right" type="CollisionShape2D" parent="WorldBorder" unique_id=667824286]
+position = Vector2(1851, -598)
+shape = SubResource("RectangleShape2D_e7nd3")
+
+[node name="WarpZoneLevel2" type="Area2D" parent="." unique_id=1603083876]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WarpZoneLevel2" unique_id=109107031]
+position = Vector2(1869, -45)
+shape = SubResource("RectangleShape2D_asq6h")
+
+[node name="FromLevel2" type="Marker2D" parent="." unique_id=349311896]
+position = Vector2(1850, 1)
+
 [connection signal="body_entered" from="SpawnRivalTrigger" to="SpawnRivalTrigger" method="_on_body_entered"]
+[connection signal="body_entered" from="WarpZoneLevel2" to="." method="_on_warp_zone_level_2_body_entered"]

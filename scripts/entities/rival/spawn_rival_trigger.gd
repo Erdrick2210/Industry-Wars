@@ -14,7 +14,7 @@ func _on_body_entered(body: Node2D) -> void:
 	
 	# Mostrar al rival
 	if rival:
-		rival.global_position = Vector2(2600, 16)
+		rival.global_position = Vector2(2000, 16)
 		rival.visible = true
 		rival.process_mode = Node.PROCESS_MODE_INHERIT
 	

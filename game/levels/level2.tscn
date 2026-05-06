@@ -18,6 +18,7 @@ size = Vector2(9, 476)
 top_level = true
 y_sort_enabled = true
 script = ExtResource("1_vtx6a")
+spawn_name = "FromLevel2"
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=690816489]
 z_index = -3
@@ -81,5 +82,8 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpZoneLevel1" unique_id=57955219]
 position = Vector2(-182.5, 41)
 shape = SubResource("RectangleShape2D_v1e6q")
+
+[node name="FromLevel1" type="Marker2D" parent="." unique_id=1595751368]
+position = Vector2(-599, -1)
 
 [connection signal="body_entered" from="WarpZoneLevel1" to="." method="_on_warp_zone_level_1_body_entered"]
