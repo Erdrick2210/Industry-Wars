@@ -32,6 +32,8 @@ var _buttons: Array = []
 func _ready() -> void:
 	_build_menu()
 	_refresh_cursor()
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	position = Vector2.ZERO
 
 # ─── Build UI ─────────────────────────────────────────────────────────────────
 
@@ -103,16 +105,19 @@ func _on_entry_pressed(idx: int) -> void:
 	match ENTRIES[idx]["scene"]:
 		"BAG":
 			var bag := BAG_SCENE.instantiate()
-			get_tree().root.add_child(bag)
-			bag.closed.connect(func(): bag.queue_free())
+			_open_submenu(bag)
 		"TALLER":
 			var taller := TALLER_SCENE.instantiate()
-			get_tree().root.add_child(taller)
-			taller.closed.connect(func(): taller.queue_free())
+			_open_submenu(taller)
 		"ROBOT":
 			var robots := ROBOT_SCENE.instantiate()
-			get_tree().root.add_child(robots)
-			robots.closed.connect(func(): robots.queue_free())
+			_open_submenu(robots)
 		"":
-			# Stub — implement Guardar, Robots, Coleccionables separately
 			print("Menú '%s' no implementado aún." % ENTRIES[idx]["label"])
+
+func _open_submenu(submenu: Control) -> void:
+	# Reutiliza el mismo CanvasLayer que ya existe en el padre
+	var canvas := get_parent()  # el CanvasLayer creado desde la escena principal
+	canvas.add_child(submenu)
+	submenu.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	submenu.closed.connect(func(): submenu.queue_free())

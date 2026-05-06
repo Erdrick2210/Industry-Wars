@@ -288,3 +288,4 @@ func _close() -> void:
 		anim_player.play("slide_out")
 		await anim_player.animation_finished
 	closed.emit()
+	queue_free()

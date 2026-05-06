@@ -190,7 +190,6 @@ animations = [{
 size = Vector2(14, 14)
 
 [node name="NpcPuzzle1" type="CharacterBody2D" unique_id=1060618669]
-collision_layer = 4
 script = ExtResource("2_pors8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1073754637]

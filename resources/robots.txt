@@ -38,4 +38,3 @@ Description=A.
 BattlerPlayerY=24
 BattlerEnemyY=32
 BattlerAltitude=0
-

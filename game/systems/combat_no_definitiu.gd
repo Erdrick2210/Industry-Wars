@@ -8,12 +8,50 @@ enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, ENEMY_TURN, END_BATTLE }
 
 var state: CombatState = CombatState.START
 
+var player_can_act: bool = false
+
 # ─────────────────────────────────────────────────────────────
 # ROBOTS
 # ─────────────────────────────────────────────────────────────
 
 var player_robot: RobotParty.RobotInstance
 var enemy_robot: RobotParty.RobotInstance
+
+# ─────────────────────────────────────────────────────────────
+# BATTLE COMMANDS UI
+# ─────────────────────────────────────────────────────────────
+
+@onready var battle_commands = $BattleCommands
+@onready var ability_container = $AbilityContainer
+@onready var ability_buttons = $AbilityContainer/AbilityButtons
+@onready var back_button = $AbilityContainer/Back
+const AbilityButtonScene = preload("res://game/scenes/ability_button.tscn")
+
+func _on_back_pressed() -> void:
+	ability_container.visible = false
+	battle_commands.visible = true
+	for child in ability_buttons.get_children():
+		child.queue_free()
+		
+# ─────────────────────────────────────────────────────────────
+# ABILITY INFO PANEL
+# ─────────────────────────────────────────────────────────────
+
+@onready var ability_info = $AbilityInfoPanel
+
+@onready var ability_name_label = $AbilityInfoPanel/NameLabel
+@onready var ability_power_label = $AbilityInfoPanel/PowerLabel
+@onready var ability_accuracy_label = $AbilityInfoPanel/AccuracyLabel
+@onready var ability_ep_label = $AbilityInfoPanel/EPLabel
+@onready var ability_description_label = $AbilityInfoPanel/DescriptionLabel
+
+func show_ability_info(ability):
+	ability_info.visible = true
+	ability_name_label.text = ability.name
+	ability_power_label.text = "POT: %d" % ability.power
+	ability_accuracy_label.text = "ACC: %d" % ability.accuracy
+	ability_ep_label.text = "EP: %d" % ability.ep_cost
+	ability_description_label.text = ability.effect
 
 # ─────────────────────────────────────────────────────────────
 # UI LOG SYSTEM
@@ -59,6 +97,8 @@ func _process_log() -> void:
 @onready var player_level = $PlayerPanel/LevelLabel
 @onready var player_hpbar = $PlayerPanel/HPBar
 @onready var player_hp_text = $PlayerPanel/HPLabel
+@onready var player_epbar = $PlayerPanel/EPBar
+@onready var player_ep_text = $PlayerPanel/EPLabel
 
 @onready var enemy_name = $EnemyPanel/NameLabel
 @onready var enemy_level = $EnemyPanel/LevelLabel
@@ -73,6 +113,9 @@ func init_battle_boxes():
 	player_hpbar.value = player_robot.current_hp
 	update_hp_color(player_hpbar, player_robot.current_hp, player_robot.max_hp)
 	update_player_hp_ui()
+	player_epbar.max_value = player_robot.max_ep
+	player_epbar.value = player_robot.current_ep
+	update_player_ep_ui()
 
 	# ENEMY
 	enemy_name.text = enemy_robot.display_name()
@@ -82,7 +125,7 @@ func init_battle_boxes():
 	enemy_hpbar.value = enemy_robot.current_hp
 	update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
 	
-func animate_hp(bar: ProgressBar, target_value: int):
+func animate_bar(bar: ProgressBar, target_value: int):
 	var start = bar.value
 	var duration = 0.5
 	var steps = 20
@@ -101,7 +144,7 @@ func update_hp_color(bar: ProgressBar, current: int, max: int):
 	if style == null:
 		return
 
-	style = style.duplicate() # MUY IMPORTANTE
+	style = style.duplicate()
 	bar.add_theme_stylebox_override("fill", style)
 
 	if ratio > 0.5:
@@ -117,12 +160,21 @@ func update_player_hp_ui():
 		player_robot.current_hp,
 		player_robot.max_hp
 	]
+	
+func update_player_ep_ui():
+	player_epbar.value = player_robot.current_ep
+	player_ep_text.text = "%d / %d" % [
+		player_robot.current_ep,
+		player_robot.max_ep
+	]
 
 # ─────────────────────────────────────────────────────────────
 # INIT
 # ─────────────────────────────────────────────────────────────
 
 func _ready():
+	ability_container.visible = false
+	ability_info.visible = false
 	_init_battle()
 
 func _init_battle() -> void:
@@ -161,6 +213,7 @@ func process_state() -> void:
 		CombatState.PLAYER_TURN:
 			print("¡Turno del jugador! ¿Qué hará el robot?")
 			await log_and_wait("¡Turno del jugador! ¿Qué hará el robot?")
+			player_can_act = true
 
 		CombatState.ENEMY_TURN:
 			await enemy_turn()
@@ -187,18 +240,21 @@ func _determine_turn() -> void:
 func _on_fight_pressed() -> void:
 	if state != CombatState.PLAYER_TURN:
 		return
-
-	await attack(player_robot, enemy_robot, 60)
-	await end_turn()
+		
+	if player_can_act:
+		show_player_abilities()
 	
 func _on_bag_pressed() -> void:
-	print("Mochila no implementada")
+	if player_can_act:
+		print("Mochila no implementada")
 	
 func _on_robots_pressed() -> void:
-	print("Robots no implementado")
+	if player_can_act:
+		print("Robots no implementado")
 	
 func _on_giveup_pressed() -> void:
-	print("Rendirse no implementado")
+	if player_can_act:
+		print("Rendirse no implementado")
 
 # ─────────────────────────────────────────────────────────────
 # ENEMY TURN
@@ -207,9 +263,38 @@ func _on_giveup_pressed() -> void:
 func enemy_turn() -> void:
 	await log_and_wait("¡Turno del enemigo!")
 
-	await attack(enemy_robot, player_robot, 50)
+	var ability = get_enemy_ability()
+	
+	# Spend EP
+	enemy_robot.current_ep -= ability.ep_cost
+
+	await log_and_wait(
+		"%s usa %s." % [
+			enemy_robot.display_name(),
+			ability.name
+		]
+	)
+
+	await attack(enemy_robot, player_robot, ability.power)
 
 	await end_turn()
+	
+func get_enemy_ability():
+	var available_abilities = []
+
+	for ability_id in enemy_robot.learned_abilities:
+		var ability = AbilityDB.get_ability(ability_id)
+
+		if ability == null:
+			continue
+
+		if enemy_robot.current_ep >= ability.ep_cost:
+			available_abilities.append(ability)
+
+	if available_abilities.is_empty():
+		return null
+
+	return available_abilities.pick_random() # We choose a random ability for the moment
 
 # ─────────────────────────────────────────────────────────────
 # ATTACK SYSTEM
@@ -227,17 +312,87 @@ func attack(atk, def, power: int) -> void:
 
 	def.current_hp = max(def.current_hp - damage, 0)
 	if def == player_robot:
-		await animate_hp(player_hpbar, player_robot.current_hp)
+		await animate_bar(player_hpbar, player_robot.current_hp)
 		update_hp_color(player_hpbar, player_robot.current_hp, player_robot.max_hp)
 		update_player_hp_ui()
 	else:
-		await animate_hp(enemy_hpbar, enemy_robot.current_hp)
+		await animate_bar(enemy_hpbar, enemy_robot.current_hp)
 		update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
 	
 	print("Daño: " + str(damage) + " | HP: " + str(def.current_hp))
 
 	await check_win_condition()
+
+# ─────────────────────────────────────────────────────────────
+# ABILITIES
+# ─────────────────────────────────────────────────────────────
 	
+func show_player_abilities():
+	print(player_robot.learned_abilities)
+	battle_commands.visible = false
+	ability_container.visible = true
+	
+	for child in ability_buttons.get_children():
+		child.queue_free()
+
+	# Create buttons
+	for ability_id in player_robot.learned_abilities:
+
+		var ability = AbilityDB.get_ability(ability_id)
+		if ability == null:
+			continue
+
+		var btn = AbilityButtonScene.instantiate()
+
+		btn.text = "%s" % [
+			ability.name
+		]
+		
+		btn.mouse_entered.connect(func():
+			show_ability_info(ability)
+		)
+		
+		btn.mouse_exited.connect(func():
+			ability_info.visible = false
+		)
+		
+		btn.pressed.connect(func():
+			await use_ability(ability)
+		)
+
+		ability_buttons.add_child(btn)
+
+func use_ability(ability):
+	
+	# Hide ability_menu
+	battle_commands.visible = true
+	ability_container.visible = false
+	for child in ability_buttons.get_children():
+		child.queue_free()
+
+	# Verify EP
+	if player_robot.current_ep < ability.ep_cost:
+		await log_and_wait("No hay suficiente EP.")
+		show_player_abilities()
+		return
+	
+	player_can_act = false
+
+	# Spend EP
+	player_robot.current_ep -= ability.ep_cost
+	await animate_bar(player_epbar, player_robot.current_ep)
+	update_player_ep_ui()
+	
+	await log_and_wait(
+		"%s usa %s." % [
+			player_robot.display_name(),
+			ability.name
+		]
+	)
+
+	await attack(player_robot, enemy_robot, ability.power)
+	
+	await end_turn()
 
 # ─────────────────────────────────────────────────────────────
 # TURN END
