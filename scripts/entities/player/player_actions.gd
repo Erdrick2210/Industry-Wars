@@ -53,6 +53,7 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
+		print("Interact pressed")
 		if interactable and interactable.has_method("interact"):
 			interactable.interact()
 
@@ -65,6 +66,7 @@ func set_frozen(value: bool):
 func _on_interaction_area_area_entered(area: Area2D) -> void:
 	if area.has_method("interact"):
 		interactable = area
+		print("Interactable assigned: ", area.name)
 	elif area.get_parent().has_method("interact"):
 		interactable = area.get_parent()
 

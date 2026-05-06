@@ -2,9 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bv5w1ciuecak4" path="res://game/levels/level1.tscn" id="1_20rwd"]
 [ext_resource type="Script" uid="uid://dj0dh78pfvdkt" path="res://scripts/main.gd" id="1_jbjdl"]
+[ext_resource type="PackedScene" uid="uid://ejeu6y7jv50y" path="res://game/levels/level2.tscn" id="3_gp8w2"]
 
 [node name="main" type="Node2D" unique_id=1103462682]
 script = ExtResource("1_jbjdl")
-
-[node name="level1" parent="." unique_id=881802809 instance=ExtResource("1_20rwd")]
-position = Vector2(109, -5)
+level = Array[PackedScene]([ExtResource("1_20rwd"), ExtResource("3_gp8w2")])

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bw1j14y0vs7ef"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_8y83o"]
+
+[node name="SignForest" unique_id=223654149 instance=ExtResource("1_8y83o")]
+
+[node name="ItemInteract" parent="." index="0" unique_id=1442005765]
+int_id = 1
