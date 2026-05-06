@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dmbtrtnh2lckd"]
+
+[ext_resource type="SpriteFrames" uid="uid://bm0b1ckigatri" path="res://scripts/entities/league_boss/league_boss.tres" id="1_e42bj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e42bj"]
+size = Vector2(18, 16)
+
+[node name="LeagueBoss" type="CharacterBody2D" unique_id=1838061329]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1829109517]
+sprite_frames = ExtResource("1_e42bj")
+animation = &"idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1479407710]
+position = Vector2(0, 13)
+shape = SubResource("RectangleShape2D_e42bj")
