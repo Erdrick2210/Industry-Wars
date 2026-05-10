@@ -4,6 +4,12 @@ extends Node2D
 @export var spawn_name : String = ""
 @onready var WarpZoneLvl1 = $WarpZoneLevel1
 @export_file("res://game/levels/level1.tscn") var level_1 : String
+
+
+# Testing only
+func _ready() -> void:
+	prepare_level()
+
 # Called when the node enters the scene tree for the first time.
 func prepare_level() -> void:
 	WarpZoneLvl1.set_deferred("monitoring", false)

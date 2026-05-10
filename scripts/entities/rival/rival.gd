@@ -3,7 +3,7 @@ extends CharacterBody2D
 # --- REFERENCIAS ---
 @export var RivalAnimation : AnimatedSprite2D
 @export var enable_detection : bool = true 
-@onready var detection_area = $DetectionArea 
+@onready var detection_area = $DetectionArea2
 
 # --- CONFIGURACIÓN ---
 @export var walking_speed : float = 120.0
@@ -46,15 +46,12 @@ func _change_state(new_state: State) -> void:
 	current_state = new_state
 
 # --- SEÑALES ---
-
-func _on_detection_area_body_entered(body: Node2D) -> void:
-	# Asegúrate de que el jugador esté en el grupo "Player"
+func _on_detection_area_2_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"): 
 		_change_state(State.IDLE)
 		body.set_frozen(true)
-		
 
 
-func _on_detection_area_body_exited(body: Node2D) -> void:
+func _on_detection_area_2_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		body.set_frozen(false)

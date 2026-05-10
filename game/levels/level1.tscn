@@ -12,6 +12,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ofauc"]
 size = Vector2(252, 86.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s721g"]
+size = Vector2(325, 261)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iddtf"]
 size = Vector2(42, 176)
 
@@ -69,6 +72,14 @@ process_mode = 4
 visible = false
 position = Vector2(1465, -83)
 
+[node name="DetectionArea2" type="Area2D" parent="Rival" unique_id=1469242358]
+collision_layer = 4
+collision_mask = 2
+
+[node name="Area" type="CollisionShape2D" parent="Rival/DetectionArea2" unique_id=84204449]
+position = Vector2(-137.5, 0.5)
+shape = SubResource("RectangleShape2D_s721g")
+
 [node name="Mentor" parent="." unique_id=483285337 instance=ExtResource("5_ofauc")]
 position = Vector2(432, -45)
 
@@ -111,5 +122,7 @@ shape = SubResource("RectangleShape2D_asq6h")
 [node name="FromLevel2" type="Marker2D" parent="." unique_id=349311896]
 position = Vector2(1850, 1)
 
+[connection signal="body_entered" from="Rival/DetectionArea2" to="Rival" method="_on_detection_area_2_body_entered"]
+[connection signal="body_exited" from="Rival/DetectionArea2" to="Rival" method="_on_detection_area_2_body_exited"]
 [connection signal="body_entered" from="SpawnRivalTrigger" to="SpawnRivalTrigger" method="_on_body_entered"]
 [connection signal="body_entered" from="WarpZoneLevel2" to="." method="_on_warp_zone_level_2_body_entered"]
