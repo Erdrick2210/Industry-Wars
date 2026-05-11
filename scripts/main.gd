@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func _on_level_change_requested(level_path: String, spawn_name: String):
 	GameManager.target_spawn_name = spawn_name
-	_change_level(level_path)
+	_change_level.call_deferred(level_path)
 
 func _change_level(level_path: String):
 	if _instantiated_level:
