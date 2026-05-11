@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://c1prdeq2ye1nu"]
 
-[ext_resource type="PackedScene" uid="uid://bv5w1ciuecak4" path="res://game/levels/level1.tscn" id="1_20rwd"]
+[ext_resource type="PackedScene" uid="uid://bv5w1ciuecak4" path="res://game/levels/level_1/level1.tscn" id="1_20rwd"]
 [ext_resource type="Script" uid="uid://dj0dh78pfvdkt" path="res://scripts/main.gd" id="1_jbjdl"]
-[ext_resource type="PackedScene" uid="uid://ejeu6y7jv50y" path="res://game/levels/level2.tscn" id="3_gp8w2"]
+[ext_resource type="PackedScene" uid="uid://ejeu6y7jv50y" path="res://game/levels/level_2/level2.tscn" id="3_gp8w2"]
+[ext_resource type="PackedScene" uid="uid://r3jn8y52d07m" path="res://game/levels/level_1/playerHome.tscn" id="4_8buom"]
 
 [node name="main" type="Node2D" unique_id=1103462682]
 script = ExtResource("1_jbjdl")
-level = Array[PackedScene]([ExtResource("1_20rwd"), ExtResource("3_gp8w2")])
+level = Array[PackedScene]([ExtResource("1_20rwd"), ExtResource("3_gp8w2"), ExtResource("4_8buom")])

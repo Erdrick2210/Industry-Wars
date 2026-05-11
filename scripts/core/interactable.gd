@@ -1,4 +1,4 @@
-class_name Interactable
+class_name InteractableNPC
 extends CharacterBody2D
 
 

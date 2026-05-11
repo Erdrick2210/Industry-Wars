@@ -1,4 +1,4 @@
-extends Interactable
+extends InteractableNPC
 
 const MINIGAME_SCENE = preload("res://game/scenes/puzzle1/minigame_puzzle1.tscn")
 @onready var area_int : Area2D = $Area2D

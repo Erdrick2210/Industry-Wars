@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d3g5a74f4ju5y"]
+
+[ext_resource type="Script" uid="uid://dp5655p813nk5" path="res://scripts/warp_zones.gd" id="1_7tukt"]
+
+[node name="WarpZone" type="Area2D" unique_id=1352216865]
+script = ExtResource("1_7tukt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1919701101]

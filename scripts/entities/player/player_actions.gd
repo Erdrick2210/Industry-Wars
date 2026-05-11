@@ -17,7 +17,6 @@ func _ready() -> void:
 			global_position = spawn_point.global_position
 			print("Jugador posicionado en: ", GameManager.target_spawn_name)
 			
-			GameManager.target_spawn_name = ""
 		else:
 			print("No se encontró el punto de spawn: ", GameManager.target_spawn_name)
 		

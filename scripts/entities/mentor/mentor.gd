@@ -1,66 +1,55 @@
-extends Interactable
+extends InteractableNPC
 
 const SPEED = 50.0
 
 @export var MentoraAnimation : AnimatedSprite2D
 var target_player : Node2D = null
 var is_moving : bool = false
-
+var event_finished : bool = false
 
 func _ready() -> void:
-	visible = false
-	process_mode = Node.PROCESS_MODE_DISABLED
-	
-	
-	await get_tree().create_timer(3.0).timeout
-	visible = true
-	process_mode = Node.PROCESS_MODE_INHERIT
-	
-	MentoraAnimation.play("idle_down")
-	await get_tree().create_timer(1.0).timeout
-	
-	is_moving = true
-	velocity.y = SPEED
-	MentoraAnimation.play("run_down")
-	await get_tree().create_timer(4.0).timeout
-	
-	is_moving = false
-	velocity = Vector2.ZERO
-	MentoraAnimation.play("idle_down")
+	if not event_finished:
+		visible = false
+		process_mode = Node.PROCESS_MODE_DISABLED
 
-func _process(_delta: float) -> void:
+# IMPORTANTE: El movimiento físico DEBE estar aquí
+func _physics_process(_delta: float) -> void:
 	if is_moving:
+		# Aplicamos la velocidad hacia abajo
+		velocity.y = SPEED
+		velocity.x = 0
 		move_and_slide()
-		return
-	if target_player:
-		var direction = (target_player.global_position - global_position)
-		
-		if abs(direction.x) > abs(direction.y):
-			if direction.x > 0:
-				MentoraAnimation.play("idle_right")
-			else:
-				MentoraAnimation.play("idle_left")
-		else:
-			if direction.y > 0:
-				MentoraAnimation.play("idle_down")
-			else:
-				MentoraAnimation.play("idle_up")
 	else:
+		# Si no se está moviendo por guion, podrías poner lógica de idle o seguimiento
+		velocity = Vector2.ZERO
+
+func prepare_npc():
+	if event_finished:
+		visible = true
+		process_mode = Node.PROCESS_MODE_INHERIT
 		MentoraAnimation.play("idle_down")
+		return
 
-func interact() -> void:
-	target_player.set_frozen(true)
-	print("¡Hola! Soy la mentora.") # Cambiar por el dialogo pertinente
-	await get_tree().create_timer(1.0).timeout # Cambiar por el dialogo pertinente
-	target_player.set_frozen(false)
-
-
-# --- SEÑALES ---
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		target_player = body
-
-
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		target_player = null
+	# Espera inicial
+	await get_tree().create_timer(3.0).timeout
+	if not is_inside_tree(): return
+	
+	visible = true
+	# Cambiamos a INHERIT para que procese _physics_process
+	process_mode = Node.PROCESS_MODE_INHERIT 
+	MentoraAnimation.play("idle_down")
+	
+	await get_tree().create_timer(1.0).timeout
+	if not is_inside_tree(): return
+	
+	# --- ACTIVAMOS MOVIMIENTO ---
+	is_moving = true
+	MentoraAnimation.play("run_down")
+	
+	await get_tree().create_timer(4.0).timeout
+	if not is_inside_tree(): return
+	
+	# --- DETENEMOS MOVIMIENTO ---
+	is_moving = false
+	event_finished = true
+	MentoraAnimation.play("idle_down")
