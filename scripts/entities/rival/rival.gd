@@ -1,12 +1,9 @@
-extends CharacterBody2D
+extends InteractableNPC
 
 # --- REFERENCIAS ---
-@export var RivalAnimation : AnimatedSprite2D
 @export var enable_detection : bool = true 
 @onready var detection_area = $DetectionArea2
 
-# --- CONFIGURACIÓN ---
-@export var walking_speed : float = 120.0
 
 # --- VARIABLES INTERNAS ---
 enum State { PATROL, IDLE }
@@ -19,7 +16,7 @@ func _ready() -> void:
 		detection_area.monitorable = false
 		detection_area.visible = false
 	
-	RivalAnimation.play("run_left")
+	animation_sprite.play("run_left")
 
 func _physics_process(_delta: float) -> void:
 	match current_state:
@@ -33,13 +30,13 @@ func _physics_process(_delta: float) -> void:
 
 func _process_idle() -> void:
 	velocity = Vector2.ZERO
-	RivalAnimation.play("idle_left")
+	animation_sprite.play("idle_left")
 
 func _process_patrol() -> void:
 	# Se mueve constantemente hacia la izquierda (eje X negativo)
 	velocity.y = 0
-	velocity.x = -walking_speed * 3 
-	RivalAnimation.play("run_left")
+	velocity.x = -speed * 3 
+	animation_sprite.play("run_left")
 
 
 func _change_state(new_state: State) -> void:

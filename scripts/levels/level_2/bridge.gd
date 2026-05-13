@@ -7,13 +7,11 @@ func _ready() -> void:
 	visible = false
 	collision_enabled = false
 	
-	#Used for testing
-	combat_won = true
+	if GameEvents.rival_event_done:
+		activate_bridge()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if combat_won:
+func activate_bridge() -> void:
+		combat_won = true
 		visible = true
 		collision_enabled = true
 		barrier.set_deferred("disabled", true)
