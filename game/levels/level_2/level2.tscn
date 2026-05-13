@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dp5655p813nk5" path="res://scripts/warp_zones.gd" id="10_5beai"]
 [ext_resource type="Script" uid="uid://dawpcvntdvo0m" path="res://scripts/entities/rival/rival_level2.gd" id="10_8dorb"]
 [ext_resource type="PackedScene" uid="uid://cxsw4dooasics" path="res://game/levels/level_2/puzzle_home_door_o.tscn" id="12_67o4f"]
+[ext_resource type="PackedScene" uid="uid://vcqnta6q3nn1" path="res://game/levels/level_2/house_2_o.tscn" id="12_e3o72"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y27mx"]
 size = Vector2(26, 112)
@@ -22,17 +23,17 @@ radius = 55.081757
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_67o4f"]
 size = Vector2(47, 374)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v1e6q"]
-size = Vector2(9, 476)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dorb"]
-size = Vector2(746, 34)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eov67"]
 size = Vector2(18, 1825)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8shqf"]
 size = Vector2(26.5, 293)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v1e6q"]
+size = Vector2(9, 476)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dorb"]
+size = Vector2(746, 34)
 
 [node name="level_2" type="Node2D" unique_id=1497282]
 top_level = true
@@ -122,34 +123,6 @@ collision_mask = 3
 position = Vector2(432.5, -503)
 shape = SubResource("RectangleShape2D_67o4f")
 
-[node name="WarpZoneLevel1" type="Area2D" parent="." unique_id=285413837]
-position = Vector2(-398, 79)
-collision_layer = 4
-collision_mask = 2
-monitoring = false
-monitorable = false
-script = ExtResource("10_5beai")
-target_level_path = "uid://bv5w1ciuecak4"
-target_spawn_name = "FromLevel2"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WarpZoneLevel1" unique_id=57955219]
-position = Vector2(-182.5, 41)
-shape = SubResource("RectangleShape2D_v1e6q")
-
-[node name="FromLevel1" type="Marker2D" parent="WarpZoneLevel1" unique_id=1595751368]
-position = Vector2(-201, -80)
-
-[node name="WarpZoneLevel3" type="Area2D" parent="." unique_id=662462752]
-script = ExtResource("10_5beai")
-target_spawn_name = "FromLevel2"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WarpZoneLevel3" unique_id=1962754889]
-position = Vector2(2083, 2223)
-shape = SubResource("RectangleShape2D_8dorb")
-
-[node name="FromLevel3" type="Marker2D" parent="WarpZoneLevel3" unique_id=537497625]
-position = Vector2(2079, 2186)
-
 [node name="MapLimits" type="StaticBody2D" parent="." unique_id=597708406]
 
 [node name="Left" type="CollisionShape2D" parent="MapLimits" unique_id=973712121]
@@ -160,11 +133,46 @@ shape = SubResource("RectangleShape2D_eov67")
 position = Vector2(2305.75, 1959.5)
 shape = SubResource("RectangleShape2D_8shqf")
 
-[node name="Puzzle_House" parent="." unique_id=434643766 instance=ExtResource("12_67o4f")]
+[node name="WarpZones" type="Node2D" parent="." unique_id=360915487]
+
+[node name="Puzzle_House" parent="WarpZones" unique_id=434643766 instance=ExtResource("12_67o4f")]
 position = Vector2(1041, -652)
 
-[node name="FPH" type="Marker2D" parent="Puzzle_House" unique_id=293122875]
+[node name="FPH" type="Marker2D" parent="WarpZones/Puzzle_House" unique_id=293122875]
 position = Vector2(-1, 52)
 
+[node name="House2" parent="WarpZones" unique_id=677892144 instance=ExtResource("12_e3o72")]
+
+[node name="FH2" type="Marker2D" parent="WarpZones/House2" unique_id=691236711]
+
+[node name="WarpZoneLevel1" type="Area2D" parent="WarpZones" unique_id=285413837]
+position = Vector2(-398, 79)
+collision_layer = 4
+collision_mask = 2
+monitoring = false
+monitorable = false
+script = ExtResource("10_5beai")
+target_level_path = "uid://bv5w1ciuecak4"
+target_spawn_name = "FromLevel2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WarpZones/WarpZoneLevel1" unique_id=57955219]
+position = Vector2(-182.5, 41)
+shape = SubResource("RectangleShape2D_v1e6q")
+
+[node name="FromLevel1" type="Marker2D" parent="WarpZones/WarpZoneLevel1" unique_id=1595751368]
+position = Vector2(-201, -80)
+
+[node name="WarpZoneLevel3" type="Area2D" parent="WarpZones" unique_id=662462752]
+position = Vector2(1807, -502)
+script = ExtResource("10_5beai")
+target_spawn_name = "FromLevel2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WarpZones/WarpZoneLevel3" unique_id=1962754889]
+position = Vector2(2083, 2223)
+shape = SubResource("RectangleShape2D_8dorb")
+
+[node name="FromLevel3" type="Marker2D" parent="WarpZones/WarpZoneLevel3" unique_id=537497625]
+position = Vector2(2079, 2186)
+
 [connection signal="body_entered" from="TriggerAnimacioRival" to="Rival" method="_on_trigger_animacio_rival_body_entered"]
-[connection signal="body_entered" from="WarpZoneLevel1" to="WarpZoneLevel1" method="_on_body_entered"]
+[connection signal="body_entered" from="WarpZones/WarpZoneLevel1" to="WarpZones/WarpZoneLevel1" method="_on_body_entered"]

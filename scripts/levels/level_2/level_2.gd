@@ -2,7 +2,6 @@ extends Node2D
 
 @onready var player = $Player
 @onready var WarpZoneLvl1 = $WarpZoneLevel1
-var first : bool = true
 
 # Testing only
 func _ready() -> void:
@@ -10,15 +9,14 @@ func _ready() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func prepare_level() -> void:
-	WarpZoneLvl1.set_deferred("monitoring", false)
-	WarpZoneLvl1.set_deferred("monitorable", false)
-	if first:
+	if GameManager.target_spawn_name == "FromLevel1":
+		WarpZoneLvl1.set_deferred("monitoring", false)
+		WarpZoneLvl1.set_deferred("monitorable", false)
 		player_entry()
-		first = false
 
 
 func player_entry():
-	player.set_physics_process(false)
+	player.set_frozen(true)
 	
 	var anim = player.get_node("PlayerAnimation")
 	anim.play("run_right")
@@ -34,7 +32,7 @@ func _finish_entry():
 	var anim = player.get_node("PlayerAnimation")
 	anim.play("idle_right")
 	
-	player.set_physics_process(true)
+	player.set_frozen(false)
 	
 	WarpZoneLvl1.monitorable = true
 	WarpZoneLvl1.monitoring = true
