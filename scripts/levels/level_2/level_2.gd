@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var player = $Player
 @onready var WarpZoneLvl1 = $WarpZoneLevel1
-
+var first : bool = true
 
 # Testing only
 func _ready() -> void:
@@ -12,7 +12,9 @@ func _ready() -> void:
 func prepare_level() -> void:
 	WarpZoneLvl1.set_deferred("monitoring", false)
 	WarpZoneLvl1.set_deferred("monitorable", false)
-	player_entry()
+	if first:
+		player_entry()
+		first = false
 
 
 func player_entry():
