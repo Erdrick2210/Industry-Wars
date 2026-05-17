@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var player = $Player
-@onready var WarpZoneLvl1 = $WarpZoneLevel1
+@onready var WarpZoneLvl1 = $WarpZones/WarpZoneLevel1
 
 # Testing only
 func _ready() -> void:
@@ -16,7 +16,7 @@ func prepare_level() -> void:
 
 
 func player_entry():
-	player.set_frozen(true)
+	player.set_physics_process(false)
 	
 	var anim = player.get_node("PlayerAnimation")
 	anim.play("run_right")
@@ -32,7 +32,7 @@ func _finish_entry():
 	var anim = player.get_node("PlayerAnimation")
 	anim.play("idle_right")
 	
-	player.set_frozen(false)
+	player.set_physics_process(true)
 	
 	WarpZoneLvl1.monitorable = true
 	WarpZoneLvl1.monitoring = true
