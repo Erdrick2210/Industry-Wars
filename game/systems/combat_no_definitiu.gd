@@ -17,6 +17,8 @@ var player_can_act: bool = false
 var player_robot: RobotParty.RobotInstance
 var enemy_robot: RobotParty.RobotInstance
 
+var participating_slots: Array[int] = []
+
 # ─────────────────────────────────────────────────────────────
 # BATTLE COMMANDS UI
 # ─────────────────────────────────────────────────────────────
@@ -99,6 +101,7 @@ func _process_log() -> void:
 @onready var player_hp_text = $PlayerPanel/HPLabel
 @onready var player_epbar = $PlayerPanel/EPBar
 @onready var player_ep_text = $PlayerPanel/EPLabel
+@onready var player_expbar = $PlayerPanel/EXPBar
 
 @onready var enemy_name = $EnemyPanel/NameLabel
 @onready var enemy_level = $EnemyPanel/LevelLabel
@@ -116,6 +119,7 @@ func init_battle_boxes():
 	player_epbar.max_value = player_robot.max_ep
 	player_epbar.value = player_robot.current_ep
 	update_player_ep_ui()
+	update_player_exp_ui()
 
 	# ENEMY
 	enemy_name.text = enemy_robot.display_name()
@@ -167,6 +171,58 @@ func update_player_ep_ui():
 		player_robot.current_ep,
 		player_robot.max_ep
 	]
+	
+func update_player_exp_ui():
+	player_level.text = "Lv " + str(player_robot.level)
+	var current_level = player_robot.level
+	var current_level_exp = RobotParty.level_to_exp(current_level)
+	var next_level_exp = RobotParty.level_to_exp(current_level + 1)
+
+	var current_progress = (player_robot.total_exp - current_level_exp)
+	var needed_progress = (next_level_exp - current_level_exp)
+
+	player_expbar.max_value = needed_progress
+	player_expbar.value = current_progress
+	
+func animate_exp_gain(old_exp: int):
+	var start_exp = old_exp
+	var target_exp = player_robot.total_exp
+
+	var current_level = RobotParty.exp_to_level(start_exp)
+
+	while start_exp < target_exp:
+		var next_level_exp = RobotParty.level_to_exp(current_level + 1)
+		var segment_target = min(target_exp, next_level_exp)
+
+		var current_level_exp = RobotParty.level_to_exp(current_level)
+		var old_progress = (start_exp - current_level_exp)
+
+		var new_progress = (segment_target - current_level_exp)
+		var needed_progress = (next_level_exp - current_level_exp)
+
+		player_expbar.max_value = needed_progress
+		player_expbar.value = old_progress
+
+		await animate_bar(player_expbar, new_progress)
+
+		# Level up?
+		if segment_target >= next_level_exp:
+			current_level += 1
+			player_level.text = "Lv " + str(current_level)
+
+			await log_and_wait(
+				"%s subió a nivel %d!" % [
+					player_robot.display_name(),
+					current_level
+				]
+			)
+
+			# Reset bar
+			player_expbar.value = 0
+
+		start_exp = segment_target
+
+	update_player_exp_ui()
 
 # ─────────────────────────────────────────────────────────────
 # INIT
@@ -184,6 +240,9 @@ func _init_battle() -> void:
 	
 	player_robot = RobotParty.party[0]
 	enemy_robot = RobotParty.party[1] # Cogemos un robot de la party, esto se debe cambiar
+	
+	participating_slots.clear()
+	participating_slots.append(0)
 	
 	print_robot_stats()
 	
@@ -251,6 +310,7 @@ func _on_bag_pressed() -> void:
 func _on_robots_pressed() -> void:
 	if player_can_act:
 		print("Robots no implementado")
+	# In the future use -> participating_slots.append(nuevo_slot) to give 100% exp
 	
 func _on_giveup_pressed() -> void:
 	if player_can_act:
@@ -399,7 +459,6 @@ func use_ability(ability):
 # ─────────────────────────────────────────────────────────────
 
 func end_turn() -> void:
-
 	if state == CombatState.END_BATTLE:
 		change_state(CombatState.END_BATTLE)
 	elif state == CombatState.PLAYER_TURN:
@@ -412,10 +471,12 @@ func end_turn() -> void:
 # ─────────────────────────────────────────────────────────────
 
 func check_win_condition() -> bool:
-
 	if enemy_robot.current_hp <= 0:
 		await log_and_wait("¡Has ganado!")
-		RobotParty.give_exp(0, 50)
+		var old_exp = player_robot.total_exp
+		give_battle_exp(enemy_robot, participating_slots)
+		await animate_exp_gain(old_exp)
+		await log_and_wait("Tus robots han conseguido EXP.")
 		state = CombatState.END_BATTLE
 		return true
 
@@ -425,6 +486,25 @@ func check_win_condition() -> bool:
 		return true
 
 	return false
+	
+func give_battle_exp(enemy_robot, participants: Array[int]):
+	var enemy_def = RobotDB.get_chassis(enemy_robot.chassis_id)
+
+	if enemy_def == null:
+		return
+
+	var base_exp = int(
+		(enemy_def.base_exp * enemy_robot.level) / 7
+	)
+
+	for i in range(RobotParty.party.size()):
+		var exp_gain = base_exp
+
+		# Robots que NO participaron → 50%
+		if not participants.has(i):
+			exp_gain = int(base_exp * 0.5)
+
+		RobotParty.give_exp(i, exp_gain)
 
 # ─────────────────────────────────────────────────────────────
 # ROBOT STATS

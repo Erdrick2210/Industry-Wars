@@ -46,6 +46,7 @@ region = Rect2(130, 138, 130, 46)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqqse"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stub7"]
+bg_color = Color(0.2578125, 0.3737793, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_871wd"]
 bg_color = Color(0.89678955, 1, 0.3046875, 1)
@@ -242,6 +243,16 @@ offset_top = 103.0
 offset_right = 514.0
 offset_bottom = 113.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_871wd")
+show_percentage = false
+
+[node name="EXPBar" type="ProgressBar" parent="PlayerPanel" unique_id=1076153272]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 134.0
+offset_right = 514.0
+offset_bottom = 142.0
+theme_override_styles/background = SubResource("StyleBoxFlat_uqqse")
+theme_override_styles/fill = SubResource("StyleBoxFlat_stub7")
 show_percentage = false
 
 [node name="EnemyPanel" type="Panel" parent="." unique_id=1758111822]
