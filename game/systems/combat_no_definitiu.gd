@@ -4,7 +4,7 @@ extends Node
 # ENUM ESTADO
 # ─────────────────────────────────────────────────────────────
 
-enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, ENEMY_TURN, END_BATTLE }
+enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, END_BATTLE }
 
 var state: CombatState = CombatState.START
 
@@ -18,6 +18,9 @@ var player_robot: RobotParty.RobotInstance
 var enemy_robot: RobotParty.RobotInstance
 
 var participating_slots: Array[int] = []
+
+var player_selected_ability = null
+var enemy_selected_ability = null
 
 # ─────────────────────────────────────────────────────────────
 # BATTLE COMMANDS UI
@@ -298,16 +301,12 @@ func process_state() -> void:
 
 		CombatState.DETERMINE_TURN:
 			print("Calculando orden de turno...")
-			await log_and_wait("Calculando orden de turno...")
 			_determine_turn()
 
 		CombatState.PLAYER_TURN:
-			print("¡Turno del jugador! ¿Qué hará el robot?")
-			await log_and_wait("¡Turno del jugador! ¿Qué hará el robot?")
+			print("¿Qué hará el robot?")
+			await log_and_wait("¿Qué hará el robot?")
 			player_can_act = true
-
-		CombatState.ENEMY_TURN:
-			await enemy_turn()
 
 		CombatState.END_BATTLE:
 			await log_and_wait("Combate terminado.")
@@ -321,10 +320,11 @@ func process_state() -> void:
 # ─────────────────────────────────────────────────────────────
 
 func _determine_turn() -> void:
-	if player_robot.speed >= enemy_robot.speed:
-		change_state(CombatState.PLAYER_TURN)
-	else:
-		change_state(CombatState.ENEMY_TURN)
+	# La IA elige primero
+	enemy_selected_ability = get_enemy_ability()
+
+	# Esperamos la acción del jugador
+	change_state(CombatState.PLAYER_TURN)
 
 # ─────────────────────────────────────────────────────────────
 # PLAYER INPUT
@@ -349,29 +349,6 @@ func _on_robots_pressed() -> void:
 func _on_giveup_pressed() -> void:
 	if player_can_act:
 		print("Rendirse no implementado")
-
-# ─────────────────────────────────────────────────────────────
-# ENEMY TURN
-# ─────────────────────────────────────────────────────────────
-
-func enemy_turn() -> void:
-	await log_and_wait("¡Turno del enemigo!")
-
-	var ability = get_enemy_ability()
-	
-	# Spend EP
-	enemy_robot.current_ep -= ability.ep_cost
-
-	await log_and_wait(
-		"%s usa %s." % [
-			enemy_robot.display_name(),
-			ability.name
-		]
-	)
-
-	await attack(enemy_robot, player_robot, ability)
-
-	await end_turn()
 	
 func get_enemy_ability():
 	var available_abilities = []
@@ -400,6 +377,19 @@ func attack(atk, def, ability) -> void:
 		atk.display_name(),
 		def.display_name()
 	])
+	
+	# ─────────────────────────────
+	# SPEND EP
+	# ─────────────────────────────
+	
+	await spend_ep(atk, ability.ep_cost)
+	
+	await log_and_wait(
+		"%s usa %s." % [
+			atk.display_name(),
+			ability.name
+		]
+	)
 	
 	# ─────────────────────────────
 	# Accuracy check
@@ -445,6 +435,12 @@ func apply_damage(defender, damage) -> void:
 		update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
 	
 	print("Daño: " + str(damage) + " | HP: " + str(defender.current_hp))
+	
+func spend_ep(robot, amount):
+	robot.current_ep = max(robot.current_ep - amount, 0)
+	if robot == player_robot:
+		await animate_bar(player_epbar, player_robot.current_ep)
+		update_player_ep_ui()
 
 # ─────────────────────────────────────────────────────────────
 # ABILITIES
@@ -486,7 +482,6 @@ func show_player_abilities():
 		ability_buttons.add_child(btn)
 
 func use_ability(ability):
-	
 	# Hide ability_menu
 	battle_commands.visible = true
 	ability_container.visible = false
@@ -496,38 +491,57 @@ func use_ability(ability):
 	# Verify EP
 	if player_robot.current_ep < ability.ep_cost:
 		await log_and_wait("No hay suficiente EP.")
-		show_player_abilities()
 		return
 	
 	player_can_act = false
 
-	# Spend EP
-	player_robot.current_ep -= ability.ep_cost
-	await animate_bar(player_epbar, player_robot.current_ep)
-	update_player_ep_ui()
-	
-	await log_and_wait(
-		"%s usa %s." % [
-			player_robot.display_name(),
-			ability.name
-		]
-	)
+	player_selected_ability = ability
 
-	await attack(player_robot, enemy_robot, ability)
-	
-	await end_turn()
+	await execute_turn()
+
+	player_selected_ability = null
+	enemy_selected_ability = null
+
+	if state != CombatState.END_BATTLE:
+		change_state(CombatState.DETERMINE_TURN)
 
 # ─────────────────────────────────────────────────────────────
-# TURN END
+# TURN EXECUTION
 # ─────────────────────────────────────────────────────────────
 
-func end_turn() -> void:
-	if state == CombatState.END_BATTLE:
-		change_state(CombatState.END_BATTLE)
-	elif state == CombatState.PLAYER_TURN:
-		change_state(CombatState.ENEMY_TURN)
+func execute_turn():
+	var player_speed = player_robot.get_modified_stat("speed")
+	var enemy_speed = enemy_robot.get_modified_stat("speed")
+
+	var player_first := false
+
+	# ─────────────────────────────
+	# SPEED CHECK
+	# ─────────────────────────────
+
+	if player_speed > enemy_speed:
+		player_first = true
+	elif enemy_speed > player_speed:
+		player_first = false
 	else:
-		change_state(CombatState.PLAYER_TURN)
+		player_first = randf() < 0.5
+
+	# ─────────────────────────────
+	# EXECUTION
+	# ─────────────────────────────
+
+	if player_first:
+		await attack(player_robot, enemy_robot, player_selected_ability)
+		if state == CombatState.END_BATTLE:
+			return
+		if enemy_robot.current_hp > 0:
+			await attack(enemy_robot, player_robot, enemy_selected_ability)
+	else:
+		await attack(enemy_robot, player_robot, enemy_selected_ability)
+		if state == CombatState.END_BATTLE:
+			return
+		if player_robot.current_hp > 0:
+			await attack(player_robot, enemy_robot, player_selected_ability)
 
 # ─────────────────────────────────────────────────────────────
 # WIN CONDITION
@@ -540,12 +554,12 @@ func check_win_condition() -> bool:
 		give_battle_exp(enemy_robot, participating_slots)
 		await animate_exp_gain(old_exp)
 		await log_and_wait("Tus robots han conseguido EXP.")
-		state = CombatState.END_BATTLE
+		await change_state(CombatState.END_BATTLE)
 		return true
 
 	if player_robot.current_hp <= 0:
 		await log_and_wait("Has perdido...")
-		state = CombatState.END_BATTLE
+		await change_state(CombatState.END_BATTLE)
 		return true
 
 	return false
