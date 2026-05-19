@@ -1,7 +1,7 @@
 extends Node2D
 @onready var player = $playerActions
+@onready var mentor = $Mentor 
 @onready var WarpZoneLvl2 = $WarpZoneLevel2
-@export var spawn_name : String = ""
 
 
 func prepare_level() -> void:
@@ -11,10 +11,12 @@ func prepare_level() -> void:
 
 	if GameManager.target_spawn_name == "FromLevel2":	
 		player_entry()
-		GameManager.target_spawn_name = ""
 	else:
 		WarpZoneLvl2.set_deferred("monitoring", true)
 		WarpZoneLvl2.set_deferred("monitorable", true)
+	
+	if mentor and mentor.has_method("prepare_npc"):
+		mentor.prepare_npc()
 
 
 func player_entry():
@@ -39,8 +41,3 @@ func _finish_entry():
 		await get_tree().create_timer(0.5).timeout
 		WarpZoneLvl2.monitorable = true
 		WarpZoneLvl2.monitoring = true
-
-func _on_warp_zone_level_2_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		print("Level 2")
-		GameEvents.emit_signal("change_level_request", 2, spawn_name)

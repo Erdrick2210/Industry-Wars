@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cdrgncwgmskjg"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_o2sv5"]
+
+[node name="Puzzle2_O" unique_id=223654149 instance=ExtResource("1_o2sv5")]
+
+[node name="ItemInteract" parent="." index="0" unique_id=1442005765]
+int_id = 3
+target_spawn_name = "FromLevel2"

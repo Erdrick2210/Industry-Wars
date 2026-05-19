@@ -26,18 +26,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if dialogue_resource:
 		# Esperamos a que termine el diálogo usando await
 		await DialogueManager.show_dialogue_balloon(dialogue_resource, dialogue_title) 
-		# // Arreglar // No se congela al jugador más de 1 frame
-		# El congelar lo he cambiado al rival.gd, así si funciona
-		
-		# Cuando el diálogo termine, descongelamos al jugador
-		if body.has_method("set_frozen"):
-			body.set_frozen(false)
-	else:
-		push_error("¡Error! No se ha asignado el dialogue_resource en el trigger")
-		if body.has_method("set_frozen"):
-			body.set_frozen(false)
 	
-	# Eliminar el trigger (ya no lo necesitamos)
 	queue_free()
 
 

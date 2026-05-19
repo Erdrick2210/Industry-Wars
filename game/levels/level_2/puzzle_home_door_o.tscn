@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cxsw4dooasics"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_ja6t5"]
+
+[node name="Puzzle_Home_Door_O" unique_id=223654149 instance=ExtResource("1_ja6t5")]
+
+[node name="ItemInteract" parent="." index="0" unique_id=1442005765]
+int_id = 3
+target_level_path = "uid://bxuqdde50gi3m"
+target_spawn_name = "FromLevel2"

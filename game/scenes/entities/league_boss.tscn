@@ -1,16 +1,31 @@
 [gd_scene format=3 uid="uid://dmbtrtnh2lckd"]
 
 [ext_resource type="SpriteFrames" uid="uid://bm0b1ckigatri" path="res://scripts/entities/league_boss/league_boss.tres" id="1_e42bj"]
+[ext_resource type="Script" uid="uid://b7hvkudogh2mo" path="res://scripts/entities/league_boss/league_boss.gd" id="1_ywtof"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e42bj"]
 size = Vector2(18, 16)
 
-[node name="LeagueBoss" type="CharacterBody2D" unique_id=1838061329]
+[sub_resource type="CircleShape2D" id="CircleShape2D_0clh7"]
+radius = 58.0
+
+[node name="LeagueBoss" type="CharacterBody2D" unique_id=1838061329 node_paths=PackedStringArray("animation_sprite")]
+script = ExtResource("1_ywtof")
+animation_sprite = NodePath("AnimatedSprite2D")
+speed = 100.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1829109517]
 sprite_frames = ExtResource("1_e42bj")
-animation = &"idle_down"
+animation = &"idle_left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1479407710]
 position = Vector2(0, 13)
 shape = SubResource("RectangleShape2D_e42bj")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=281196241]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1493793137]
+position = Vector2(0, 13)
+shape = SubResource("CircleShape2D_0clh7")

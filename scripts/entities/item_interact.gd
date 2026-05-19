@@ -1,7 +1,11 @@
 extends Area2D
 class_name InteractableItem
 
-@export var int_id : int 
+@export var int_id : int
+
+@export_file("*.tscn") var target_level_path : String
+@export var target_spawn_name : String
+
 var inside : bool = false
 
 func interact():
@@ -12,6 +16,8 @@ func interact():
 			print("<-- Junkyard. Forest -->")
 		2:
 			print("<-- Casa Rival")
+		3:
+			_change_scene()
 
 func pickup_item():
 	print("Item picked up")
@@ -21,6 +27,9 @@ func pickup_item():
 		owner.queue_free()
 	else:
 		queue_free()
+
+func _change_scene():
+	GameEvents.emit_signal("change_level_request", target_level_path, target_spawn_name)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"): 

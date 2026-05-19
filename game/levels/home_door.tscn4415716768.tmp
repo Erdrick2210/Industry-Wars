@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://6fdowpmchqqi"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_82l0j"]
+[ext_resource type="Script" uid="uid://735cudych6l2" path="res://scripts/levels/level_2/home_door.gd" id="2_hyexn"]
+
+[node name="homeDoor" unique_id=223654149 instance=ExtResource("1_82l0j")]
+script = ExtResource("2_hyexn")
+
+[node name="ItemInteract" parent="." index="0" unique_id=1442005765]
+int_id = 3
+spawn_name = "FromHome"
+target_level_path = null

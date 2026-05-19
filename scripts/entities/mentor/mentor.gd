@@ -1,66 +1,71 @@
-extends Interactable
+extends InteractableNPC
 
-const SPEED = 50.0
 
-@export var MentoraAnimation : AnimatedSprite2D
-var target_player : Node2D = null
+
 var is_moving : bool = false
-
+var event_finished : bool = false 
 
 func _ready() -> void:
-	visible = false
-	process_mode = Node.PROCESS_MODE_DISABLED
+	# Estado inicial: oculto si el evento no ha ocurrido
+	if not event_finished:
+		visible = false
+		process_mode = Node.PROCESS_MODE_DISABLED
+
+func _physics_process(_delta: float) -> void:
+	# PRIORIDAD 1: Movimiento por guion
+	if is_moving:
+		velocity.y = speed
+		velocity.x = 0
+		move_and_slide()
+		return # No ejecuta la mirada mientras camina
+
+	# PRIORIDAD 2: Mirar al jugador si no se está moviendo
+	_update_look_direction()
+
+
+func prepare_npc() -> void:
+	# Si ya terminó su caminata en una visita anterior, solo la mostramos
+	if event_finished:
+		visible = true
+		process_mode = Node.PROCESS_MODE_INHERIT
+		return
+
+	# --- SECUENCIA DE INTRODUCCIÓN ---
 	
-	
+	# 1. Espera inicial (el nodo está en el limbo del caché o recién creado)
 	await get_tree().create_timer(3.0).timeout
+	if not is_inside_tree(): return # Seguridad: abortar si el jugador cambió de nivel
+	
 	visible = true
 	process_mode = Node.PROCESS_MODE_INHERIT
+	animation_sprite.play("idle_down")
 	
-	MentoraAnimation.play("idle_down")
+	# 2. Pequeña pausa antes de empezar a caminar
 	await get_tree().create_timer(1.0).timeout
+	if not is_inside_tree(): return
 	
+	# 3. Empieza a caminar
 	is_moving = true
-	velocity.y = SPEED
-	MentoraAnimation.play("run_down")
-	await get_tree().create_timer(4.0).timeout
+	animation_sprite.play("run_down")
 	
+	# 4. Duración de la caminata
+	await get_tree().create_timer(4.0).timeout
+	if not is_inside_tree(): return
+	
+	# 5. Finalización
 	is_moving = false
 	velocity = Vector2.ZERO
-	MentoraAnimation.play("idle_down")
-
-func _process(_delta: float) -> void:
-	if is_moving:
-		move_and_slide()
-		return
-	if target_player:
-		var direction = (target_player.global_position - global_position)
-		
-		if abs(direction.x) > abs(direction.y):
-			if direction.x > 0:
-				MentoraAnimation.play("idle_right")
-			else:
-				MentoraAnimation.play("idle_left")
-		else:
-			if direction.y > 0:
-				MentoraAnimation.play("idle_down")
-			else:
-				MentoraAnimation.play("idle_up")
-	else:
-		MentoraAnimation.play("idle_down")
+	event_finished = true
+	animation_sprite.play("idle_down")
 
 func interact() -> void:
-	target_player.set_frozen(true)
-	print("¡Hola! Soy la mentora.") # Cambiar por el dialogo pertinente
-	await get_tree().create_timer(1.0).timeout # Cambiar por el dialogo pertinente
-	target_player.set_frozen(false)
-
-
-# --- SEÑALES ---
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		target_player = body
-
-
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		target_player = null
+	# Usamos la referencia que ya tenemos o buscamos al jugador
+	if target_player and target_player.has_method("set_frozen"):
+		target_player.set_frozen(true)
+		
+	print("¡Hola! Soy la mentora.") # TODO Diàleg
+	
+	await get_tree().create_timer(2.0).timeout
+	
+	if target_player:
+		target_player.set_frozen(false)
