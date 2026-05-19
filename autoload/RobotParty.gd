@@ -41,11 +41,8 @@ class RobotInstance:
 	}
 	
 	# Estados alterados
-	var status_effects = {
-		"stunned": false,
-		"short_circuit": false,
-		"damage_to_hp": 0.0
-	}
+	var status_effect: String = ""
+	var volatile_statuses := {}
 
 	func _init(p_chassis_id: int, p_exp: int = 1) -> void:
 		chassis_id        = p_chassis_id
@@ -77,16 +74,30 @@ class RobotInstance:
 			2: return 2.0
 			3: return 2.5
 		return 1.0
+	
+	# Modificadores de estados alterados
+	func has_status(status: String) -> bool:
+		return status_effect == status
+
+	func add_status(status:String):
+		status_effect = status
+
+	func remove_status():
+		status_effect = ""
 		
+	# Modificadores de estdos temporales
+	func add_volatile_status(status: String):
+		volatile_statuses[status] = true
+		
+	func remove_volatile_status(status: String):
+		volatile_statuses.erase(status)
+		
+	func has_volatile_status(status: String) -> bool:
+		return volatile_statuses.has(status)
+	
 	func reset_battle_modifiers():
 		for stat in stat_stages.keys():
 			stat_stages[stat] = 0
-
-		status_effects = {
-			"stunned": false,
-			"short_circuit": false,
-			"damage_to_hp": 0.0
-		}
 
 # ─── Party ────────────────────────────────────────────────────────────────────
 

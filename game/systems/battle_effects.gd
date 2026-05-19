@@ -2,7 +2,7 @@ extends Node
 
 class_name BattleEffects
 
-static func apply_effect(battle, effect_id:String, user, target, damage:int):
+static func apply_effect(battle, effect_id:String, user, target, ability):
 	match effect_id:
 		"NONE":
 			pass
@@ -80,21 +80,12 @@ static func apply_effect(battle, effect_id:String, user, target, damage:int):
 			if target.current_hp <= 0:
 				return
 			await battle.log_and_wait("¡Golpe adicional!")
-			var second_damage = BattleCalculator.calculate_damage(user, target, damage)
+			var second_damage = BattleCalculator.calculate_damage(user, target, ability)
 			await battle.apply_damage(target, second_damage)
 		
 		# ─────────────────────────────
-		# STUN
+		# IGNORE DEF
 		# ─────────────────────────────
-		
-		"STUN_20":
-			if randf() <= 0.2:
-				target.status_effects["stunned"] = true
-				await battle.log_and_wait(
-					"¡%s quedó aturdido!" % [
-						target.display_name()
-					]
-				)
 		
 		"IGNORE_DEF_20":
 			pass # Se maneja directamente en calculate_damage()
@@ -104,11 +95,11 @@ static func apply_effect(battle, effect_id:String, user, target, damage:int):
 		# ─────────────────────────────
 		
 		"LIFESTEAL_20":
-			var heal = int(damage * 0.2)
+			var heal = int(ability.power * 0.2)
 			await heal_robot(battle, user, heal)
 
 		"LIFESTEAL_50":
-			var heal = int(damage * 0.5)
+			var heal = int(ability.power * 0.5)
 			await heal_robot(battle, user, heal)
 			
 		# ─────────────────────────────
@@ -133,12 +124,34 @@ static func apply_effect(battle, effect_id:String, user, target, damage:int):
 		# SPECIAL STATUS
 		# ─────────────────────────────
 		
-		"DAMAGE_TO_HP_50":
-			user.status_effects["damage_to_hp"] = 0.5
-			await battle.log_and_wait("¡Conversión residual activada!")
+		"STUN_20":
+			if randf() <= 0.2:
+				target.add_volatile_status("stunned")
+		
+		"OVERHEAT":
+			if target.has_status("overheated"):
+				await battle.log_and_wait(
+					"¡%s ya está sobrecalentado!" % [
+						target.display_name()
+					]
+				)
+				return
+			target.add_status("overheated")
+			await battle.log_and_wait(
+				"¡%s entra en sobrecalentamiento!" % [
+					target.display_name()
+				]
+			)
 		
 		"SHORT_CIRCUIT":
-			target.status_effects["short_circuit"] = true
+			if target.has_status("short_circuited"):
+				await battle.log_and_wait(
+					"¡%s ya está cortocircuitado!" % [
+						target.display_name()
+					]
+				)
+				return
+			target.add_status("short_circuited")
 			await battle.log_and_wait(
 				"¡%s sufrió un cortocircuito!" % [
 					target.display_name()

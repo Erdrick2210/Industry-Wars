@@ -8,6 +8,11 @@ enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, END_BATTLE }
 
 var state: CombatState = CombatState.START
 
+const STATUS_ICONS = {
+	"overheated": preload("res://assets/art/ui/overheat.png"),
+	"short_circuited": preload("res://assets/art/ui/short_circuit.png")
+}
+
 var player_can_act: bool = false
 
 # ─────────────────────────────────────────────────────────────
@@ -109,11 +114,13 @@ func _process_log() -> void:
 @onready var player_ep_text = $PlayerPanel/EPLabel
 @onready var player_expbar = $PlayerPanel/EXPBar
 @onready var player_buff_container = $PlayerPanel/BuffContainer
+@onready var player_status_container = $PlayerPanel/StatusContainer
 
 @onready var enemy_name = $EnemyPanel/NameLabel
 @onready var enemy_level = $EnemyPanel/LevelLabel
 @onready var enemy_hpbar = $EnemyPanel/HPBar
 @onready var enemy_buff_container = $EnemyPanel/BuffContainer
+@onready var enemy_status_container = $EnemyPanel/StatusContainer
 
 func init_battle_boxes():
 	# PLAYER
@@ -258,6 +265,25 @@ func update_stat_stages_ui(robot, container):
 			]
 
 		container.add_child(label)
+		
+func update_status_effects_ui(robot, container):
+	for child in container.get_children():
+		child.queue_free()
+
+	if robot.status_effect == "":
+		return
+
+	if not STATUS_ICONS.has(robot.status_effect):
+		return
+
+	var icon = TextureRect.new()
+
+	icon.texture = STATUS_ICONS[robot.status_effect]
+	icon.custom_minimum_size = Vector2(32, 32)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+
+	container.add_child(icon)
 
 # ─────────────────────────────────────────────────────────────
 # INIT
@@ -372,11 +398,11 @@ func get_enemy_ability():
 # ─────────────────────────────────────────────────────────────
 
 func attack(atk, def, ability) -> void:
-	print(atk.display_name() + " ataca a " + def.display_name() + ".")
-	await log_and_wait("%s ataca a %s." % [
-		atk.display_name(),
-		def.display_name()
-	])
+	if ability.target != "Self":
+		await log_and_wait("%s ataca a %s." % [
+			atk.display_name(),
+			def.display_name()
+		])
 	
 	# ─────────────────────────────
 	# SPEND EP
@@ -413,9 +439,11 @@ func attack(atk, def, ability) -> void:
 	# Effects
 	# ─────────────────────────────
 
-	await BattleEffects.apply_effect(self, ability.effect_id, atk, def, damage)
+	await BattleEffects.apply_effect(self, ability.effect_id, atk, def, ability)
 	update_stat_stages_ui(player_robot, player_buff_container)
 	update_stat_stages_ui(enemy_robot, enemy_buff_container)
+	update_status_effects_ui(player_robot, player_status_container)
+	update_status_effects_ui(enemy_robot, enemy_status_container)
 	
 	# ─────────────────────────────
 	# Win condition
@@ -532,16 +560,76 @@ func execute_turn():
 
 	if player_first:
 		await attack(player_robot, enemy_robot, player_selected_ability)
-		if state == CombatState.END_BATTLE:
-			return
 		if enemy_robot.current_hp > 0:
-			await attack(enemy_robot, player_robot, enemy_selected_ability)
+			if await can_act(enemy_robot):
+				await attack(enemy_robot, player_robot, enemy_selected_ability)
 	else:
 		await attack(enemy_robot, player_robot, enemy_selected_ability)
-		if state == CombatState.END_BATTLE:
-			return
 		if player_robot.current_hp > 0:
-			await attack(player_robot, enemy_robot, player_selected_ability)
+			if await can_act(player_robot):
+				await attack(player_robot, enemy_robot, player_selected_ability)
+	
+	# ─────────────────────────────
+	# TURN END - STATUS CONDITIONS
+	# ─────────────────────────────
+	
+	await process_status_effects()
+	if await check_win_condition():
+		return
+			
+func process_status_effects():
+	var robots = [player_robot, enemy_robot]
+
+	robots.sort_custom(func(a, b):
+		return a.get_modified_stat("speed") > b.get_modified_stat("speed")
+	)
+
+	for robot in robots:
+		await process_overheat(robot)
+		await process_short_circuit(robot)
+	
+func process_overheat(robot):
+	if not robot.has_status("overheated"):
+		return
+
+	var damage = int(robot.max_hp * 0.1)
+	damage = max(1, damage)
+
+	await log_and_wait(
+		"¡%s sufre daño por sobrecalentamiento!" % [
+			robot.display_name()
+		]
+	)
+
+	await apply_damage(robot, damage)
+	
+func process_short_circuit(robot):
+	if not robot.has_status("short_circuited"):
+		return
+
+	var ep_loss = int(robot.max_ep * 0.1)
+	ep_loss = max(1, ep_loss)
+
+	await log_and_wait(
+		"¡%s pierde energía por cortocircuito!" % [
+			robot.display_name()
+		]
+	)
+	
+	await spend_ep(robot, ep_loss)
+
+func can_act(robot) -> bool:
+	if robot.has_volatile_status("stunned"):
+		await log_and_wait(
+			"¡%s se ha aturdido!" % [
+				robot.display_name()
+			]
+		)
+		
+		robot.remove_volatile_status("stunned")
+		
+		return false
+	return true
 
 # ─────────────────────────────────────────────────────────────
 # WIN CONDITION
@@ -622,12 +710,14 @@ func _format_robot_stats(robot) -> String:
 		stage_text = "NONE"
 
 	# Status effects
-	var status_text := "NONE"
+	var status_text = robot.status_effect
 
-	if robot.status_effects.size() > 0:
-		status_text = str(robot.status_effects.keys())
+	if status_text == "":
+		status_text = "NONE"
+		
+	var volatile_text = str(robot.volatile_statuses.keys())
 
-	return "%s\nHP: %d/%d | EP: %d/%d\nATK: %d | DEF: %d | SPD: %d\nSTAGES: %s\nSTATUS: %s" % [
+	return "%s\nHP: %d/%d | EP: %d/%d\nATK: %d | DEF: %d | SPD: %d\nSTAGES: %s\nSTATUS: %s\nVOLATILE: %s" % [
 		robot.display_name(),
 		robot.current_hp, robot.max_hp,
 		robot.current_ep, robot.max_ep,
@@ -635,5 +725,6 @@ func _format_robot_stats(robot) -> String:
 		robot.defense,
 		robot.speed,
 		stage_text,
-		status_text
+		status_text,
+		volatile_text
 	]

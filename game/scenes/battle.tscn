@@ -265,6 +265,13 @@ offset_top = 152.0
 offset_right = 58.0
 offset_bottom = 432.0
 
+[node name="StatusContainer" type="BoxContainer" parent="PlayerPanel" unique_id=1480591217]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 24.0
+offset_right = 432.0
+offset_bottom = 56.0
+
 [node name="EnemyPanel" type="Panel" parent="." unique_id=1758111822]
 layout_mode = 0
 offset_left = 576.0
@@ -312,6 +319,13 @@ offset_left = 513.0
 offset_top = 152.0
 offset_right = 563.0
 offset_bottom = 432.0
+
+[node name="StatusContainer" type="BoxContainer" parent="EnemyPanel" unique_id=182230302]
+layout_mode = 0
+offset_left = 364.0
+offset_top = 24.0
+offset_right = 396.0
+offset_bottom = 56.0
 
 [node name="AbilityContainer" type="Control" parent="." unique_id=1496680190]
 anchors_preset = 0

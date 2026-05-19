@@ -147,10 +147,10 @@ Category=Status
 Type=Recycling
 Target=Enemy
 Power=0
-Accuracy=-1
+Accuracy=80
 EPCost=30
-Effect=Convierte el 50% del daño recibido en HP.
-EffectID=DAMAGE_TO_HP_50
+Effect=Aplica sobrecalentamiento. Reduce los HP del objetivo cada turno.
+EffectID=OVERHEAT
 
 [PULSO_RESTAURADOR]
 Name=Pulso Restaurador
@@ -201,8 +201,8 @@ Name=Pulso de Alto Voltaje
 Category=Status
 Type=Energetic
 Target=Enemy
-Power=90
-Accuracy=85
+Power=0
+Accuracy=80
 EPCost=30
 Effect=Aplica cortocircuito.
 EffectID=SHORT_CIRCUIT
