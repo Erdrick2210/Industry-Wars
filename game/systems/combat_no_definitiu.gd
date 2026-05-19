@@ -335,7 +335,7 @@ func enemy_turn() -> void:
 		]
 	)
 
-	await attack(enemy_robot, player_robot, ability.power)
+	await attack(enemy_robot, player_robot, ability)
 
 	await end_turn()
 	
@@ -360,18 +360,57 @@ func get_enemy_ability():
 # ATTACK SYSTEM
 # ─────────────────────────────────────────────────────────────
 
-func attack(atk, def, power: int) -> void:
+func attack(atk, def, ability) -> void:
 	print(atk.display_name() + " ataca a " + def.display_name() + ".")
 	await log_and_wait("%s ataca a %s." % [
 		atk.display_name(),
 		def.display_name()
 	])
+	
+	# ─────────────────────────────
+	# Accuracy check
+	# ─────────────────────────────
 
-	var damage = (atk.attack * power / 100.0) - (def.defense * 0.1)
-	damage = max(1, round(damage))
+	if not check_accuracy(ability):
+		await log_and_wait("%s falla." % ability.name)
+		return
+	
+	# ─────────────────────────────
+	# Damage
+	# ─────────────────────────────
 
-	def.current_hp = max(def.current_hp - damage, 0)
-	if def == player_robot:
+	var damage := 0
+
+	if ability.category == "Damage":
+		damage = calculate_damage(atk, def, ability.power)
+		await apply_damage(def, damage)
+
+	# ─────────────────────────────
+	# Effects
+	# ─────────────────────────────
+
+	await apply_effect(ability.effect_id, atk, def, damage)
+	
+	# ─────────────────────────────
+	# Win condition
+	# ─────────────────────────────
+
+	await check_win_condition()
+	
+func check_accuracy(ability) -> bool:
+	if ability.accuracy < 0:
+		return true
+
+	return randi_range(1, 100) <= ability.accuracy
+
+func calculate_damage(attacker, defender, power) -> int:
+	var damage = (attacker.attack * power / 100.0) - (defender.defense * 0.1)
+	return max(1, round(damage))
+	
+func apply_damage(defender, damage) -> void:
+	defender.current_hp = max(defender.current_hp - damage, 0)
+	
+	if defender == player_robot:
 		await animate_bar(player_hpbar, player_robot.current_hp)
 		update_hp_color(player_hpbar, player_robot.current_hp, player_robot.max_hp)
 		update_player_hp_ui()
@@ -379,9 +418,213 @@ func attack(atk, def, power: int) -> void:
 		await animate_bar(enemy_hpbar, enemy_robot.current_hp)
 		update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
 	
-	print("Daño: " + str(damage) + " | HP: " + str(def.current_hp))
+	print("Daño: " + str(damage) + " | HP: " + str(defender.current_hp))
 
-	await check_win_condition()
+func apply_effect(effect_id:String, user, target, damage:int):
+	match effect_id:
+		"NONE":
+			pass
+			
+		"LIFESTEAL_20":
+			var heal = int(damage * 0.2)
+			user.current_hp = min(user.current_hp + heal, user.max_hp)
+			
+			await log_and_wait(
+				"%s recupera %d HP." % [
+					user.display_name(),
+					heal
+				]
+			)
+			
+			if user == player_robot:
+				await animate_bar(player_hpbar, player_robot.current_hp)
+				update_hp_color(player_hpbar, player_robot.current_hp, player_robot.max_hp)
+				update_player_hp_ui()
+			else:
+				await animate_bar(enemy_hpbar, enemy_robot.current_hp)
+				update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
+			
+		"DOUBLE_HIT":
+			await log_and_wait("¡Golpe doble!")
+			var second_damage = calculate_damage(user, target, AbilityDB.get_ability("RAFAGA_SINCRONICA"))
+			await apply_damage(target, second_damage)
+
+		"SPEED_UP_20":
+			user.speed = int(user.speed * 1.2)
+			await log_and_wait("La velocidad aumenta.")
+
+		"STUN_20":
+			if randf() <= 0.2:
+				target.stunned = true
+
+				await log_and_wait(
+					"%s queda aturdido." % [
+						target.display_name()
+					]
+				)
+				
+	match effect_id:
+		"NONE":
+			pass
+
+		"SPEED_UP_1":
+			RobotParty.modify_stage(user, "speed", 1)
+			await log_and_wait(
+				RobotParty.get_stage_text("speed", 1)
+			)
+			
+		"SPEED_UP_2":
+			RobotParty.modify_stage(user, "speed", 2)
+			await log_and_wait(
+				"¡La velocidad aumentó mucho!"
+			)
+
+		"SPEED_DOWN_1":
+			RobotParty.modify_stage(target, "speed", -1)
+			await log_and_wait(
+				RobotParty.get_stage_text("speed", -1)
+			)
+
+		"ATK_UP_1":
+			RobotParty.modify_stage(user, "attack", 1)
+			await log_and_wait(
+				RobotParty.get_stage_text("attack", 1)
+			)
+
+		"ATK_DEF_UP_1":
+			RobotParty.modify_stage(user, "attack", 1)
+			RobotParty.modify_stage(user, "defense", 1)
+			await log_and_wait(
+				"¡Ataque y defensa aumentaron!"
+			)
+
+		"DEF_UP_1":
+			RobotParty.modify_stage(user, "defense", 1)
+			await log_and_wait(
+				RobotParty.get_stage_text("defense", 1)
+			)
+
+		"SELF_DEF_DOWN_1":
+			RobotParty.modify_stage(user, "defense", -1)
+			await log_and_wait(
+				RobotParty.get_stage_text("defense", -1)
+			)
+
+		"EVASION_UP_1":
+			RobotParty.modify_stage(user, "evasion", 1)
+			await log_and_wait(
+				RobotParty.get_stage_text("evasion", 1)
+			)
+
+		"DOUBLE_HIT":
+			if target.current_hp <= 0:
+				return
+			await log_and_wait("¡Golpe adicional!")
+			var second_damage = calculate_damage(user, target, damage)
+			await apply_damage(target, second_damage)
+
+		"STUN_20":
+			if randf() <= 0.2:
+				target.status_effects["stunned"] = true
+				await log_and_wait(
+					"¡%s quedó aturdido!" % [
+						target.display_name()
+					]
+				)
+
+		"IGNORE_DEF_20":
+			pass
+			# Se maneja directamente
+			# en calculate_damage()
+
+		"LIFESTEAL_20":
+			var heal = int(damage * 0.2)
+			user.current_hp = min(
+				user.current_hp + heal,
+				user.max_hp
+			)
+
+			await log_and_wait(
+				"%s recupera %d HP." % [
+					user.display_name(),
+					heal
+				]
+			)
+
+		"LIFESTEAL_50":
+			var heal = int(damage * 0.5)
+			user.current_hp = min(
+				user.current_hp + heal,
+				user.max_hp
+			)
+
+			await log_and_wait(
+				"%s recupera %d HP." % [
+					user.display_name(),
+					heal
+				]
+			)
+
+		"DAMAGE_TO_HP_50":
+			user.status_effects["damage_to_hp"] = 0.5
+			await log_and_wait(
+				"¡Conversión residual activada!"
+			)
+
+		"HEAL_HP_50":
+			var heal = int(user.max_hp * 0.5)
+			user.current_hp = min(
+				user.current_hp + heal,
+				user.max_hp
+			)
+
+			await log_and_wait(
+				"%s recupera %d HP." % [
+					user.display_name(),
+					heal
+				]
+			)
+
+		"RESTORE_EP_5":
+			user.current_ep = min(
+				user.current_ep + 5,
+				user.max_ep
+			)
+
+			await log_and_wait(
+				"¡%s recupera 5 EP!" % [
+					user.display_name()
+				]
+			)
+
+		"RESTORE_EP_40":
+			user.current_ep = min(
+				user.current_ep + 40,
+				user.max_ep
+			)
+			
+			await log_and_wait(
+				"¡%s recupera 40 EP!" % [
+					user.display_name()
+				]
+			)
+
+		"SHORT_CIRCUIT":
+			target.status_effects["short_circuit"] = true
+			await log_and_wait(
+				"¡%s sufrió un cortocircuito!" % [
+					target.display_name()
+				]
+			)
+
+		# ─────────────────────────────
+		# UNKNOWN
+		# ─────────────────────────────
+		
+		_:
+			push_warning(
+				"EffectID no manejado: %s" % effect_id
+			)
 
 # ─────────────────────────────────────────────────────────────
 # ABILITIES
@@ -450,7 +693,7 @@ func use_ability(ability):
 		]
 	)
 
-	await attack(player_robot, enemy_robot, ability.power)
+	await attack(player_robot, enemy_robot, ability)
 	
 	await end_turn()
 

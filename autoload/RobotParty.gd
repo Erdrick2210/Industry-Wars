@@ -27,9 +27,25 @@ class RobotInstance:
 	var attack:      int
 	var defense:     int
 	var speed:       int
-
+	
 	# Habilidades desbloqueadas (ids de las que ya aprendió)
 	var learned_abilities: Array  # Array[String]
+	
+	# Nivel de Stats durante el combate
+	var stat_stages = {
+		"attack": 0,
+		"defense": 0,
+		"speed": 0,
+		"accuracy": 0,
+		"evasion": 0
+	}
+	
+	# Estados alterados
+	var status_effects = {
+		"stunned": false,
+		"short_circuit": false,
+		"damage_to_hp": 0.0
+	}
 
 	func _init(p_chassis_id: int, p_exp: int = 1) -> void:
 		chassis_id        = p_chassis_id
@@ -143,6 +159,30 @@ func remove_robot(slot: int) -> void:
 		return
 	party.remove_at(slot)
 	party_changed.emit()
+	
+# ─── Estadísticas durante el combate ────────────────────────────────────────────────────────────
+
+func modify_stage(robot, stat:String, amount:int):
+	if not robot.stat_stages.has(stat):
+		return
+
+	var old_stage = robot.stat_stages[stat]
+
+	robot.stat_stages[stat] = clamp(old_stage + amount, -3, 3)
+	
+func get_stage_text(stat:String, amount:int) -> String:
+	var stat_name = {
+		"attack": "ataque",
+		"defense": "defensa",
+		"speed": "velocidad",
+		"accuracy": "precisión",
+		"evasion": "evasión"
+	}
+
+	if amount > 0:
+		return "¡El %s aumentó!" % stat_name[stat]
+
+	return "¡El %s disminuyó!" % stat_name[stat]
 
 # ─── Serialización ────────────────────────────────────────────────────────────
 
@@ -176,7 +216,7 @@ func deserialize(data: Array) -> void:
 
 func _add_demo_party() -> void:
 	# EXP de ejemplo: nivel 5 = 125, nivel 8 = 512, nivel 3 = 27, nivel 10 = 1000
-	add_robot(1, 520)   # Guardián  ~nivel 5
+	add_robot(1, 520)   # Guardián  ~nivel 8
 	add_robot(2, 520)   # Asalto    ~nivel 8
 	add_robot(3,  30)   # Explorador ~nivel 3
 	add_robot(4, 980)   # Técnico   ~nivel 9

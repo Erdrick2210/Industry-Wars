@@ -1,139 +1,219 @@
 [IMPULSO_VECTORIAL]
 Name=Impulso Vectorial
+Category=Damage
+Type=Logistic
+Target=Enemy
 Power=50
 Accuracy=100
 EPCost=0
-Effect=Tiene prioridad.
+Effect=Aumenta la velocidad propia 1 nivel.
+EffectID=SPEED_UP_1
 
 [RAFAGA_SINCRONICA]
 Name=Ráfaga Sincrónica
+Category=Damage
+Type=Logistic
+Target=Enemy
 Power=45
 Accuracy=95
 EPCost=0
 Effect=Golpea 2 veces.
+EffectID=DOUBLE_HIT
 
 [DESFASE_LUMINICO]
 Name=Desfase Lumínico
-Power=40
-Accuracy=90
+Category=Status
+Type=Logistic
+Target=Self
+Power=0
+Accuracy=-1
 EPCost=20
-Effect=Aumenta la evasión 10%.
+Effect=Aumenta la evasión propia 1 nivel.
+EffectID=EVASION_UP_1
 
 [ACELERACION_TACTICA]
 Name=Aceleración Táctica
+Category=Status
+Type=Logistic
+Target=Self
 Power=0
-Accuracy=85
+Accuracy=-1
 EPCost=25
-Effect=Aumenta la velocidad 20%.
+Effect=Aumenta la velocidad propia 2 niveles.
+EffectID=SPEED_UP_2
 
 [ECO_CINETICO]
 Name=Eco Cinético
+Category=Damage
+Type=Logistic
+Target=Enemy
 Power=80
 Accuracy=100
 EPCost=30
-Effect=Repite 50% del daño infligido en el turno siguiente.
+Effect=Reduce la velocidad del rival en 1 nivel.
+EffectID=SPEED_DOWN_1
 
 [IMPACTO_INDUSTRIAL]
 Name=Impacto Industrial
+Category=Damage
+Type=Productive
+Target=Enemy
 Power=60
 Accuracy=95
 EPCost=0
 Effect=Sin efectos.
+EffectID=NONE
 
 [FURIA_MECANICA]
 Name=Furia Mecánica
-Power=55
-Accuracy=90
+Category=Damage
+Type=Productive
+Target=Enemy
+Power=40
+Accuracy=95
 EPCost=0
-Effect=+10% ataque.
+Effect=Aumenta el ataque propio 1 nivel.
+EffectID=ATK_UP_1
 
 [FORJA_BRUTAL]
 Name=Forja Brutal
+Category=Damage
+Type=Productive
+Target=Enemy
 Power=100
 Accuracy=80
 EPCost=35
-Effect=-10% defensa.
+Effect=Reduce la defensa propia 1 nivel.
+EffectID=SELF_DEF_DOWN_1
 
 [EMBATE_DE_ACERO]
 Name=Embate de Acero
+Category=Damage
+Type=Productive
+Target=Enemy
 Power=90
 Accuracy=85
 EPCost=30
-Effect=20% aturdir (atasco).
+Effect=20% de probabilidad de aturdir.
+EffectID=STUN_20
 
 [TRITURACION]
 Name=Trituración
+Category=Damage
+Type=Productive
+Target=Enemy
 Power=110
 Accuracy=75
 EPCost=40
-Effect=Ignora 20% defensa.
+Effect=Ignora el 20% de la defensa del rival.
+EffectID=IGNORE_DEF_20
 
 [REPROCESAMIENTO_VITAL]
 Name=Reprocesamiento Vital
+Category=Damage
+Type=Recycling
+Target=Enemy
 Power=40
 Accuracy=100
 EPCost=0
-Effect=Cura 20% del daño hecho.
+Effect=Aumenta la defensa propia 1 nivel.
+EffectID=DEF_UP_1
 
 [ABSORCION_CIRCULAR]
 Name=Absorción Circular
+Category=Damage
+Type=Recycling
+Target=Enemy
 Power=45
 Accuracy=95
 EPCost=0
-Effect=Recupera 10 EP.
+Effect=Cura 20% del daño hecho.
+EffectID=LIFESTEAL_20
 
 [DRENAJE_REVERSIBLE]
 Name=Drenaje Reversible
+Category=Damage
+Type=Recycling
+Target=Enemy
 Power=70
 Accuracy=90
 EPCost=25
-Effect=Cura 30% del daño hecho.
+Effect=Cura 50% del daño hecho.
+EffectID=LIFESTEAL_50
 
 [CONVERSION_RESIDUAL]
 Name=Conversión Residual
+Category=Status
+Type=Recycling
+Target=Enemy
 Power=0
 Accuracy=100
 EPCost=30
 Effect=Convierte el 50% del daño recibido en HP.
+EffectID=DAMAGE_TO_HP_50
 
 [PULSO_RESTAURADOR]
 Name=Pulso Restaurador
+Category=Status
+Type=Recycling
+Target=Self
 Power=0
 Accuracy=100
 EPCost=35
-Effect=Cura 40% HP.
+Effect=Cura 50% del HP máximos propios.
+EffectID=HEAL_HP_50
 
 [EXPANSION_DE_REACTOR]
 Name=Expansión de Reactor
+Category=Damage
+Type=Energetic
+Target=Self
 Power=45
 Accuracy=100
 EPCost=0
 Effect=Recupera 5 EP.
+EffectID=RESTORE_EP_5
 
 [CAMPO_DE_POTENCIAL]
 Name=Campo de Potencial
+Category=Damage
+Type=Energetic
+Target=Self
 Power=40
 Accuracy=100
 EPCost=0
-Effect=Reduce coste EP siguiente habilidad un 10%.
+Effect=Aumenta la precisión propia en 1 nivel.
+EffectID=NEXT_EP_COST_DOWN_10
 
 [AMPLIFICACION_INTERNA]
 Name=Amplificación Interna
-Power=80
-Accuracy=90
-EPCost=25
-Effect=+20% daño.
+Category=Damage
+Type=Energetic
+Target=Enemy
+Power=0
+Accuracy=100
+EPCost=40
+Effect=Aumenta el ataque y la defensa propia en 1 nivel.
+EffectID=ATK_DEF_UP_1
 
 [PULSO_DE_ALTO_VOLTAJE]
 Name=Pulso de Alto Voltaje
+Category=Status
+Type=Energetic
+Target=Enemy
 Power=90
 Accuracy=85
 EPCost=30
 Effect=Aplica cortocircuito.
+EffectID=SHORT_CIRCUIT
 
 [MATRIZ_ENERGETICA]
 Name=Matriz Energética
+Category=Status
+Type=Energetic
+Target=Self
 Power=0
 Accuracy=100
 EPCost=35
-Effect=Recupera 25 EP.
+Effect=Recupera 40 EP.
+EffectID=RESTORE_EP_40

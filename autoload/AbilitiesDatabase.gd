@@ -5,10 +5,15 @@
 ## abilities.txt esperado:
 ##   [ID_HABILIDAD]
 ##   Name=Impulso Vectorial
+##   Category=Damage
+##   Type=Logistic
+##   Target=Enemy
 ##   Power=50
 ##   Accuracy=100
 ##   EPCost=0
 ##   Effect=Tiene prioridad.
+##   EffectID=PRIORITY_1
+
 
 extends Node
 
@@ -17,10 +22,14 @@ extends Node
 class AbilityDef:
 	var id:       String
 	var name:     String
+	var category: String
+	var type:     String
+	var target:   String
 	var power:    int
 	var accuracy: int
 	var ep_cost:  int
 	var effect:   String
+	var effect_id:String
 
 # ─── Registry ─────────────────────────────────────────────────────────────────
 
@@ -68,15 +77,22 @@ func _load_db() -> void:
 		match key:
 			"Name":
 				current.name = val
+			"Category":
+				current.category = val
+			"Type":
+				current.type = val
+			"Target":
+				current.target = val
 			"Power":
 				current.power = int(val)
 			"Accuracy":
-				# Manejamos posibles valores vacíos como 100% de base
 				current.accuracy = int(val) if val.is_valid_int() else 100
 			"EPCost":
 				current.ep_cost = int(val)
 			"Effect":
 				current.effect = val
+			"EffectID":
+				current.effect_id = val
 
 	# Último bloque
 	if current != null:
