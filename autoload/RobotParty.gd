@@ -58,6 +58,33 @@ class RobotInstance:
 			var def = RobotDB.get_chassis(chassis_id)
 			return def.name if def else "???"
 		return nickname
+		
+	func get_modified_stat(stat_name:String) -> int:
+		var base_value = self.get(stat_name)
+		var stage = stat_stages.get(stat_name, 0)
+		var multiplier = stage_to_multiplier(stage)
+		return int(base_value * multiplier)
+	
+	func stage_to_multiplier(stage:int) -> float:
+		match stage:
+			-3: return 0.4
+			-2: return 0.5
+			-1: return 0.66
+			0: return 1.0
+			1: return 1.5
+			2: return 2.0
+			3: return 2.5
+		return 1.0
+		
+	func reset_battle_modifiers():
+		for stat in stat_stages.keys():
+			stat_stages[stat] = 0
+
+		status_effects = {
+			"stunned": false,
+			"short_circuit": false,
+			"damage_to_hp": 0.0
+		}
 
 # ─── Party ────────────────────────────────────────────────────────────────────
 
@@ -169,20 +196,6 @@ func modify_stage(robot, stat:String, amount:int):
 	var old_stage = robot.stat_stages[stat]
 
 	robot.stat_stages[stat] = clamp(old_stage + amount, -3, 3)
-	
-func get_stage_text(stat:String, amount:int) -> String:
-	var stat_name = {
-		"attack": "ataque",
-		"defense": "defensa",
-		"speed": "velocidad",
-		"accuracy": "precisión",
-		"evasion": "evasión"
-	}
-
-	if amount > 0:
-		return "¡El %s aumentó!" % stat_name[stat]
-
-	return "¡El %s disminuyó!" % stat_name[stat]
 
 # ─── Serialización ────────────────────────────────────────────────────────────
 

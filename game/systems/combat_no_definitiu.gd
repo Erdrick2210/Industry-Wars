@@ -371,7 +371,7 @@ func attack(atk, def, ability) -> void:
 	# Accuracy check
 	# ─────────────────────────────
 
-	if not check_accuracy(ability):
+	if not BattleCalculator.check_accuracy(ability):
 		await log_and_wait("%s falla." % ability.name)
 		return
 	
@@ -382,30 +382,20 @@ func attack(atk, def, ability) -> void:
 	var damage := 0
 
 	if ability.category == "Damage":
-		damage = calculate_damage(atk, def, ability.power)
+		damage = BattleCalculator.calculate_damage(atk, def, ability)
 		await apply_damage(def, damage)
 
 	# ─────────────────────────────
 	# Effects
 	# ─────────────────────────────
 
-	await apply_effect(ability.effect_id, atk, def, damage)
+	await BattleEffects.apply_effect(self, ability.effect_id, atk, def, damage)
 	
 	# ─────────────────────────────
 	# Win condition
 	# ─────────────────────────────
 
 	await check_win_condition()
-	
-func check_accuracy(ability) -> bool:
-	if ability.accuracy < 0:
-		return true
-
-	return randi_range(1, 100) <= ability.accuracy
-
-func calculate_damage(attacker, defender, power) -> int:
-	var damage = (attacker.attack * power / 100.0) - (defender.defense * 0.1)
-	return max(1, round(damage))
 	
 func apply_damage(defender, damage) -> void:
 	defender.current_hp = max(defender.current_hp - damage, 0)
@@ -419,212 +409,6 @@ func apply_damage(defender, damage) -> void:
 		update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
 	
 	print("Daño: " + str(damage) + " | HP: " + str(defender.current_hp))
-
-func apply_effect(effect_id:String, user, target, damage:int):
-	match effect_id:
-		"NONE":
-			pass
-			
-		"LIFESTEAL_20":
-			var heal = int(damage * 0.2)
-			user.current_hp = min(user.current_hp + heal, user.max_hp)
-			
-			await log_and_wait(
-				"%s recupera %d HP." % [
-					user.display_name(),
-					heal
-				]
-			)
-			
-			if user == player_robot:
-				await animate_bar(player_hpbar, player_robot.current_hp)
-				update_hp_color(player_hpbar, player_robot.current_hp, player_robot.max_hp)
-				update_player_hp_ui()
-			else:
-				await animate_bar(enemy_hpbar, enemy_robot.current_hp)
-				update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
-			
-		"DOUBLE_HIT":
-			await log_and_wait("¡Golpe doble!")
-			var second_damage = calculate_damage(user, target, AbilityDB.get_ability("RAFAGA_SINCRONICA"))
-			await apply_damage(target, second_damage)
-
-		"SPEED_UP_20":
-			user.speed = int(user.speed * 1.2)
-			await log_and_wait("La velocidad aumenta.")
-
-		"STUN_20":
-			if randf() <= 0.2:
-				target.stunned = true
-
-				await log_and_wait(
-					"%s queda aturdido." % [
-						target.display_name()
-					]
-				)
-				
-	match effect_id:
-		"NONE":
-			pass
-
-		"SPEED_UP_1":
-			RobotParty.modify_stage(user, "speed", 1)
-			await log_and_wait(
-				RobotParty.get_stage_text("speed", 1)
-			)
-			
-		"SPEED_UP_2":
-			RobotParty.modify_stage(user, "speed", 2)
-			await log_and_wait(
-				"¡La velocidad aumentó mucho!"
-			)
-
-		"SPEED_DOWN_1":
-			RobotParty.modify_stage(target, "speed", -1)
-			await log_and_wait(
-				RobotParty.get_stage_text("speed", -1)
-			)
-
-		"ATK_UP_1":
-			RobotParty.modify_stage(user, "attack", 1)
-			await log_and_wait(
-				RobotParty.get_stage_text("attack", 1)
-			)
-
-		"ATK_DEF_UP_1":
-			RobotParty.modify_stage(user, "attack", 1)
-			RobotParty.modify_stage(user, "defense", 1)
-			await log_and_wait(
-				"¡Ataque y defensa aumentaron!"
-			)
-
-		"DEF_UP_1":
-			RobotParty.modify_stage(user, "defense", 1)
-			await log_and_wait(
-				RobotParty.get_stage_text("defense", 1)
-			)
-
-		"SELF_DEF_DOWN_1":
-			RobotParty.modify_stage(user, "defense", -1)
-			await log_and_wait(
-				RobotParty.get_stage_text("defense", -1)
-			)
-
-		"EVASION_UP_1":
-			RobotParty.modify_stage(user, "evasion", 1)
-			await log_and_wait(
-				RobotParty.get_stage_text("evasion", 1)
-			)
-
-		"DOUBLE_HIT":
-			if target.current_hp <= 0:
-				return
-			await log_and_wait("¡Golpe adicional!")
-			var second_damage = calculate_damage(user, target, damage)
-			await apply_damage(target, second_damage)
-
-		"STUN_20":
-			if randf() <= 0.2:
-				target.status_effects["stunned"] = true
-				await log_and_wait(
-					"¡%s quedó aturdido!" % [
-						target.display_name()
-					]
-				)
-
-		"IGNORE_DEF_20":
-			pass
-			# Se maneja directamente
-			# en calculate_damage()
-
-		"LIFESTEAL_20":
-			var heal = int(damage * 0.2)
-			user.current_hp = min(
-				user.current_hp + heal,
-				user.max_hp
-			)
-
-			await log_and_wait(
-				"%s recupera %d HP." % [
-					user.display_name(),
-					heal
-				]
-			)
-
-		"LIFESTEAL_50":
-			var heal = int(damage * 0.5)
-			user.current_hp = min(
-				user.current_hp + heal,
-				user.max_hp
-			)
-
-			await log_and_wait(
-				"%s recupera %d HP." % [
-					user.display_name(),
-					heal
-				]
-			)
-
-		"DAMAGE_TO_HP_50":
-			user.status_effects["damage_to_hp"] = 0.5
-			await log_and_wait(
-				"¡Conversión residual activada!"
-			)
-
-		"HEAL_HP_50":
-			var heal = int(user.max_hp * 0.5)
-			user.current_hp = min(
-				user.current_hp + heal,
-				user.max_hp
-			)
-
-			await log_and_wait(
-				"%s recupera %d HP." % [
-					user.display_name(),
-					heal
-				]
-			)
-
-		"RESTORE_EP_5":
-			user.current_ep = min(
-				user.current_ep + 5,
-				user.max_ep
-			)
-
-			await log_and_wait(
-				"¡%s recupera 5 EP!" % [
-					user.display_name()
-				]
-			)
-
-		"RESTORE_EP_40":
-			user.current_ep = min(
-				user.current_ep + 40,
-				user.max_ep
-			)
-			
-			await log_and_wait(
-				"¡%s recupera 40 EP!" % [
-					user.display_name()
-				]
-			)
-
-		"SHORT_CIRCUIT":
-			target.status_effects["short_circuit"] = true
-			await log_and_wait(
-				"¡%s sufrió un cortocircuito!" % [
-					target.display_name()
-				]
-			)
-
-		# ─────────────────────────────
-		# UNKNOWN
-		# ─────────────────────────────
-		
-		_:
-			push_warning(
-				"EffectID no manejado: %s" % effect_id
-			)
 
 # ─────────────────────────────────────────────────────────────
 # ABILITIES
@@ -765,11 +549,41 @@ func print_robot_stats():
 	print("==================================")
 	
 func _format_robot_stats(robot) -> String:
-	return "%s\nHP: %d/%d | EP: %d/%d\nATK: %d | DEF: %d | SPD: %d" % [
+	var stage_text := ""
+
+	for stat in robot.stat_stages.keys():
+		var value = robot.stat_stages[stat]
+
+		if value == 0:
+			continue
+
+		var sign = "+"
+
+		if value < 0:
+			sign = ""
+
+		stage_text += "%s%s%d " % [
+			stat.to_upper(),
+			sign,
+			value
+		]
+
+	if stage_text == "":
+		stage_text = "NONE"
+
+	# Status effects
+	var status_text := "NONE"
+
+	if robot.status_effects.size() > 0:
+		status_text = str(robot.status_effects.keys())
+
+	return "%s\nHP: %d/%d | EP: %d/%d\nATK: %d | DEF: %d | SPD: %d\nSTAGES: %s\nSTATUS: %s" % [
 		robot.display_name(),
 		robot.current_hp, robot.max_hp,
 		robot.current_ep, robot.max_ep,
 		robot.attack,
 		robot.defense,
-		robot.speed
+		robot.speed,
+		stage_text,
+		status_text
 	]
