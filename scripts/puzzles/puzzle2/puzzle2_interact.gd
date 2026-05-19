@@ -1,66 +1,44 @@
 extends Area2D
-class_name InteractableItem
-
-@export var int_id : int
-
-@export_file("*.tscn") var target_level_path : String
-@export var target_spawn_name : String
+class_name PuzzlePillar
 
 @export var pillar_color: String 
 @export var texture_normal: Texture2D
 @export var texture_pressed: Texture2D
 @export var texture_flash: Texture2D 
 
+# Signal to tell the Cave scene which color was pressed
 signal interacted_with_pillar(color: String)
 
 var inside : bool = false
 
+# Grab the sprite when the scene loads for the flash animation
 @onready var sprite = $Sprite2D 
 
 func _ready():
+	# Force the sprite to show the normal texture the moment the game starts
 	if sprite and texture_normal:
 		sprite.texture = texture_normal
 
 func interact():
-	print("ID is: ", int_id) 
-	match int_id:
-		0:
-			pickup_item()
-		1:
-			print("<-- Junkyard. Forest -->")
-		2:
-			print("<-- Casa Rival")
-		3:
-			_change_scene()
-		4:
-			# NEW: Trigger the puzzle pillar logic
-			_trigger_pillar()
-
-func pickup_item():
-	print("Item picked up")
-	if owner:
-		owner.queue_free()
-	else:
-		queue_free()
-
-func _change_scene():
-	GameEvents.emit_signal("change_level_request", target_level_path, target_spawn_name)
+	print("Pillar interact function triggered!") 
+	_trigger_pillar()
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"): 
 		inside = true
-		print("Jugador detectado")
+		print("Jugador detectado en pilar")
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"): 
 		inside = false
 
-# --- NEW: Puzzle Functions ---
+# --- Puzzle Functions ---
 
 func _trigger_pillar():
 	player_press(0.2) # Show the button physically go down
 	interacted_with_pillar.emit(pillar_color) # Tell the Cave
 
+# The Cave script will call this to show the glowing pattern
 func sequence_flash(duration: float = 0.6):
 	if sprite and texture_flash:
 		sprite.texture = texture_flash
@@ -70,6 +48,7 @@ func sequence_flash(duration: float = 0.6):
 	if sprite and texture_normal:
 		sprite.texture = texture_normal
 
+# We use this to briefly show the button pressed down when the player clicks it
 func player_press(duration: float = 0.2):
 	if sprite and texture_pressed:
 		sprite.texture = texture_pressed

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dqdsim572plw7"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_ub0br"]
+[ext_resource type="Texture2D" uid="uid://urj2i48v34gy" path="res://assets/art/textures/tilesets/puzzle2_tileset.png" id="2_c1mw1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6seiq"]
+atlas = ExtResource("2_c1mw1")
+region = Rect2(0, 80, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lx7x"]
+atlas = ExtResource("2_c1mw1")
+region = Rect2(0, 208, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_157gl"]
+atlas = ExtResource("2_c1mw1")
+region = Rect2(32, 80, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vtr8"]
+atlas = ExtResource("2_c1mw1")
+region = Rect2(0, 80, 32, 48)
+
+[node name="button green" unique_id=223654149 instance=ExtResource("1_ub0br")]
+
+[node name="ItemInteract" parent="." index="0" unique_id=1442005765]
+int_id = 4
+pillar_color = "blue"
+texture_normal = SubResource("AtlasTexture_6seiq")
+texture_pressed = SubResource("AtlasTexture_5lx7x")
+texture_flash = SubResource("AtlasTexture_157gl")
+
+[node name="Sprite2D" type="Sprite2D" parent="ItemInteract" index="1" unique_id=2095292854]
+texture = SubResource("AtlasTexture_4vtr8")
