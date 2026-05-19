@@ -12,38 +12,66 @@ static func apply_effect(battle, effect_id:String, user, target, damage:int):
 		# ─────────────────────────────
 		
 		"SPEED_UP_1":
-			RobotParty.modify_stage(user, "speed", 1)
-			await battle.log_and_wait("¡La velocidad aumentó 1 nivel!")
+			if user.stat_stages["speed"] < 3:
+				RobotParty.modify_stage(user, "speed", 1)
+				await battle.log_and_wait("¡La velocidad aumentó 1 nivel!")
+			else:
+				await battle.log_and_wait("¡La velocidad está al máximo!")
 			
 		"SPEED_UP_2":
-			RobotParty.modify_stage(user, "speed", 2)
-			await battle.log_and_wait("¡La velocidad aumentó 2 niveles!")
+			if user.stat_stages["speed"] < 3:
+				RobotParty.modify_stage(user, "speed", 2)
+				await battle.log_and_wait("¡La velocidad aumentó 2 niveles!")
+			else:
+				await battle.log_and_wait("¡La velocidad está al máximo!")
 
 		"SPEED_DOWN_1":
-			RobotParty.modify_stage(target, "speed", -1)
-			await battle.log_and_wait("¡La velocidad se redució 1 nivel!")
+			if target.stat_stages["speed"] > -3:
+				RobotParty.modify_stage(target, "speed", -1)
+				await battle.log_and_wait("¡La velocidad se redució 1 nivel!")
+			else:
+				await battle.log_and_wait("¡La velocidad está al mínimo!")
 
 		"ATK_UP_1":
-			RobotParty.modify_stage(user, "attack", 1)
-			await battle.log_and_wait("¡El ataque aumentó 1 nivel!")
+			if user.stat_stages["attack"] < 3:
+				RobotParty.modify_stage(user, "attack", 1)
+				await battle.log_and_wait("¡El ataque aumentó 1 nivel!")
+			else:
+				await battle.log_and_wait("¡El ataque está al máximo!")
 
 		"ATK_DEF_UP_1":
-			RobotParty.modify_stage(user, "attack", 1)
-			RobotParty.modify_stage(user, "defense", 1)
-			await battle.log_and_wait("¡Ataque y defensa aumentaron 1 nivel!")
+			if user.stat_stages["attack"] < 3:
+				RobotParty.modify_stage(user, "attack", 1)
+				await battle.log_and_wait("¡El ataque aumentó 1 nivel!")
+			else:
+				await battle.log_and_wait("¡El ataque está al máximo!")
+			if user.stat_stages["defense"] < 3:
+				RobotParty.modify_stage(user, "defense", 1)
+				await battle.log_and_wait("¡La defensa aumentó 1 nivel!")
+			else:
+				await battle.log_and_wait("¡La defensa está al máximo!")
 
 		"DEF_UP_1":
-			RobotParty.modify_stage(user, "defense", 1)
-			await battle.log_and_wait("¡La defensa aumentó 1 nivel!")
+			if user.stat_stages["defense"] < 3:
+				RobotParty.modify_stage(user, "defense", 1)
+				await battle.log_and_wait("¡La defensa aumentó 1 nivel!")
+			else:
+				await battle.log_and_wait("¡La defensa está al máximo!")
 
 		"SELF_DEF_DOWN_1":
-			RobotParty.modify_stage(user, "defense", -1)
-			await battle.log_and_wait("¡La defensa se redució 1 nivel!")
+			if user.stat_stages["defense"] > -3:
+				RobotParty.modify_stage(user, "defense", 1)
+				await battle.log_and_wait("¡La defensa se redució 1 nivel!")
+			else:
+				await battle.log_and_wait("¡La defensa está al mínimo!")
 
 		"EVASION_UP_1":
-			RobotParty.modify_stage(user, "evasion", 1)
-			await battle.log_and_wait("¡La evasión aumentó 1 nivel!")
-		
+			if user.stat_stages["evasion"] < 3:
+				RobotParty.modify_stage(user, "evasion", 1)
+				await battle.log_and_wait("¡La evasión aumentó 1 nivel!")
+			else:
+				await battle.log_and_wait("¡La evasión está al máximo!")
+				
 		# ─────────────────────────────
 		# MULTI HIT
 		# ─────────────────────────────
