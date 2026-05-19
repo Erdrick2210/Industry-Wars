@@ -58,13 +58,15 @@ class RobotInstance:
 			var def = RobotDB.get_chassis(chassis_id)
 			return def.name if def else "???"
 		return nickname
-		
+	
+	# Devuelve el stat alterado por el combate
 	func get_modified_stat(stat_name:String) -> int:
 		var base_value = self.get(stat_name)
 		var stage = stat_stages.get(stat_name, 0)
 		var multiplier = stage_to_multiplier(stage)
 		return int(base_value * multiplier)
 	
+	# Conversor de nivel de stat a multiplicador
 	func stage_to_multiplier(stage:int) -> float:
 		match stage:
 			-3: return 0.4
@@ -194,7 +196,6 @@ func modify_stage(robot, stat:String, amount:int):
 		return
 
 	var old_stage = robot.stat_stages[stat]
-
 	robot.stat_stages[stat] = clamp(old_stage + amount, -3, 3)
 
 # ─── Serialización ────────────────────────────────────────────────────────────

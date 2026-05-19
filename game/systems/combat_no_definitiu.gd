@@ -51,7 +51,10 @@ func show_ability_info(ability):
 	ability_info.visible = true
 	ability_name_label.text = ability.name
 	ability_power_label.text = "POT: %d" % ability.power
-	ability_accuracy_label.text = "ACC: %d" % ability.accuracy
+	if ability.accuracy == -1:
+		ability_accuracy_label.text = "ACC: -"
+	else:
+		ability_accuracy_label.text = "ACC: %d" % ability.accuracy
 	ability_ep_label.text = "EP: %d" % ability.ep_cost
 	ability_description_label.text = ability.effect
 
@@ -102,10 +105,12 @@ func _process_log() -> void:
 @onready var player_epbar = $PlayerPanel/EPBar
 @onready var player_ep_text = $PlayerPanel/EPLabel
 @onready var player_expbar = $PlayerPanel/EXPBar
+@onready var player_buff_container = $PlayerPanel/BuffContainer
 
 @onready var enemy_name = $EnemyPanel/NameLabel
 @onready var enemy_level = $EnemyPanel/LevelLabel
 @onready var enemy_hpbar = $EnemyPanel/HPBar
+@onready var enemy_buff_container = $EnemyPanel/BuffContainer
 
 func init_battle_boxes():
 	# PLAYER
@@ -223,6 +228,33 @@ func animate_exp_gain(old_exp: int):
 		start_exp = segment_target
 
 	update_player_exp_ui()
+	
+func update_stat_stages_ui(robot, container):
+	# Clear old
+	for child in container.get_children():
+		child.queue_free()
+
+	for stat in robot.stat_stages.keys():
+		var stage = robot.stat_stages[stat]
+
+		if stage == 0:
+			continue
+
+		var label = Label.new()
+		label.modulate = Color.BLACK
+
+		if stage > 0:
+			label.text = "↑ %s %d" % [
+				stat.substr(0,3).to_upper(),
+				stage
+			]
+		else:
+			label.text = "↓ %s %d" % [
+				stat.substr(0,3).to_upper(),
+				abs(stage)
+			]
+
+		container.add_child(label)
 
 # ─────────────────────────────────────────────────────────────
 # INIT
@@ -279,6 +311,8 @@ func process_state() -> void:
 
 		CombatState.END_BATTLE:
 			await log_and_wait("Combate terminado.")
+			player_robot.reset_battle_modifiers()
+			enemy_robot.reset_battle_modifiers()
 			await get_tree().create_timer(1.0).timeout
 			GameManager.return_to_previous_scene()
 
@@ -371,7 +405,7 @@ func attack(atk, def, ability) -> void:
 	# Accuracy check
 	# ─────────────────────────────
 
-	if not BattleCalculator.check_accuracy(ability):
+	if not BattleCalculator.check_accuracy(atk, def, ability):
 		await log_and_wait("%s falla." % ability.name)
 		return
 	
@@ -390,6 +424,8 @@ func attack(atk, def, ability) -> void:
 	# ─────────────────────────────
 
 	await BattleEffects.apply_effect(self, ability.effect_id, atk, def, damage)
+	update_stat_stages_ui(player_robot, player_buff_container)
+	update_stat_stages_ui(enemy_robot, enemy_buff_container)
 	
 	# ─────────────────────────────
 	# Win condition

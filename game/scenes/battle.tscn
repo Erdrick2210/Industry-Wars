@@ -255,6 +255,13 @@ theme_override_styles/background = SubResource("StyleBoxFlat_uqqse")
 theme_override_styles/fill = SubResource("StyleBoxFlat_stub7")
 show_percentage = false
 
+[node name="BuffContainer" type="VBoxContainer" parent="PlayerPanel" unique_id=1214324448]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 152.0
+offset_right = 58.0
+offset_bottom = 432.0
+
 [node name="EnemyPanel" type="Panel" parent="." unique_id=1758111822]
 layout_mode = 0
 offset_left = 576.0
@@ -295,6 +302,13 @@ offset_bottom = 102.0
 theme_override_styles/background = SubResource("StyleBoxFlat_wd3if")
 theme_override_styles/fill = SubResource("StyleBoxFlat_meiey")
 show_percentage = false
+
+[node name="BuffContainer" type="VBoxContainer" parent="EnemyPanel" unique_id=1294778993]
+layout_mode = 0
+offset_left = 519.0
+offset_top = 152.0
+offset_right = 569.0
+offset_bottom = 432.0
 
 [node name="AbilityContainer" type="Control" parent="." unique_id=1496680190]
 anchors_preset = 0
