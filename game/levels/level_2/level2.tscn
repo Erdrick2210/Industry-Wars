@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cxsw4dooasics" path="res://game/levels/level_2/puzzle_home_door_o.tscn" id="12_67o4f"]
 [ext_resource type="PackedScene" uid="uid://vcqnta6q3nn1" path="res://game/levels/level_2/house_2_o.tscn" id="12_e3o72"]
 [ext_resource type="PackedScene" uid="uid://cdrgncwgmskjg" path="res://game/levels/level_2/puzzle_2_o.tscn" id="13_rn1it"]
+[ext_resource type="PackedScene" uid="uid://cme0qo28kjwqp" path="res://game/levels/level_2/house_3_o.tscn" id="14_8eg62"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y27mx"]
 size = Vector2(26, 112)
@@ -153,6 +154,12 @@ position = Vector2(2075, -443)
 
 [node name="FromPuzzle2" type="Marker2D" parent="WarpZones/Puzzle2_O" unique_id=133475636]
 position = Vector2(0, 55)
+
+[node name="House3" parent="WarpZones" unique_id=447133300 instance=ExtResource("14_8eg62")]
+position = Vector2(-210, 1188)
+
+[node name="FH3" type="Marker2D" parent="WarpZones/House3" unique_id=1521809158]
+position = Vector2(1, 46)
 
 [node name="WarpZoneLevel1" type="Area2D" parent="WarpZones" unique_id=285413837]
 position = Vector2(-398, 79)
