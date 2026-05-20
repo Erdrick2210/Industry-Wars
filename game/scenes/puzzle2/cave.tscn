@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dubbx2liid1jn" path="res://game/scenes/puzzle2/button_yellow.tscn" id="8_fo6f5"]
 [ext_resource type="PackedScene" uid="uid://cpmmnb8rbboum" path="res://game/scenes/puzzle2/chest.tscn" id="9_15j3c"]
 [ext_resource type="PackedScene" uid="uid://byxjjwb3wui4u" path="res://game/scenes/puzzle2/start_console.tscn" id="9_jvo38"]
+[ext_resource type="PackedScene" uid="uid://b34n2sypojh72" path="res://game/levels/level_2/cave_warp.tscn" id="10_jvo38"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fppxd"]
 texture = ExtResource("1_2uml6")
@@ -466,6 +467,9 @@ size = Vector2(20, 45)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqksl"]
 size = Vector2(20, 45)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l2hr"]
+size = Vector2(1263, 20)
+
 [node name="Cave" type="Node2D" unique_id=571681545]
 script = ExtResource("1_15j3c")
 
@@ -483,7 +487,7 @@ tile_map_data = PackedByteArray("AAAcACcAAAAMAAsAAAAdACcAAAAOAAoAAAAdACgAAAAMAAs
 tile_set = SubResource("TileSet_gmomg")
 
 [node name="Player" parent="." unique_id=1974727383 instance=ExtResource("2_fppxd")]
-position = Vector2(575, 620)
+position = Vector2(570, 597)
 
 [node name="Camera2D2" type="Camera2D" parent="Player" unique_id=2075392179]
 zoom = Vector2(1.5, 1.5)
@@ -571,6 +575,18 @@ position = Vector2(0, 5)
 
 [node name="CollisionShape2D" parent="StartConsole/Area2D/Sprite2D/StaticBody2D" index="0" unique_id=1692276915]
 position = Vector2(0, 0)
+
+[node name="CaveWarp" parent="." unique_id=1117670663 instance=ExtResource("10_jvo38")]
+position = Vector2(570, 652)
+
+[node name="FromLevel2" type="Marker2D" parent="CaveWarp" unique_id=945968860]
+position = Vector2(0, -27)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=400662307]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=649770450]
+position = Vector2(559.5, 663)
+shape = SubResource("RectangleShape2D_0l2hr")
 
 [connection signal="interacted_with_pillar" from="GreenPillar/ItemInteract" to="." method="_on_pillar_interacted"]
 [connection signal="interacted_with_pillar" from="BluePillar/ItemInteract" to="." method="_on_pillar_interacted"]
