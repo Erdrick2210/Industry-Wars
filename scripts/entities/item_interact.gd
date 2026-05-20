@@ -3,12 +3,14 @@ class_name InteractableItem
 
 @export var int_id : int
 
+# Scene Transition Variables
 @export_file("*.tscn") var target_level_path : String
 @export var target_spawn_name : String
 
 var inside : bool = false
 
 func interact():
+	print("Interact function triggered! My ID is: ", int_id) 
 	match int_id:
 		0:
 			pickup_item()
@@ -21,8 +23,6 @@ func interact():
 
 func pickup_item():
 	print("Item picked up")
-	# Añador logica de item al inventario
-	# Desaparicion del item
 	if owner:
 		owner.queue_free()
 	else:
@@ -36,6 +36,6 @@ func _on_body_entered(body: Node2D) -> void:
 		inside = true
 		print("Jugador detectado")
 
-
 func _on_body_exited(body: Node2D) -> void:
-	if body.is_in_group("Player"): inside = false
+	if body.is_in_group("Player"): 
+		inside = false

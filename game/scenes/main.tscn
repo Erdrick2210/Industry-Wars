@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bxuqdde50gi3m" path="res://game/levels/level_2/puzzle2_house.tscn" id="5_l3qal"]
 [ext_resource type="PackedScene" uid="uid://1wyiwhx4vk2" path="res://game/levels/level_2/house_2.tscn" id="6_uk16q"]
 [ext_resource type="PackedScene" uid="uid://cydmo4hlbpxs5" path="res://game/levels/level_2/house_3.tscn" id="7_7j1va"]
-[ext_resource type="PackedScene" uid="uid://c4uonisff3hsc" path="res://game/scenes/battle.tscn" id="8_rmvmd"]
+[ext_resource type="PackedScene" uid="uid://6ndeocvgxyos" path="res://game/scenes/puzzle2/cave.tscn" id="8_rmvmd"]
 
 [node name="main" type="Node2D" unique_id=1103462682]
 script = ExtResource("1_jbjdl")

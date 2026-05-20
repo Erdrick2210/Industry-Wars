@@ -6,4 +6,5 @@
 
 [node name="ItemInteract" parent="." index="0" unique_id=1442005765]
 int_id = 3
+target_level_path = "uid://6ndeocvgxyos"
 target_spawn_name = "FromLevel2"

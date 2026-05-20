@@ -19,8 +19,8 @@ func _on_body_entered(body: Node2D) -> void:
 		rival.process_mode = Node.PROCESS_MODE_INHERIT
 	
 	# Congelar al jugador
-	if body.has_method("set_frozen"):
-		body.set_frozen(true)
+	#if body.has_method("set_frozen"):
+	#	body.set_frozen(true)
 	
 	# Iniciar el diálogo
 	if dialogue_resource:
