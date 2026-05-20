@@ -21,7 +21,7 @@ func go_to_overworld():
 	get_tree().change_scene_to_file(OVERWORLD_SCENE)
 
 func start_battle():
-	get_tree().change_scene_to_file(BATTLE_SCENE)
+	GameEvents.emit_signal("start_battle", "res://game/scenes/battle.tscn")
 
 func return_to_previous_scene():
 	if previous_scene != "":

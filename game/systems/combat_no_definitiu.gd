@@ -339,7 +339,18 @@ func process_state() -> void:
 			player_robot.reset_battle_modifiers()
 			enemy_robot.reset_battle_modifiers()
 			await get_tree().create_timer(1.0).timeout
-			GameManager.return_to_previous_scene()
+			
+			GameEvents.end_combat()
+			
+			# NUEVO: Buscamos el nodo raíz 'main' en el árbol de Godot y le pedimos regresar
+			var main_node = get_tree().root.get_node_or_null("main") # Asegúrate de que tu escena principal se llame "main" (en minúsculas/mayúsculas según tu proyecto)
+			if main_node and main_node.has_method("_end_battle_and_return"):
+				main_node._end_battle_and_return()
+			else:
+				# Si no encuentra el nodo 'main' por su nombre, lo busca en el script padre de su CanvasLayer
+				var parent = get_parent()
+				if parent is CanvasLayer and parent.get_parent().has_method("_end_battle_and_return"):
+					parent.get_parent()._end_battle_and_return()
 
 # ─────────────────────────────────────────────────────────────
 # TURN LOGIC
