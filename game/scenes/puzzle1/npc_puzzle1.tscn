@@ -189,8 +189,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xy0iu"]
 size = Vector2(14, 14)
 
-[node name="NpcPuzzle1" type="CharacterBody2D" unique_id=1060618669]
+[node name="NpcPuzzle1" type="CharacterBody2D" unique_id=1060618669 node_paths=PackedStringArray("animation_sprite")]
 script = ExtResource("2_pors8")
+animation_sprite = NodePath("AnimatedSprite2D")
+speed = 200.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1073754637]
 sprite_frames = SubResource("SpriteFrames_l6o8v")

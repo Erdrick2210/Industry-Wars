@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bnq87kss4diov"]
+
+[ext_resource type="PackedScene" uid="uid://kegt8js53qyu" path="res://game/scenes/entities/ItemInteract.tscn" id="2_vogsl"]
+
+[node name="Sign" type="Node2D" unique_id=223654149]
+
+[node name="ItemInteract" parent="." unique_id=1442005765 instance=ExtResource("2_vogsl")]

@@ -1,16 +1,14 @@
-extends Interactable
+extends InteractableNPC
 
 const MINIGAME_SCENE = preload("res://game/scenes/puzzle1/minigame_puzzle1.tscn")
 @onready var area_int : Area2D = $Area2D
 @onready var damaged_lab : TileMapLayer = $"../DamagedLab"
-@export var speed: float = 200.0
 @export var switch_time: float = 1.5
 
 var direction: int = 1
 var timer: float = 0.0
 var is_running: bool = true  # <--- NUEVA VARIABLE
 
-@onready var anim = $AnimatedSprite2D
 
 func _physics_process(delta):
 	# Si no debe correr, detenemos la velocidad y salimos de la función
@@ -28,9 +26,9 @@ func _physics_process(delta):
 	velocity.x = direction * speed
 	
 	if direction == 1:
-		anim.play("run_right")
+		animation_sprite.play("run_right")
 	else:
-		anim.play("run_left")
+		animation_sprite.play("run_left")
 		
 	move_and_slide()
 
@@ -58,7 +56,7 @@ func _on_minigame_ended(win: bool, minigame_node: Node):
 		print("¡El NPC dice: Bien hecho, superaste el puzzle!")
 		repair_lab()
 		is_running = false # <--- SE QUEDA QUIETO PARA SIEMPRE
-		anim.play("idle_down")  # <--- Asegúrate de tener una animación llamada "idle"
+		animation_sprite.play("idle_down")  # <--- Asegúrate de tener una animación llamada "idle"
 	else:
 		print("¡El NPC dice: Has fallado, vuelve a intentarlo!")
 		is_running = true  # <--- VUELVE A CORRER SI FALLAS

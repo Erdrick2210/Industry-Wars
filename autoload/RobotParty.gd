@@ -16,24 +16,39 @@ const SAVE_PATH := "user://save_game.json"
 # ─── RobotInstance ────────────────────────────────────────────────────────────
 
 class RobotInstance:
-	var chassis_id:       int
-	var nickname:         String
-	var total_exp:        int
-	var current_hp:       int
-	var current_ep:       int
+	var chassis_id:  int
+	var nickname:    String    # vacío = usa el nombre del chasis
+	var total_exp:   int
+	var current_hp:  int       # HP actuales (se reduce en combate)
+	var current_ep:  int       # EP actuales
 
-	var level:    int
-	var max_hp:   int
-	var max_ep:   int
-	var attack:   int
-	var defense:  int
-	var speed:    int
-
+	# Stats calculadas (se actualizan al subir nivel)
+	var level:       int
+	var max_hp:      int
+	var max_ep:      int
+	var attack:      int
+	var defense:     int
+	var speed:       int
+	
+	# Habilidades desbloqueadas (ids de las que ya aprendió)
 	var learned_abilities: Array  # todos los aprendidos
 	var active_moves:      Array  # máx. 4, usados en combate
 
 	var equipped_core:    String = ""
 	var equipped_modules: Array  = []
+	
+	# Nivel de Stats durante el combate
+	var stat_stages = {
+		"attack": 0,
+		"defense": 0,
+		"speed": 0,
+		"accuracy": 0,
+		"evasion": 0
+	}
+	
+	# Estados alterados
+	var status_effect: String = ""
+	var volatile_statuses := {}
 
 	func _init(p_chassis_id: int, p_exp: int = 1) -> void:
 		chassis_id        = p_chassis_id
@@ -49,6 +64,49 @@ class RobotInstance:
 			var def = RobotDB.get_chassis(chassis_id)
 			return def.name if def else "???"
 		return nickname
+	
+	# Devuelve el stat alterado por el combate
+	func get_modified_stat(stat_name:String) -> int:
+		var base_value = self.get(stat_name)
+		var stage = stat_stages.get(stat_name, 0)
+		var multiplier = stage_to_multiplier(stage)
+		return int(base_value * multiplier)
+	
+	# Conversor de nivel de stat a multiplicador
+	func stage_to_multiplier(stage:int) -> float:
+		match stage:
+			-3: return 0.4
+			-2: return 0.5
+			-1: return 0.66
+			0: return 1.0
+			1: return 1.5
+			2: return 2.0
+			3: return 2.5
+		return 1.0
+	
+	# Modificadores de estados alterados
+	func has_status(status: String) -> bool:
+		return status_effect == status
+
+	func add_status(status:String):
+		status_effect = status
+
+	func remove_status():
+		status_effect = ""
+		
+	# Modificadores de estdos temporales
+	func add_volatile_status(status: String):
+		volatile_statuses[status] = true
+		
+	func remove_volatile_status(status: String):
+		volatile_statuses.erase(status)
+		
+	func has_volatile_status(status: String) -> bool:
+		return volatile_statuses.has(status)
+	
+	func reset_battle_modifiers():
+		for stat in stat_stages.keys():
+			stat_stages[stat] = 0
 
 	## Habilidades aprendidas que NO están en active_moves
 	func available_moves() -> Array:
@@ -301,6 +359,15 @@ func _save() -> void:
 		return
 	file.store_string(JSON.stringify(serialize(), "\t"))
 	file.close()
+	
+# ─── Estadísticas durante el combate ────────────────────────────────────────────────────────────
+
+func modify_stage(robot, stat:String, amount:int):
+	if not robot.stat_stages.has(stat):
+		return
+
+	var old_stage = robot.stat_stages[stat]
+	robot.stat_stages[stat] = clamp(old_stage + amount, -3, 3)
 
 func _load() -> bool:
 	if not FileAccess.file_exists(SAVE_PATH):
@@ -348,7 +415,8 @@ func deserialize(data: Array) -> void:
 	party_changed.emit()
 
 func _add_demo_party() -> void:
-	add_robot(1, 140)
-	add_robot(2, 520)
-	add_robot(3,  30)
-	add_robot(4, 980)
+	# EXP de ejemplo: nivel 5 = 125, nivel 8 = 512, nivel 3 = 27, nivel 10 = 1000
+	add_robot(1, 520)   # Guardián  ~nivel 8
+	add_robot(2, 520)   # Asalto    ~nivel 8
+	add_robot(3,  980)   # Explorador ~nivel 9
+	add_robot(4, 980)   # Técnico   ~nivel 9

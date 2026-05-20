@@ -9,10 +9,11 @@ size = Vector2(16, 6)
 [sub_resource type="CircleShape2D" id="CircleShape2D_3k55v"]
 radius = 155.00322
 
-[node name="Mentor" type="CharacterBody2D" unique_id=1470311325 node_paths=PackedStringArray("MentoraAnimation") groups=["Interactable"]]
+[node name="Mentor" type="CharacterBody2D" unique_id=1470311325 node_paths=PackedStringArray("animation_sprite") groups=["Interactable"]]
 collision_layer = 4
 script = ExtResource("1_5tgon")
-MentoraAnimation = NodePath("AnimatedSprite2D")
+animation_sprite = NodePath("AnimatedSprite2D")
+speed = 50.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=539148447]
 sprite_frames = ExtResource("1_fri8o")
@@ -28,6 +29,3 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1746287254]
 shape = SubResource("CircleShape2D_3k55v")
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

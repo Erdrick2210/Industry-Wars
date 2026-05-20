@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cqkkw524r4joq"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_pdks1"]
+[ext_resource type="Texture2D" uid="uid://c6sk5n62k7e0n" path="res://assets/art/textures/tilesets/firstzone_tileset.png" id="2_s12xn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s12xn"]
+size = Vector2(31, 31)
+
+[node name="TestItem" unique_id=223654149 instance=ExtResource("1_pdks1")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1" unique_id=886075981]
+texture = ExtResource("2_s12xn")
+region_enabled = true
+region_rect = Rect2(224, 32, 32, 32)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="2" unique_id=1729576559]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="0" unique_id=850153773]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_s12xn")

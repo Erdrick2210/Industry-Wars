@@ -25,6 +25,8 @@ DialogueManager="*uid://c3rodes2l3gxb"
 GameManager="*uid://yvpde1r6fa41"
 AbilitiesDB="*uid://c0d6c31s5jptb"
 ModuleDB="*uid://y1gaxotmsogt"
+GameEvents="*uid://chieddngn4os0"
+AbilityDB="*uid://c0d6c31s5jptb"
 
 [display]
 
@@ -98,3 +100,4 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

@@ -10,6 +10,16 @@ var last_direction = "down"
 # Variable para controlar el estado
 var is_frozen : bool = false 
 
+func _ready() -> void:
+	if GameManager.target_spawn_name != "":
+		var spawn_point = get_tree().current_scene.find_child(GameManager.target_spawn_name, true, false)
+		if spawn_point:
+			global_position = spawn_point.global_position
+			print("Jugador posicionado en: ", GameManager.target_spawn_name)
+			
+		else:
+			print("No se encontró el punto de spawn: ", GameManager.target_spawn_name)
+		
 func _physics_process(delta: float) -> void:
 	# --- LÓGICA DE CONGELAMIENTO ---
 	if is_frozen:
@@ -53,6 +63,7 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
+		print("Interact pressed")
 		if interactable and interactable.has_method("interact"):
 			interactable.interact()
 
@@ -63,8 +74,13 @@ func set_frozen(value: bool):
 
 
 func _on_interaction_area_area_entered(area: Area2D) -> void:
-	interactable = area.get_parent()
+	if area.has_method("interact"):
+		interactable = area
+		print("Interactable assigned: ", area.name)
+	elif area.get_parent().has_method("interact"):
+		interactable = area.get_parent()
 
 
 func _on_interaction_area_area_exited(area: Area2D) -> void:
-	interactable = null # Replace with function body.
+	if interactable == area or interactable == area.get_parent():
+		interactable = null # Replace with function body.
