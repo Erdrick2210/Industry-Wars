@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_q7dox"]
 [ext_resource type="Texture2D" uid="uid://btso4o28h1ko" path="res://assets/art/ui/battleCommand.png" id="3_1iry5"]
 [ext_resource type="Texture2D" uid="uid://dgox1aku3ssmd" path="res://assets/art/ui/enemybaseFieldGrass.png" id="4_ak62o"]
-[ext_resource type="Texture2D" uid="uid://dl45fl1uhlkin" path="res://assets/art/sprites/battlers/front/assault.png" id="5_5cged"]
+[ext_resource type="Texture2D" uid="uid://dl45fl1uhlkin" path="res://assets/art/sprites/battlers/assault.png" id="5_871wd"]
 [ext_resource type="Texture2D" uid="uid://dps4tvavaledi" path="res://assets/art/ui/battleCommandButtons.png" id="6_ak62o"]
-[ext_resource type="Texture2D" uid="uid://land53m4kkyp" path="res://assets/art/sprites/battlers/front/guardian.png" id="6_uuvcu"]
+[ext_resource type="Texture2D" uid="uid://land53m4kkyp" path="res://assets/art/sprites/battlers/guardian.png" id="6_uqqse"]
 [ext_resource type="Texture2D" uid="uid://hcdosd6c5t53" path="res://assets/art/ui/battlePlayerBoxS.png" id="8_yl0ul"]
 [ext_resource type="Texture2D" uid="uid://1eowrkwoxplh" path="res://assets/art/ui/battleFoeBoxS.png" id="9_871wd"]
 [ext_resource type="Texture2D" uid="uid://315ijfabr044" path="res://assets/art/ui/back_button.png" id="10_871wd"]
@@ -110,12 +110,12 @@ stretch_mode = 4
 [node name="EnemyRobot" type="Sprite2D" parent="." unique_id=411619326]
 position = Vector2(837, 294)
 scale = Vector2(2, 2)
-texture = ExtResource("5_5cged")
+texture = ExtResource("5_871wd")
 
 [node name="PlayerRobot" type="Sprite2D" parent="." unique_id=1799485215]
 position = Vector2(313, 297)
 scale = Vector2(2, 2)
-texture = ExtResource("6_uuvcu")
+texture = ExtResource("6_uqqse")
 flip_h = true
 
 [node name="BattleCommands" type="GridContainer" parent="." unique_id=740667587]

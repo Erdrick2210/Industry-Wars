@@ -19,6 +19,7 @@ class ChassisDef:
 	var id:          int
 	var name:        String
 	var description: String
+	var sprite_path: String
 	var base_hp:     int
 	var base_atk:    int
 	var base_def:    int
@@ -77,6 +78,8 @@ func _load_db() -> void:
 				current.name = val
 			"Description":
 				current.description = val
+			"Sprite":
+				current.sprite_path = val
 			"GrowthRate":
 				current.growth_rate = val
 			"BaseEXP":

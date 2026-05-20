@@ -64,7 +64,14 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 				await battle.log_and_wait("¡La defensa se redució 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La defensa está al mínimo!")
-
+		
+		"ACC_UP_1":
+			if user.stat_stages["accuracy"] < 3:
+				RobotParty.modify_stage(user, "accuracy", 1)
+				await battle.log_and_wait("¡La precisión aumentó 1 nivel!")
+			else:
+				await battle.log_and_wait("¡La precisión está al máximo!")
+		
 		"EVASION_UP_1":
 			if user.stat_stages["evasion"] < 3:
 				RobotParty.modify_stage(user, "evasion", 1)

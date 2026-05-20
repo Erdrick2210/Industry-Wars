@@ -107,6 +107,7 @@ func _process_log() -> void:
 # UI BATTLEBOX UPDATE
 # ─────────────────────────────────────────────────────────────
 
+@onready var player_sprite = $PlayerRobot
 @onready var player_name = $PlayerPanel/NameLabel
 @onready var player_level = $PlayerPanel/LevelLabel
 @onready var player_hpbar = $PlayerPanel/HPBar
@@ -117,6 +118,7 @@ func _process_log() -> void:
 @onready var player_buff_container = $PlayerPanel/BuffContainer
 @onready var player_status_container = $PlayerPanel/StatusContainer
 
+@onready var enemy_sprite = $EnemyRobot
 @onready var enemy_name = $EnemyPanel/NameLabel
 @onready var enemy_level = $EnemyPanel/LevelLabel
 @onready var enemy_hpbar = $EnemyPanel/HPBar
@@ -125,6 +127,7 @@ func _process_log() -> void:
 
 func init_battle_boxes():
 	# PLAYER
+	player_sprite.texture = load(RobotDB.get_chassis(player_robot.chassis_id).sprite_path)
 	player_name.text = player_robot.display_name()
 	player_level.text = "Lv " + str(player_robot.level)
 
@@ -138,6 +141,7 @@ func init_battle_boxes():
 	update_player_exp_ui()
 
 	# ENEMY
+	enemy_sprite.texture = load(RobotDB.get_chassis(enemy_robot.chassis_id).sprite_path)
 	enemy_name.text = enemy_robot.display_name()
 	enemy_level.text = "Lv " + str(enemy_robot.level)
 
