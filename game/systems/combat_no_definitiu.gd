@@ -573,6 +573,9 @@ func execute_turn():
 	# TURN END - STATUS CONDITIONS
 	# ─────────────────────────────
 	
+	if state == CombatState.END_BATTLE:
+		return
+	
 	await process_status_effects()
 	if await check_win_condition():
 		return
@@ -717,7 +720,8 @@ func _format_robot_stats(robot) -> String:
 		
 	var volatile_text = str(robot.volatile_statuses.keys())
 
-	return "%s\nHP: %d/%d | EP: %d/%d\nATK: %d | DEF: %d | SPD: %d\nSTAGES: %s\nSTATUS: %s\nVOLATILE: %s" % [
+	return "%s\nHP: %d/%d | EP: %d/%d\nATK: %d | DEF: %d | SPD: %d
+	\nSTAGES: %s\nSTATUS: %s\nVOLATILE: %s" % [
 		robot.display_name(),
 		robot.current_hp, robot.max_hp,
 		robot.current_ep, robot.max_ep,

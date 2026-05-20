@@ -243,5 +243,5 @@ func _add_demo_party() -> void:
 	# EXP de ejemplo: nivel 5 = 125, nivel 8 = 512, nivel 3 = 27, nivel 10 = 1000
 	add_robot(1, 520)   # Guardián  ~nivel 8
 	add_robot(2, 520)   # Asalto    ~nivel 8
-	add_robot(3,  30)   # Explorador ~nivel 3
+	add_robot(3,  980)   # Explorador ~nivel 9
 	add_robot(4, 980)   # Técnico   ~nivel 9

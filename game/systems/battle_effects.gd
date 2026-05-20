@@ -60,7 +60,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 
 		"SELF_DEF_DOWN_1":
 			if user.stat_stages["defense"] > -3:
-				RobotParty.modify_stage(user, "defense", 1)
+				RobotParty.modify_stage(user, "defense", -1)
 				await battle.log_and_wait("¡La defensa se redució 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La defensa está al mínimo!")
