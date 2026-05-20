@@ -564,7 +564,13 @@ shape = SubResource("RectangleShape2D_mqksl")
 position = Vector2(570, 165)
 
 [node name="StartConsole" parent="." unique_id=699977917 instance=ExtResource("9_jvo38")]
-position = Vector2(667, 296)
+position = Vector2(667, 313)
+
+[node name="StaticBody2D" parent="StartConsole/Area2D/Sprite2D" parent_id_path=PackedInt32Array(699977917, 1851720698) index="0" unique_id=32711504]
+position = Vector2(0, 5)
+
+[node name="CollisionShape2D" parent="StartConsole/Area2D/Sprite2D/StaticBody2D" index="0" unique_id=1692276915]
+position = Vector2(0, 0)
 
 [connection signal="interacted_with_pillar" from="GreenPillar/ItemInteract" to="." method="_on_pillar_interacted"]
 [connection signal="interacted_with_pillar" from="BluePillar/ItemInteract" to="." method="_on_pillar_interacted"]

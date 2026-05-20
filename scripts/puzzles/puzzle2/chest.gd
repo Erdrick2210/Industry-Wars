@@ -5,7 +5,7 @@ extends Area2D
 
 @onready var sprite = $Sprite2D
 var is_open: bool = false
-var is_locked: bool = true # <--- NEW: The chest starts locked!
+var is_locked: bool = true 
 
 func _ready():
 	if sprite and texture_closed:
