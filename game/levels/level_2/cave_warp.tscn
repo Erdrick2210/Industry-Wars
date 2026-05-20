@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b34n2sypojh72"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_ee7uj"]
+
+[node name="CaveWarp" unique_id=223654149 instance=ExtResource("1_ee7uj")]
+
+[node name="ItemInteract" parent="." index="0" unique_id=1442005765]
+int_id = 3
+target_level_path = "uid://ejeu6y7jv50y"
+target_spawn_name = "FromPuzzle2"
