@@ -1,0 +1,31 @@
+[NUCLEO_LOGISTICO]
+Name=Núcleo Logístico
+Subtitle=Alta Velocidad
+Icon=💡
+Modifiers=speed,25,defense,-10
+Passive=Si ataca primero, inflige +20% daño.
+PassiveID=FIRST_STRIKE_BONUS
+
+[NUCLEO_PRODUCTIVO]
+Name=Núcleo Productivo
+Subtitle=Ataque
+Icon=🛠️
+Modifiers=attack,25,max_hp,-15
+Passive=El primer ataque del combate hace +30% daño.
+PassiveID=FIRST_ATTACK_BONUS
+
+[NUCLEO_RECICLADOR]
+Name=Núcleo Reciclador
+Subtitle=Recuperación HP
+Icon=♻️
+Modifiers=max_hp,30,max_ep,-10
+Passive=Recupera 5 HP al final de cada turno.
+PassiveID=HP_REGEN_5
+
+[NUCLEO_ENERGETICO]
+Name=Núcleo Energético
+Subtitle=Mayor EP máximo
+Icon=⚡
+Modifiers=max_ep,20,attack,-10
+Passive=Las habilidades cuestan 15% menos EP.
+PassiveID=EP_COST_REDUCTION

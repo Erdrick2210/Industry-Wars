@@ -16,7 +16,7 @@ func _ready() -> void:
 
 	for id in todos_los_ids:
 		# Añadimos 1 unidad de cada cosa para probar
-		Inventory.add_item(id, 1)
+		Inventory.add_item(id, 5)
 		print("Añadido: ", id)
 
 	print("--- CARGA COMPLETADA: ", Inventory._slots.size(), " SLOTS OCUPADOS ---")

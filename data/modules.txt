@@ -1,0 +1,143 @@
+# modules.txt
+# Formato:
+# [ID]
+# Name=...
+# Type=passive|active
+# Category=offensive|defensive|energetic|tactical
+# Icon=...
+# Modifiers=stat,val,stat,val,...   (vacío si ninguno)
+# PassiveID=ID_EFECTO_PASIVO        (solo pasivos; resuelto en combate)
+# Skill=ID_HABILIDAD                (solo activos; definida en abilities.txt)
+# SkillCost=N                       (EP; sobreescribe el coste base de la habilidad)
+# SkillCooldown=N                   (turnos; sobreescribe el cooldown base)
+# RequiredCore=ID_NUCLEO            (vacío = sin restricción)
+# StatSlot=attack|defense|speed|none
+
+# ─── OFENSIVOS ────────────────────────────────────────────────────────────────
+
+[MOD_SOBRECARGADOR_CINETICO]
+Name=Sobrecargador Cinético
+Type=passive
+Category=offensive
+Icon=🔴
+Modifiers=attack,20,defense,-10
+PassiveID=STAT_BOOST_ATTACK
+StatSlot=attack
+
+[MOD_PROYECTOR_IMPACTO]
+Name=Proyector de Impacto
+Type=active
+Category=offensive
+Icon=🔴
+Modifiers=
+Skill=DISPARO_PERFORANTE
+SkillCost=25
+RequiredCore=NUCLEO_PRODUCTIVO
+StatSlot=none
+
+[MOD_NUCLEO_COMBATE]
+Name=Núcleo de Combate Cercano
+Type=active
+Category=offensive
+Icon=🔴
+Modifiers=
+Skill=EMBATE_BRUTAL
+SkillCost=30
+RequiredCore=NUCLEO_PRODUCTIVO
+StatSlot=none
+
+# ─── DEFENSIVOS ───────────────────────────────────────────────────────────────
+
+[MOD_PLACAS_REFORZADAS]
+Name=Placas Reforzadas
+Type=passive
+Category=defensive
+Icon=🔵
+Modifiers=defense,25,speed,-10
+PassiveID=STAT_BOOST_DEFENSE
+StatSlot=defense
+
+[MOD_MINERAL_ENDURECEDOR]
+Name=Mineral Endurecedor
+Type=active
+Category=defensive
+Icon=🔵
+Modifiers=
+Skill=CAMPO_MITIGACION
+SkillCost=20
+RequiredCore=NUCLEO_RECICLADOR
+StatSlot=none
+
+[MOD_ABSORBEDOR_IMPACTO]
+Name=Absorbedor de Impacto
+Type=passive
+Category=defensive
+Icon=🔵
+Modifiers=
+PassiveID=CRIT_REDUCTION_15
+StatSlot=none
+
+# ─── ENERGÉTICOS ──────────────────────────────────────────────────────────────
+
+[MOD_CONDENSADOR_EXPANDIDO]
+Name=Condensador Expandido
+Type=passive
+Category=energetic
+Icon=🟡
+Modifiers=max_ep,30
+PassiveID=STAT_BOOST_EP
+StatSlot=none
+
+[MOD_REACTOR_AUXILIAR]
+Name=Reactor Auxiliar
+Type=passive
+Category=energetic
+Icon=🟡
+Modifiers=
+PassiveID=EP_REGEN_5
+StatSlot=none
+
+[MOD_CARGADOR_EXTERNO]
+Name=Cargador Externo
+Type=active
+Category=energetic
+Icon=🟡
+Modifiers=
+Skill=PULSO_RECARGA
+SkillCost=0
+SkillCooldown=3
+RequiredCore=NUCLEO_ENERGETICO
+StatSlot=none
+
+# ─── TÁCTICOS ─────────────────────────────────────────────────────────────────
+
+[MOD_PROPULSORES_VECTORIALES]
+Name=Propulsores Vectoriales
+Type=passive
+Category=tactical
+Icon=🟢
+Modifiers=speed,20
+PassiveID=STAT_BOOST_SPEED
+StatSlot=speed
+
+[MOD_DISTORSIONADOR_OPTICO]
+Name=Distorsionador Óptico
+Type=active
+Category=tactical
+Icon=🟢
+Modifiers=
+Skill=ESPEJISMO_ILUSORIO
+SkillCost=20
+RequiredCore=NUCLEO_LOGISTICO
+StatSlot=none
+
+[MOD_INTERFERIDOR_NEURAL]
+Name=Interferidor Neural
+Type=active
+Category=tactical
+Icon=🟢
+Modifiers=
+Skill=DETERIORO_ACELERADO
+SkillCost=25
+RequiredCore=NUCLEO_LOGISTICO
+StatSlot=none

@@ -65,6 +65,9 @@ layout_mode = 2
 [node name="RecipeDesc" type="Label" parent="SplitContainer/RightPanel/VBox" unique_id=1651946432]
 layout_mode = 2
 
+[node name="ResultPreview" type="Label" parent="SplitContainer/RightPanel/VBox" unique_id=558362956]
+layout_mode = 2
+
 [node name="IngredientsBox" type="VBoxContainer" parent="SplitContainer/RightPanel/VBox" unique_id=147219300]
 layout_mode = 2
 
