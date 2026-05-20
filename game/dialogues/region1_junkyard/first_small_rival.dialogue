@@ -8,3 +8,4 @@ Novato: Llevo dos semanas aquí y ya gané tres duelos. ¿Te atreves a un combat
 	do GameManager.start_battle()
 - Ahora no, estoy configurando módulos.
 	Novato: ¡Bah, qué aburrido! Cuando dejes de tener miedo me encontrarás cerca del taller.
+	do GameEvents.cancel_battle("Rival")

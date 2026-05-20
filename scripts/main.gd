@@ -2,12 +2,14 @@ extends Node2D
 
 @export var level : Array[PackedScene]
 
+
 var _current_level: String 
 var _instantiated_level : Node
 var _level_cache : Dictionary = {}
+var _is_returning_from_battle: bool = false
 
 func _ready() -> void:
-	
+	GameEvents.register_world_node(self)
 	GameEvents.change_level_request.connect(_on_level_change_requested)
 	GameEvents.start_battle.connect(_start_battle)
 	# Usamos la misma función de cambio para el nivel 1 para que se guarde en cache
@@ -78,6 +80,10 @@ func _start_battle(battle_path : String):
 	print("[Main] Escena de combate inyectada dentro de un CanvasLayer protector.")
 
 func _end_battle_and_return():
+	if _is_returning_from_battle:
+		return
+	_is_returning_from_battle = true
+	
 	print("[Main] Finalizando combate y preparando retorno...")
 	
 	# 1. Buscamos el contenedor de la batalla y lo destruimos por completo de la memoria
@@ -89,6 +95,5 @@ func _end_battle_and_return():
 	if _current_level != "":
 		_change_level(_current_level)
 		print("[Main] Devuelto con éxito al mapa: ", _current_level)
-	else:
-		# Por si acaso fallase la variable, cargamos el nivel por defecto
-		_change_level("res://game/levels/level_1/playerHome.tscn")
+	await get_tree().process_frame
+	_is_returning_from_battle = false
