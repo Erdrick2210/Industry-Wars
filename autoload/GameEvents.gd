@@ -1,15 +1,24 @@
 extends Node
 signal change_level_request(level_path : String, spawn_name : String)
+signal start_battle(battle_path : String)
 var rival_event_done = false
-signal combat_rival2_finished
+var _world_node: Node = null
+signal combat_rival_finished(player_won: bool, enemy_name: String)
+
+func register_world_node(node: Node) -> void:
+	_world_node = node
+
+func end_battle(player_won: bool, enemy_name: String) -> void:
+	combat_rival_finished.emit(player_won, enemy_name)
+	
+	# Buscamos a main.gd y le ordenamos que limpie la interfaz y devuelva al jugador
+	if _world_node and _world_node.has_method("_end_battle_and_return"):
+		_world_node._end_battle_and_return.call_deferred()
+
 
 func end_combat() -> void:
-	combat_rival2_finished.emit()
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	combat_rival_finished.emit(true, "RivalLevel2")
+	
+func cancel_battle(enemy_name: String) -> void:
+	print("[GameEvents] Batalla cancelada en el diálogo para: ", enemy_name)
+	combat_rival_finished.emit(false, enemy_name)

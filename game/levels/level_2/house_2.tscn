@@ -2,6 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://gnhbe38dmnqi" path="res://assets/art/textures/tilesets/playerHome.tres" id="1_ei7xl"]
 [ext_resource type="PackedScene" uid="uid://dk1stoxfoawd" path="res://game/levels/level_2/house_2_door.tscn" id="2_65oiw"]
+[ext_resource type="PackedScene" uid="uid://dwi2l0fuc3o8o" path="res://game/scenes/entities/player_actions.tscn" id="3_nmmmp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_65oiw"]
 size = Vector2(769, 20)
@@ -35,9 +36,6 @@ z_index = 2
 tile_map_data = PackedByteArray("AAD7//7/AQAAAAAAAAD7//3/AQAAAAAAAAD7//z/AQAAAAAAAAD7//v/AQAAAAAAAAD6//7/AQAAAAAAAQD5//7/AQAAAAAAAQD4//7/AQAAAAAAAQD1//7/AQAAAAAAAQD0//7/AQAAAAAAAQD7//r/AQAAAAAAAAD7//n/AQAAAAAAAAADAP7/AQAAAAAAAQAEAP7/AQAAAAAAAQAFAP7/AQAAAAAAAQAGAP7/AQAAAAAAAQA=")
 tile_set = ExtResource("1_ei7xl")
 
-[node name="FromLevel2" type="Marker2D" parent="." unique_id=460967922]
-position = Vector2(-42, 191)
-
 [node name="MapLimits" type="StaticBody2D" parent="." unique_id=1061312408]
 collision_mask = 2
 
@@ -55,3 +53,9 @@ shape = SubResource("RectangleShape2D_nmmmp")
 
 [node name="house2_door" parent="." unique_id=223654149 instance=ExtResource("2_65oiw")]
 position = Vector2(-42, 244)
+
+[node name="FromLevel2" type="Marker2D" parent="house2_door" unique_id=460967922]
+position = Vector2(-1, -54)
+
+[node name="Player" parent="." unique_id=1974727383 instance=ExtResource("3_nmmmp")]
+position = Vector2(-41, 180)

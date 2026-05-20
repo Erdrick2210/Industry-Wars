@@ -9,8 +9,8 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	
 	# Evitar que se active más de una vez
-	monitoring = false
-	monitorable = false
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 	
 	# Mostrar al rival
 	if rival:
@@ -28,12 +28,3 @@ func _on_body_entered(body: Node2D) -> void:
 		await DialogueManager.show_dialogue_balloon(dialogue_resource, dialogue_title) 
 	
 	queue_free()
-
-
-# Opcional: Para debuggear en el editor
-func _on_body_exited(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		monitoring = true  # Reactivar si el jugador sale (útil para pruebas)
-
-func _start_battle() -> void:
-	get_tree().change_scene_to_file("res://game/scenes/battle.tscn")

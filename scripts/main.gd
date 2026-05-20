@@ -2,13 +2,16 @@ extends Node2D
 
 @export var level : Array[PackedScene]
 
+
 var _current_level: String 
 var _instantiated_level : Node
 var _level_cache : Dictionary = {}
+var _is_returning_from_battle: bool = false
 
 func _ready() -> void:
-	
+	GameEvents.register_world_node(self)
 	GameEvents.change_level_request.connect(_on_level_change_requested)
+	GameEvents.start_battle.connect(_start_battle)
 	# Usamos la misma función de cambio para el nivel 1 para que se guarde en cache
 	_change_level("res://game/levels/level_1/playerHome.tscn")
 
@@ -36,6 +39,7 @@ func _change_level(level_path: String):
 		_instantiated_level.prepare_level()
 
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		_toggle_bag()
@@ -54,3 +58,42 @@ func _toggle_bag() -> void:
 	add_child(canvas)
 	canvas.add_child(menu)
 	menu.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+
+func _start_battle(battle_path : String):
+	# 1. Quitamos el nivel actual del Overworld del árbol
+	if _instantiated_level:
+		remove_child(_instantiated_level)
+	
+	# 2. Instanciamos la escena de batalla
+	var battle_res = load(battle_path)
+	_instantiated_level = battle_res.instantiate()
+	
+	# 3. Creamos un contenedor de Canvas Layer dinámico
+	var battle_canvas = CanvasLayer.new()
+	battle_canvas.name = "BattleCanvas"
+	
+	# 4. Enlazamos la jerarquía: Main -> CanvasLayer -> Escena de Batalla
+	add_child(battle_canvas)
+	battle_canvas.add_child(_instantiated_level)
+	
+	print("[Main] Escena de combate inyectada dentro de un CanvasLayer protector.")
+
+func _end_battle_and_return():
+	if _is_returning_from_battle:
+		return
+	_is_returning_from_battle = true
+	
+	print("[Main] Finalizando combate y preparando retorno...")
+	
+	# 1. Buscamos el contenedor de la batalla y lo destruimos por completo de la memoria
+	var battle_canvas = get_node_or_null("BattleCanvas")
+	if battle_canvas:
+		battle_canvas.queue_free()
+	
+	# 2. Recuperamos el nivel donde se quedó el jugador usando la ruta guardada en '_current_level'
+	if _current_level != "":
+		_change_level(_current_level)
+		print("[Main] Devuelto con éxito al mapa: ", _current_level)
+	await get_tree().process_frame
+	_is_returning_from_battle = false

@@ -103,17 +103,17 @@ limit_bottom = 2200
 [node name="LeagueBoss" parent="." unique_id=1838061329 instance=ExtResource("7_6j5gc")]
 position = Vector2(1927, 1841)
 
-[node name="Rival" parent="." unique_id=1029693162 instance=ExtResource("8_v1e6q")]
+[node name="RivalLevel2" parent="." unique_id=1029693162 instance=ExtResource("8_v1e6q")]
 position = Vector2(61, -627)
 script = ExtResource("10_8dorb")
 speed = 150.0
 look_distance = 300.0
 
-[node name="InteractionArea2" type="Area2D" parent="Rival" unique_id=1623450932]
+[node name="InteractionArea2" type="Area2D" parent="RivalLevel2" unique_id=1623450932]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Rival/InteractionArea2" unique_id=1661549905]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RivalLevel2/InteractionArea2" unique_id=1661549905]
 position = Vector2(0, 12)
 shape = SubResource("CircleShape2D_67o4f")
 
@@ -193,5 +193,5 @@ position = Vector2(2092, 2163)
 [node name="RetiradaRival" type="Marker2D" parent="WarpZones" unique_id=2128027419]
 position = Vector2(-343, -441)
 
-[connection signal="body_entered" from="TriggerAnimacioRival" to="Rival" method="_on_trigger_animacio_rival_body_entered"]
+[connection signal="body_entered" from="TriggerAnimacioRival" to="RivalLevel2" method="_on_trigger_animacio_rival_body_entered"]
 [connection signal="body_entered" from="WarpZones/WarpZoneLevel1" to="WarpZones/WarpZoneLevel1" method="_on_body_entered"]
