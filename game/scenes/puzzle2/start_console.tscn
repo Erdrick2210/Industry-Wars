@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://byxjjwb3wui4u"]
+
+[ext_resource type="Script" uid="uid://duahk58siduu1" path="res://scripts/puzzles/puzzle2/start_console.gd" id="1_pfewe"]
+[ext_resource type="Texture2D" uid="uid://urj2i48v34gy" path="res://assets/art/textures/tilesets/puzzle2_tileset.png" id="2_fooug"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fooug"]
+atlas = ExtResource("2_fooug")
+region = Rect2(160, 72, 32, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0bgj"]
+atlas = ExtResource("2_fooug")
+region = Rect2(192, 72, 32, 24)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pfewe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnxfj"]
+atlas = ExtResource("2_fooug")
+region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fooug"]
+size = Vector2(26, 20)
+
+[node name="StartConsole" type="Node2D" unique_id=699977917]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=792044994]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_pfewe")
+texture_normal = SubResource("AtlasTexture_fooug")
+texture_pressed = SubResource("AtlasTexture_w0bgj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1696867370]
+shape = SubResource("CircleShape2D_pfewe")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=1851720698]
+z_index = -1
+texture = SubResource("AtlasTexture_rnxfj")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Area2D/Sprite2D" unique_id=32711504]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/Sprite2D/StaticBody2D" unique_id=1692276915]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_fooug")

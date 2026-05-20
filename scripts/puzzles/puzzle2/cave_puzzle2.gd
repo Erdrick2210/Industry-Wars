@@ -11,13 +11,11 @@ var current_round: int = 0
 var target_sequence: Array[String] = []
 var player_input_index: int = 0
 
-enum GameState { SHOWING_SEQUENCE, WAITING_FOR_INPUT, GAME_OVER, PUZZLE_SOLVED }
-var current_state = GameState.SHOWING_SEQUENCE
+enum GameState { NOT_STARTED, SHOWING_SEQUENCE, WAITING_FOR_INPUT, GAME_OVER, PUZZLE_SOLVED }
+var current_state = GameState.NOT_STARTED
 
 func _ready():
-	# Wait 1.5 seconds after entering the cave before starting the puzzle
-	await get_tree().create_timer(1.5).timeout
-	start_round()
+	pass
 
 func start_round():
 	# Check if the player has beaten all 3 rounds
@@ -104,3 +102,10 @@ func win_puzzle():
 
 	if reward_chest:
 		reward_chest.unlock()
+		
+func begin_puzzle():
+	# Only start if the puzzle hasn't been started yet
+	if current_state == GameState.NOT_STARTED:
+		print("Puzzle Initiated! Get ready...")
+		await get_tree().create_timer(1.0).timeout
+		start_round()

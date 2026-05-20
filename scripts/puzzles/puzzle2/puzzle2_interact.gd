@@ -20,7 +20,6 @@ func _ready():
 		sprite.texture = texture_normal
 
 func interact():
-	print("Pillar interact function triggered!") 
 	_trigger_pillar()
 
 func _on_body_entered(body: Node2D) -> void:

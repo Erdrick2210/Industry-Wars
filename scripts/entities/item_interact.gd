@@ -3,26 +3,14 @@ class_name InteractableItem
 
 @export var int_id : int
 
+# Scene Transition Variables
 @export_file("*.tscn") var target_level_path : String
 @export var target_spawn_name : String
 
-@export var pillar_color: String 
-@export var texture_normal: Texture2D
-@export var texture_pressed: Texture2D
-@export var texture_flash: Texture2D 
-
-signal interacted_with_pillar(color: String)
-
 var inside : bool = false
 
-@onready var sprite = $Sprite2D 
-
-func _ready():
-	if sprite and texture_normal:
-		sprite.texture = texture_normal
-
 func interact():
-	print("ID is: ", int_id) 
+	print("Interact function triggered! My ID is: ", int_id) 
 	match int_id:
 		0:
 			pickup_item()
@@ -32,9 +20,6 @@ func interact():
 			print("<-- Casa Rival")
 		3:
 			_change_scene()
-		4:
-			# NEW: Trigger the puzzle pillar logic
-			_trigger_pillar()
 
 func pickup_item():
 	print("Item picked up")
@@ -54,27 +39,3 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"): 
 		inside = false
-
-# --- NEW: Puzzle Functions ---
-
-func _trigger_pillar():
-	player_press(0.2) # Show the button physically go down
-	interacted_with_pillar.emit(pillar_color) # Tell the Cave
-
-func sequence_flash(duration: float = 0.6):
-	if sprite and texture_flash:
-		sprite.texture = texture_flash
-	
-	await get_tree().create_timer(duration).timeout
-	
-	if sprite and texture_normal:
-		sprite.texture = texture_normal
-
-func player_press(duration: float = 0.2):
-	if sprite and texture_pressed:
-		sprite.texture = texture_pressed
-	
-	await get_tree().create_timer(duration).timeout
-	
-	if sprite and texture_normal:
-		sprite.texture = texture_normal

@@ -34,6 +34,7 @@ texture_open = SubResource("AtlasTexture_xskyr")
 shape = SubResource("CircleShape2D_75b7r")
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=606893395]
+z_index = -1
 texture = SubResource("AtlasTexture_fo6f5")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Area2D/Sprite2D" unique_id=871371138]
