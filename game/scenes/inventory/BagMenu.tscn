@@ -132,9 +132,15 @@ layout_mode = 2
 text = "ItemName
 "
 
+[node name="BonusLabel" type="Label" parent="DetailsContainer/NameDescContainer" unique_id=705372576]
+layout_mode = 2
+
 [node name="DescLabel" type="Label" parent="DetailsContainer/NameDescContainer" unique_id=1188802508]
 layout_mode = 2
 text = "Item Description"
+
+[node name="FeedbackLabel" type="Label" parent="DetailsContainer/NameDescContainer" unique_id=1224724500]
+layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="DetailsContainer" unique_id=118031072]
 layout_mode = 2
@@ -149,6 +155,17 @@ layout_mode = 2
 text = "x3"
 horizontal_alignment = 2
 
+[node name="MarginContainer2" type="MarginContainer" parent="DetailsContainer" unique_id=329219373]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 0
+
+[node name="EquippedLabel" type="Label" parent="DetailsContainer" unique_id=1684128830]
+layout_mode = 2
+text = "Equipped"
+
 [node name="ActionBtn" type="Button" parent="DetailsContainer" unique_id=1128732726]
 visible = false
 layout_mode = 2
@@ -156,3 +173,40 @@ size_flags_vertical = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1173361980]
 libraries/ = SubResource("AnimationLibrary_xlwhc")
+
+[node name="RobotPopup" type="Panel" parent="." unique_id=1084660870]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="RobotPopup" unique_id=971559648]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="PopupTitle" type="Label" parent="RobotPopup/VBox" unique_id=1488247994]
+layout_mode = 2
+text = "Elige un Robot para Equipar"
+horizontal_alignment = 1
+
+[node name="PopupList" type="VBoxContainer" parent="RobotPopup/VBox" unique_id=169194359]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CancelBtn" type="Button" parent="RobotPopup/VBox" unique_id=1899558397]
+layout_mode = 2
+text = "Cancelar"
