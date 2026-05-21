@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var is_interior : bool = false
 @onready var player = $Player
 @onready var WarpZoneLvl1 = $WarpZones/WarpZoneLevel1
 
