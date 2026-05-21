@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://33tb10giodbh"]
+
+[ext_resource type="Script" uid="uid://eit63j1r2x6j" path="res://scripts/core/minimap_gui.gd" id="1_s0017"]
+[ext_resource type="Texture2D" uid="uid://coccwt7n8mn86" path="res://assets/art/sprites/characters/mc.png" id="2_g27ks"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s0017"]
+bg_color = Color(0.004019165, 0.004019165, 0.004019165, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.69803923, 0.5529412, 0.27450982, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 5
+
+[node name="MinimapGUI" type="Control" unique_id=292967289]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_s0017")
+
+[node name="Panel" type="Panel" parent="." unique_id=1849447767]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 203.0
+offset_bottom = 153.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_s0017")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1879216666]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 150.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=348861502]
+handle_input_locally = false
+canvas_cull_mask = 4293918723
+size = Vector2i(200, 150)
+render_target_update_mode = 4
+
+[node name="MapCamera" type="Camera2D" parent="SubViewportContainer/SubViewport" unique_id=1183775959]
+light_mask = 2
+visibility_layer = 2
+
+[node name="PlayerIcon" type="Sprite2D" parent="SubViewportContainer" unique_id=810669123]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_g27ks")
+region_enabled = true
+region_rect = Rect2(2, 8, 28, 38)

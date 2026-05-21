@@ -1,5 +1,7 @@
 extends Node2D
-@onready var player = $playerActions
+
+@export var is_interior : bool = false
+@onready var player = $Player
 @onready var mentor = $Mentor 
 @onready var WarpZoneLvl2 = $WarpZoneLevel2
 

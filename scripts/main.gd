@@ -12,7 +12,6 @@ func _ready() -> void:
 	GameEvents.register_world_node(self)
 	GameEvents.change_level_request.connect(_on_level_change_requested)
 	GameEvents.start_battle.connect(_start_battle)
-	# Usamos la misma función de cambio para el nivel 1 para que se guarde en cache
 	_change_level("res://game/levels/level_1/playerHome.tscn")
 
 func _on_level_change_requested(level_path: String, spawn_name: String):
@@ -35,8 +34,31 @@ func _change_level(level_path: String):
 		print("Nivel instanciado por primera vez: ", level_path)
 	add_child(_instantiated_level)
 	
+	# Esperamos un frame para que el Player y su cámara existan en el árbol
+	await get_tree().process_frame
+	
 	if _instantiated_level.has_method("prepare_level"):
 		_instantiated_level.prepare_level()
+	
+	var minimap = get_node_or_null("UICanvas/MinimapGUI")
+	if minimap:
+		var raw_interior = _instantiated_level.get("is_interior")
+		var level_is_interior: bool = raw_interior if raw_interior != null else true
+		
+		minimap.player = null 
+		minimap.is_interior = level_is_interior
+		minimap.visible = !level_is_interior
+		minimap.is_expanded = false
+		minimap._update_view_mode()
+		
+		if not level_is_interior and is_instance_valid(minimap.viewport):
+			minimap.viewport.world_2d = _instantiated_level.get_world_2d()
+			
+			var player_node = _instantiated_level.find_child("Player", true, false)
+			if player_node:
+				var cam = player_node.get_node_or_null("Camera2D")
+				if cam and cam is Camera2D:
+					minimap.set_map_limits(cam.limit_left, cam.limit_top, cam.limit_right, cam.limit_bottom)
 
 
 
