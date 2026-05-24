@@ -4,7 +4,7 @@ extends Node
 # ENUM ESTADO
 # ─────────────────────────────────────────────────────────────
 
-enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, END_BATTLE }
+enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, FORCED_SWITCH, END_BATTLE }
 
 var state: CombatState = CombatState.START
 
@@ -15,6 +15,7 @@ const STATUS_ICONS = {
 
 var player_victory: bool = true
 var player_can_act: bool = false
+var waiting_for_switch: bool = false
 
 # ─────────────────────────────────────────────────────────────
 # ROBOTS
@@ -25,6 +26,8 @@ var enemy_robot: RobotParty.RobotInstance
 
 var participating_slots: Array[int] = []
 var active_player_slot := 0
+var enemy_party: Array = []
+var active_enemy_slot := 0
 
 var player_selected_ability = null
 var enemy_selected_ability = null
@@ -221,6 +224,8 @@ func init_battle_boxes():
 	player_epbar.value = player_robot.current_ep
 	update_player_ep_ui()
 	update_player_exp_ui()
+	update_stat_stages_ui(player_robot, player_buff_container)
+	update_status_effects_ui(player_robot, player_status_container)
 
 	# ENEMY
 	enemy_sprite.texture = load(RobotDB.get_chassis(enemy_robot.chassis_id).sprite_path)
@@ -230,6 +235,8 @@ func init_battle_boxes():
 	enemy_hpbar.max_value = enemy_robot.max_hp
 	enemy_hpbar.value = enemy_robot.current_hp
 	update_hp_color(enemy_hpbar, enemy_robot.current_hp, enemy_robot.max_hp)
+	update_stat_stages_ui(enemy_robot, enemy_buff_container)
+	update_status_effects_ui(enemy_robot, enemy_status_container)
 
 func animate_bar(bar: ProgressBar, target_value: int):
 	var start = bar.value
@@ -387,8 +394,10 @@ func _init_battle() -> void:
 		push_error("El jugador no tiene robots en el equipo!")
 		return
 	
+	enemy_party = create_enemy_party()
+	
 	player_robot = RobotParty.party[active_player_slot]
-	enemy_robot = RobotParty.party[1] # Cogemos un robot de la party, esto se debe cambiar
+	enemy_robot = enemy_party[active_enemy_slot]
 	
 	participating_slots.clear()
 	participating_slots.append(0)
@@ -400,6 +409,12 @@ func _init_battle() -> void:
 	print("Iniciando duelo...")
 	await log_and_wait("Iniciando duelo...")
 	change_state(CombatState.DETERMINE_TURN)
+	
+func create_enemy_party() -> Array:
+	return [
+		RobotParty.create_robot(2, 520),
+		RobotParty.create_robot(3, 520)
+	]
 
 # ─────────────────────────────────────────────────────────────
 # STATE MACHINE
@@ -501,6 +516,9 @@ func get_enemy_ability():
 func show_robot_menu():
 	battle_commands.visible = false
 	ability_container.visible = true
+	
+	# SOLO mostrar volver si el cambio NO es obligatorio
+	back_button.visible = not waiting_for_switch
 
 	for child in ability_buttons.get_children():
 		child.queue_free()
@@ -551,16 +569,27 @@ func switch_robot(new_slot: int):
 	if not participating_slots.has(new_slot):
 		participating_slots.append(new_slot)
 
-	await log_and_wait(
-		"¡%s vuelve!" % old_robot.display_name()
-	)
+	# Sólo mostrar "vuelve" si no murió
+	if old_robot.current_hp > 0:
+		await log_and_wait("¡%s vuelve!" % old_robot.display_name())
 
-	await log_and_wait(
-		"¡Adelante, %s!" % player_robot.display_name()
-	)
-
+	await log_and_wait("¡Adelante, %s!" % player_robot.display_name())
+	
 	# Actualizar UI
 	init_battle_boxes()
+	
+	# ─────────────────────────────
+	# FORCED SWITCH
+	# ─────────────────────────────
+	
+	if waiting_for_switch:
+		waiting_for_switch = false
+		change_state(CombatState.DETERMINE_TURN)
+		return
+	
+	# ─────────────────────────────
+	# NORMAL SWITCH
+	# ─────────────────────────────
 
 	player_can_act = false
 
@@ -628,12 +657,6 @@ func attack(atk, def, ability) -> void:
 	update_stat_stages_ui(enemy_robot, enemy_buff_container)
 	update_status_effects_ui(player_robot, player_status_container)
 	update_status_effects_ui(enemy_robot, enemy_status_container)
-	
-	# ─────────────────────────────
-	# Win condition
-	# ─────────────────────────────
-
-	await check_win_condition()
 	
 func apply_damage(defender, damage) -> void:
 	defender.current_hp = max(defender.current_hp - damage, 0)
@@ -745,11 +768,15 @@ func execute_turn():
 	if player_first:
 		await attack(player_robot, enemy_robot, player_selected_ability)
 		if enemy_robot.current_hp > 0:
+			if await check_win_condition():
+				return
 			if await can_act(enemy_robot):
 				await attack(enemy_robot, player_robot, enemy_selected_ability)
 	else:
 		await attack(enemy_robot, player_robot, enemy_selected_ability)
 		if player_robot.current_hp > 0:
+			if await check_win_condition():
+				return
 			if await can_act(player_robot):
 				await attack(player_robot, enemy_robot, player_selected_ability)
 	
@@ -823,7 +850,17 @@ func can_act(robot) -> bool:
 # ─────────────────────────────────────────────────────────────
 
 func check_win_condition() -> bool:
+	# Enemy KO
 	if enemy_robot.current_hp <= 0:
+		await log_and_wait("¡%s ha sido destruido!" % enemy_robot.display_name())
+		
+		var next_enemy = get_next_enemy_robot()
+		if next_enemy != null:
+			enemy_robot = next_enemy
+			await log_and_wait("¡El rival envía a %s!" % enemy_robot.display_name())
+			init_battle_boxes()
+			return false
+		
 		await log_and_wait("¡Has ganado!")
 		var old_exp = player_robot.total_exp
 		give_battle_exp(enemy_robot, participating_slots)
@@ -833,11 +870,39 @@ func check_win_condition() -> bool:
 		await change_state(CombatState.END_BATTLE)
 		return true
 
+	# Player KO
 	if player_robot.current_hp <= 0:
+		await log_and_wait("¡%s ha sido destruido!" % player_robot.display_name())
+		
+		# Quedan robots vivos
+		if has_alive_player_robots():
+			waiting_for_switch = true
+			state = CombatState.FORCED_SWITCH
+			show_robot_menu()
+			return true
+		
+		# Derrota
 		await log_and_wait("Has perdido...")
 		player_victory = false
 		await change_state(CombatState.END_BATTLE)
 		return true
+
+	return false
+	
+func get_next_enemy_robot() -> RobotParty.RobotInstance:
+	for robot in enemy_party:
+		if robot.current_hp > 0:
+			return robot
+	return null
+	
+func has_alive_player_robots() -> bool:
+	for i in range(RobotParty.party.size()):
+		if i == active_player_slot:
+			continue
+
+		var robot = RobotParty.party[i]
+		if robot.current_hp > 0:
+			return true
 
 	return false
 	
