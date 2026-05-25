@@ -40,13 +40,30 @@ var enemy_selected_ability = null
 @onready var ability_container = $AbilityContainer
 @onready var ability_buttons = $AbilityContainer/AbilityButtons
 @onready var back_button = $AbilityContainer/Back
+@onready var prev_page_button = $AbilityContainer/PrevPage
+@onready var next_page_button = $AbilityContainer/NextPage
 const AbilityButtonScene = preload("res://game/scenes/ability_button.tscn")
 
+var selected_item_id: String = ""
+var battle_item_page := 0
+const ITEMS_PER_PAGE := 4
+
 func _on_back_pressed() -> void:
+	prev_page_button.visible = false
+	next_page_button.visible = false
 	ability_container.visible = false
 	battle_commands.visible = true
 	for child in ability_buttons.get_children():
 		child.queue_free()
+		
+func _on_prev_page_pressed():
+	if battle_item_page > 0:
+		battle_item_page -= 1
+		show_battle_items()
+
+func _on_next_page_pressed():
+	battle_item_page += 1
+	show_battle_items()
 		
 # ─────────────────────────────────────────────────────────────
 # ABILITY INFO PANEL
@@ -384,6 +401,8 @@ func update_status_effects_ui(robot, container):
 # ─────────────────────────────────────────────────────────────
 
 func _ready():
+	prev_page_button.visible = false
+	next_page_button.visible = false
 	ability_container.visible = false
 	ability_info.visible = false
 	robot_info.visible = false
@@ -479,8 +498,11 @@ func _on_fight_pressed() -> void:
 		show_player_abilities()
 	
 func _on_bag_pressed() -> void:
-	if player_can_act:
-		print("Mochila no implementada")
+	if not player_can_act:
+		return
+	
+	battle_item_page = 0
+	show_battle_items()
 	
 func _on_robots_pressed() -> void:
 	if not player_can_act:
@@ -508,6 +530,186 @@ func get_enemy_ability():
 		return null
 
 	return available_abilities.pick_random() # We choose a random ability for the moment
+
+# ─────────────────────────────────────────────────────────────
+# BAG MENU
+# ─────────────────────────────────────────────────────────────
+
+func show_battle_items():
+	battle_commands.visible = false
+	ability_container.visible = true
+
+	for child in ability_buttons.get_children():
+		child.queue_free()
+
+	var slots = Inventory.get_slots_for_category(
+		ItemDB.Category.ENERGIA,
+		ItemDB.SortMode.OBTENCION
+	)
+
+	if slots.is_empty():
+		await log_and_wait("No tienes objetos.")
+		ability_container.visible = false
+		battle_commands.visible = true
+		return
+
+	var start = battle_item_page * ITEMS_PER_PAGE
+	var end = min(start + ITEMS_PER_PAGE, slots.size())
+
+	for i in range(start, end):
+		var slot = slots[i]
+		var item = ItemDB.get_item(slot.item_id)
+
+		if item == null:
+			continue
+
+		if not item.can_use:
+			continue
+
+		var btn = AbilityButtonScene.instantiate()
+
+		btn.text = "%s x%d" % [
+			item.display_name,
+			slot.quantity
+		]
+
+		btn.mouse_entered.connect(func():
+			show_item_info(item)
+		)
+
+		btn.mouse_exited.connect(func():
+			ability_info.visible = false
+		)
+
+		btn.pressed.connect(func():
+			selected_item_id = slot.item_id
+			show_robot_menu_for_item()
+		)
+
+		ability_buttons.add_child(btn)
+		
+	# ─────────────────────────────
+	# PAGINATION BUTTONS
+	# ─────────────────────────────
+
+	prev_page_button.visible = battle_item_page > 0
+
+	next_page_button.visible = end < slots.size()
+		
+func show_item_info(item):
+	ability_info.visible = true
+
+	ability_name_label.text = item.display_name
+	ability_description_label.text = item.description
+
+	ability_power_label.text = ""
+	ability_ep_label.text = ""
+
+	var effect_text := ""
+
+	if item.use_effect.has("heal_hp"):
+		effect_text += "HP +%d " % item.use_effect["heal_hp"]
+
+	if item.use_effect.has("heal_ep"):
+		effect_text += "EP +%d" % item.use_effect["heal_ep"]
+
+	ability_accuracy_label.text = effect_text
+	
+func show_robot_menu_for_item():
+	prev_page_button.visible = false
+	next_page_button.visible = false
+	
+	for child in ability_buttons.get_children():
+		child.queue_free()
+		
+	var item = ItemDB.get_item(selected_item_id)
+	
+	if item == null:
+		return
+
+	for i in range(RobotParty.party.size()):
+		var robot = RobotParty.party[i]
+
+		var btn = AbilityButtonScene.instantiate()
+
+		btn.text = "%s" % robot.display_name()
+		
+		# Desactivar si no se puede usar
+		btn.disabled = not can_use_item_on_robot(item, robot)
+
+		btn.mouse_entered.connect(func():
+			show_robot_info(robot)
+		)
+
+		btn.mouse_exited.connect(func():
+			robot_info.visible = false
+		)
+
+		btn.pressed.connect(func():
+			await use_battle_item(selected_item_id, i)
+		)
+
+		ability_buttons.add_child(btn)
+		
+func can_use_item_on_robot(item, robot) -> bool:
+	if robot.current_hp <= 0:
+		return false
+
+	var needs_hp := false
+	var needs_ep := false
+
+	if item.use_effect.has("heal_hp"):
+		needs_hp = robot.current_hp < robot.max_hp
+
+	if item.use_effect.has("heal_ep"):
+		needs_ep = robot.current_ep < robot.max_ep
+
+	# Si no tiene efectos conocidos
+	if not item.use_effect.has("heal_hp") and not item.use_effect.has("heal_ep"):
+		return true
+
+	return needs_hp or needs_ep
+		
+func use_battle_item(item_id: String, robot_slot: int):
+	battle_commands.visible = true
+	ability_container.visible = false
+
+	for child in ability_buttons.get_children():
+		child.queue_free()
+
+	var robot = RobotParty.party[robot_slot]
+
+	if not Inventory.use_item(item_id, robot_slot):
+		await log_and_wait("No se pudo usar el objeto.")
+		return
+
+	await log_and_wait(
+		"Usaste el objeto en %s." % robot.display_name()
+	)
+
+	selected_item_id = ""
+
+	# Actualizar UI
+	await animate_bar(player_hpbar, robot.current_hp)
+	update_hp_color(player_hpbar, robot.current_hp, robot.max_hp)
+	update_player_hp_ui()
+	await animate_bar(player_epbar, robot.current_ep)
+	update_player_ep_ui()
+
+	player_can_act = false
+
+	# Turno enemigo
+	if enemy_robot.current_hp > 0:
+		if await can_act(enemy_robot):
+			await attack(enemy_robot, player_robot, enemy_selected_ability)
+
+	if state == CombatState.END_BATTLE:
+		return
+
+	await process_status_effects()
+
+	if not await check_win_condition():
+		change_state(CombatState.DETERMINE_TURN)
 
 # ─────────────────────────────────────────────────────────────
 # ROBOTS MENU

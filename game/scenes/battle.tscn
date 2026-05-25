@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://hcdosd6c5t53" path="res://assets/art/ui/battlePlayerBoxS.png" id="8_yl0ul"]
 [ext_resource type="Texture2D" uid="uid://1eowrkwoxplh" path="res://assets/art/ui/battleFoeBoxS.png" id="9_871wd"]
 [ext_resource type="Texture2D" uid="uid://315ijfabr044" path="res://assets/art/ui/back_button.png" id="10_871wd"]
+[ext_resource type="Texture2D" uid="uid://cu5f2hisr0u5" path="res://assets/art/ui/prev_page_button.png" id="11_stub7"]
+[ext_resource type="Texture2D" uid="uid://ddbjvfh8si3kq" path="res://assets/art/ui/next_page_button.png" id="12_wd3if"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5cged"]
 atlas = ExtResource("6_ak62o")
@@ -64,6 +66,22 @@ region = Rect2(0, 0, 84, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_imxk3"]
 atlas = ExtResource("10_871wd")
 region = Rect2(84, 0, 84, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_higs2"]
+atlas = ExtResource("11_stub7")
+region = Rect2(0, 0, 26, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xm5kd"]
+atlas = ExtResource("11_stub7")
+region = Rect2(26, 0, 26, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgui0"]
+atlas = ExtResource("12_wd3if")
+region = Rect2(0, 0, 26, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqabj"]
+atlas = ExtResource("12_wd3if")
+region = Rect2(26, 0, 26, 40)
 
 [node name="Battle" type="Control" unique_id=2056252675]
 layout_mode = 3
@@ -350,6 +368,24 @@ offset_bottom = 73.0
 texture_normal = SubResource("AtlasTexture_shju3")
 texture_hover = SubResource("AtlasTexture_imxk3")
 
+[node name="PrevPage" type="TextureButton" parent="AbilityContainer" unique_id=207623730]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 34.0
+offset_right = 34.0
+offset_bottom = 74.0
+texture_normal = SubResource("AtlasTexture_higs2")
+texture_hover = SubResource("AtlasTexture_xm5kd")
+
+[node name="NextPage" type="TextureButton" parent="AbilityContainer" unique_id=1727735853]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 34.0
+offset_right = 66.0
+offset_bottom = 74.0
+texture_normal = SubResource("AtlasTexture_hgui0")
+texture_hover = SubResource("AtlasTexture_sqabj")
+
 [node name="AbilityInfoPanel" type="Panel" parent="." unique_id=139032601]
 visible = false
 layout_mode = 0
@@ -499,5 +535,8 @@ theme_override_font_sizes/normal_font_size = 18
 text = "MOVE LIST"
 
 [connection signal="pressed" from="BattleCommands/Fight" to="." method="_on_fight_pressed"]
+[connection signal="pressed" from="BattleCommands/Bag" to="." method="_on_bag_pressed"]
 [connection signal="pressed" from="BattleCommands/Robots" to="." method="_on_robots_pressed"]
 [connection signal="pressed" from="AbilityContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="AbilityContainer/PrevPage" to="." method="_on_prev_page_pressed"]
+[connection signal="pressed" from="AbilityContainer/NextPage" to="." method="_on_next_page_pressed"]
