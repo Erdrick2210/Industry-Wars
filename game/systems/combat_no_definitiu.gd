@@ -500,7 +500,8 @@ func _on_fight_pressed() -> void:
 func _on_bag_pressed() -> void:
 	if not player_can_act:
 		return
-
+	
+	battle_item_page = 0
 	show_battle_items()
 	
 func _on_robots_pressed() -> void:
@@ -615,6 +616,9 @@ func show_item_info(item):
 	ability_accuracy_label.text = effect_text
 	
 func show_robot_menu_for_item():
+	prev_page_button.visible = false
+	next_page_button.visible = false
+	
 	for child in ability_buttons.get_children():
 		child.queue_free()
 		
@@ -686,7 +690,11 @@ func use_battle_item(item_id: String, robot_slot: int):
 	selected_item_id = ""
 
 	# Actualizar UI
-	init_battle_boxes()
+	await animate_bar(player_hpbar, robot.current_hp)
+	update_hp_color(player_hpbar, robot.current_hp, robot.max_hp)
+	update_player_hp_ui()
+	await animate_bar(player_epbar, robot.current_ep)
+	update_player_ep_ui()
 
 	player_can_act = false
 
