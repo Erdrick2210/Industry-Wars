@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d0cdjkhe7e5cg"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_mmch0"]
+
+[node name="Vending_Machine" unique_id=223654149 instance=ExtResource("1_mmch0")]
+
+[node name="ItemInteract" parent="." index="0" unique_id=1442005765]
+int_id = 4

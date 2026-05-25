@@ -72,15 +72,21 @@ func _input(event: InputEvent) -> void:
 func set_frozen(value: bool):
 	is_frozen = value
 
+func interact_btn(value : bool):
+	$Interact.visible = value
 
 func _on_interaction_area_area_entered(area: Area2D) -> void:
 	if area.has_method("interact"):
 		interactable = area
+		interact_btn(true)
 		print("Interactable assigned: ", area.name)
 	elif area.get_parent().has_method("interact"):
 		interactable = area.get_parent()
+		interact_btn(true)
 
 
 func _on_interaction_area_area_exited(area: Area2D) -> void:
 	if interactable == area or interactable == area.get_parent():
-		interactable = null # Replace with function body.
+		interact_btn(false)
+		interactable = null
+		

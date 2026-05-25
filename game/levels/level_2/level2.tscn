@@ -188,7 +188,10 @@ position = Vector2(-201, -80)
 
 [node name="WarpZoneLevel3" type="Area2D" parent="WarpZones" unique_id=662462752]
 position = Vector2(-8, -1)
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("10_5beai")
+target_level_path = "uid://w82g2xng35mj"
 target_spawn_name = "FromLevel2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WarpZones/WarpZoneLevel3" unique_id=1962754889]
@@ -196,7 +199,7 @@ position = Vector2(2083, 2223)
 shape = SubResource("RectangleShape2D_8dorb")
 
 [node name="FromLevel3" type="Marker2D" parent="WarpZones/WarpZoneLevel3" unique_id=537497625]
-position = Vector2(2092, 2163)
+position = Vector2(2085, 2170)
 
 [node name="RetiradaRival" type="Marker2D" parent="WarpZones" unique_id=2128027419]
 position = Vector2(-343, -441)

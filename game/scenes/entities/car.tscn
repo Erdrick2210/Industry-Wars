@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://jfxvggr4l7e0"]
+
+[ext_resource type="Script" uid="uid://b10kytvt8t6jv" path="res://scripts/levels/level_3/path_follow_2d.gd" id="1_jucsx"]
+[ext_resource type="Texture2D" uid="uid://dlwt7lcjb7jbg" path="res://assets/art/textures/tilesets/level3_tileset.png" id="2_388lp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_27yox"]
+size = Vector2(91.41986, 69)
+
+[node name="Car" type="PathFollow2D" unique_id=2085671555]
+script = ExtResource("1_jucsx")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=513886013]
+texture = ExtResource("2_388lp")
+region_enabled = true
+region_rect = Rect2(96, 782, 96, 85)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D" unique_id=9048531]
+collision_layer = 5
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D" unique_id=1819854788]
+position = Vector2(-0.4116211, 5.5)
+shape = SubResource("RectangleShape2D_27yox")
+
+[node name="RayCast2D" type="RayCast2D" parent="Sprite2D/StaticBody2D" unique_id=1211751638]
+target_position = Vector2(90, 0)
+collision_mask = 6
