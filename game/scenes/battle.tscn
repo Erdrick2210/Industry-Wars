@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://2j5qstvd8wkq" path="res://game/systems/combat_no_definitiu.gd" id="1_srlwi"]
 [ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_q7dox"]
+[ext_resource type="PackedScene" uid="uid://bxbprbj1dmtts" path="res://game/scenes/battle_animator.tscn" id="2_wd3if"]
 [ext_resource type="Texture2D" uid="uid://btso4o28h1ko" path="res://assets/art/ui/battleCommand.png" id="3_1iry5"]
 [ext_resource type="Texture2D" uid="uid://dgox1aku3ssmd" path="res://assets/art/ui/enemybaseFieldGrass.png" id="4_ak62o"]
 [ext_resource type="Texture2D" uid="uid://dl45fl1uhlkin" path="res://assets/art/sprites/battlers/assault.png" id="5_871wd"]
@@ -91,6 +92,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_srlwi")
+
+[node name="BattleAnimator" parent="." unique_id=761200384 instance=ExtResource("2_wd3if")]
+layout_mode = 1
 
 [node name="Background" type="TextureRect" parent="." unique_id=744813657]
 layout_mode = 0
