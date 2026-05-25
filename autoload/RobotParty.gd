@@ -203,21 +203,11 @@ func set_active_move(robot_slot: int, move_slot: int, ability_id: String) -> boo
 	if move_slot < 0 or move_slot > 3:
 		return false
 
-	# Asegurar que el array tiene el tamaño correcto
-	while robot.active_moves.size() <= move_slot:
-		robot.active_moves.append("")
-
 	var existing_idx: int = robot.active_moves.find(ability_id)
-	if existing_idx != -1 and existing_idx != move_slot:
-		# Swap
-		var displaced: String       = robot.active_moves[move_slot]
-		robot.active_moves[move_slot]    = ability_id
-		robot.active_moves[existing_idx] = displaced
-	elif existing_idx == -1:
-		robot.active_moves[move_slot] = ability_id
-
-	# Limpiar entradas vacías al final pero mantener hasta 4
-	robot.active_moves.resize(mini(robot.active_moves.size(), 4))
+	if existing_idx != -1:
+		robot.active_moves[existing_idx] = robot.active_moves[move_slot]
+	
+	robot.active_moves[move_slot] = ability_id
 
 	party_changed.emit()
 	_save()

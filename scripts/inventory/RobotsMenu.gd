@@ -400,8 +400,8 @@ func _open_move_swap_popup(robot_slot: int, move_slot: int) -> void:
 	equip_popup.show()
 
 func _on_move_selected(ability_id: String) -> void:
-	_hide_popup()
 	RobotParty.set_active_move(_selected_slot, _pending_move_slot, ability_id)
+	_hide_popup()
 
 func _on_move_removed(robot_slot: int, move_slot: int) -> void:
 	_hide_popup()
