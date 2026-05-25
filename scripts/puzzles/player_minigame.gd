@@ -40,11 +40,13 @@ func check_game_over():
 	
 	if fireballs_caught >= fireballs_needed_to_win:
 		print("LEVEL PASSED!")
+		minimap.visible = true
 		$SpawnTimer.stop() 
 		game_over.emit(true) 
 		return 
 	
 	if fireballs_resolved >= max_fireballs:
 		print("LEVEL FAILED.")
+		minimap.visible = true
 		$SpawnTimer.stop()
 		game_over.emit(false)
