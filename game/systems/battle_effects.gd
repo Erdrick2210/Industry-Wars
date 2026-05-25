@@ -14,6 +14,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"SPEED_UP_1":
 			if user.stat_stages["speed"] < 3:
 				RobotParty.modify_stage(user, "speed", 1)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, true)
 				await battle.log_and_wait("¡La velocidad aumentó 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La velocidad está al máximo!")
@@ -21,6 +22,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"SPEED_UP_2":
 			if user.stat_stages["speed"] < 3:
 				RobotParty.modify_stage(user, "speed", 2)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, true)
 				await battle.log_and_wait("¡La velocidad aumentó 2 niveles!")
 			else:
 				await battle.log_and_wait("¡La velocidad está al máximo!")
@@ -28,6 +30,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"SPEED_DOWN_1":
 			if target.stat_stages["speed"] > -3:
 				RobotParty.modify_stage(target, "speed", -1)
+				await battle.battle_animator.animate_stat_change(target == battle.player_robot, false)
 				await battle.log_and_wait("¡La velocidad se redució 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La velocidad está al mínimo!")
@@ -35,6 +38,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"ATK_UP_1":
 			if user.stat_stages["attack"] < 3:
 				RobotParty.modify_stage(user, "attack", 1)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, true)
 				await battle.log_and_wait("¡El ataque aumentó 1 nivel!")
 			else:
 				await battle.log_and_wait("¡El ataque está al máximo!")
@@ -42,11 +46,13 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"ATK_DEF_UP_1":
 			if user.stat_stages["attack"] < 3:
 				RobotParty.modify_stage(user, "attack", 1)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, true)
 				await battle.log_and_wait("¡El ataque aumentó 1 nivel!")
 			else:
 				await battle.log_and_wait("¡El ataque está al máximo!")
 			if user.stat_stages["defense"] < 3:
 				RobotParty.modify_stage(user, "defense", 1)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, true)
 				await battle.log_and_wait("¡La defensa aumentó 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La defensa está al máximo!")
@@ -54,6 +60,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"DEF_UP_1":
 			if user.stat_stages["defense"] < 3:
 				RobotParty.modify_stage(user, "defense", 1)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, true)
 				await battle.log_and_wait("¡La defensa aumentó 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La defensa está al máximo!")
@@ -61,6 +68,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"SELF_DEF_DOWN_1":
 			if user.stat_stages["defense"] > -3:
 				RobotParty.modify_stage(user, "defense", -1)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, false)
 				await battle.log_and_wait("¡La defensa se redució 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La defensa está al mínimo!")
@@ -68,6 +76,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"ACC_UP_1":
 			if user.stat_stages["accuracy"] < 3:
 				RobotParty.modify_stage(user, "accuracy", 1)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, true)
 				await battle.log_and_wait("¡La precisión aumentó 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La precisión está al máximo!")
@@ -75,6 +84,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 		"EVASION_UP_1":
 			if user.stat_stages["evasion"] < 3:
 				RobotParty.modify_stage(user, "evasion", 1)
+				await battle.battle_animator.animate_stat_change(user == battle.player_robot, true)
 				await battle.log_and_wait("¡La evasión aumentó 1 nivel!")
 			else:
 				await battle.log_and_wait("¡La evasión está al máximo!")
@@ -144,6 +154,8 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 				)
 				return
 			target.add_status("overheated")
+			battle.battle_animator.animate_hit(target == battle.player_robot)
+			battle.battle_animator.animate_shake(target == battle.player_robot)
 			await battle.log_and_wait(
 				"¡%s entra en sobrecalentamiento!" % [
 					target.display_name()
@@ -159,6 +171,8 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 				)
 				return
 			target.add_status("short_circuited")
+			battle.battle_animator.animate_hit(target == battle.player_robot)
+			battle.battle_animator.animate_shake(target == battle.player_robot)
 			await battle.log_and_wait(
 				"¡%s sufrió un cortocircuito!" % [
 					target.display_name()
@@ -189,7 +203,9 @@ static func heal_robot(battle, robot, amount:int) -> void:
 			healed_amount
 		]
 	)
-
+	
+	await battle.battle_animator.animate_heal(robot == battle.player_robot)
+	
 	if robot == battle.player_robot:
 		await battle.animate_bar(battle.player_hpbar, robot.current_hp)
 		battle.update_hp_color(battle.player_hpbar, robot.current_hp, robot.max_hp)
@@ -213,6 +229,8 @@ static func restore_ep(battle, robot, amount:int) -> void:
 			ep_restored
 		]
 	)
+	
+	await battle.battle_animator.animate_ep_restore(robot == battle.player_robot)
 
 	if robot == battle.player_robot:
 		await battle.animate_bar(battle.player_epbar, robot.current_ep)

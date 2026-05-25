@@ -1,5 +1,7 @@
 extends Node
 
+@onready var battle_animator = $BattleAnimator
+
 # ─────────────────────────────────────────────────────────────
 # ENUM ESTADO
 # ─────────────────────────────────────────────────────────────
@@ -406,6 +408,7 @@ func _ready():
 	ability_container.visible = false
 	ability_info.visible = false
 	robot_info.visible = false
+	battle_animator.setup(player_sprite, enemy_sprite)
 	_init_battle()
 
 func _init_battle() -> void:
@@ -683,9 +686,13 @@ func use_battle_item(item_id: String, robot_slot: int):
 		await log_and_wait("No se pudo usar el objeto.")
 		return
 
-	await log_and_wait(
-		"Usaste el objeto en %s." % robot.display_name()
-	)
+	await log_and_wait("Usaste el objeto en %s." % robot.display_name())
+
+	var item = ItemDB.get_item(selected_item_id)
+	if item.use_effect.has("heal_hp"):
+		battle_animator.animate_heal(robot == player_robot)
+	if item.use_effect.has("heal_ep"):
+		battle_animator.animate_ep_restore(robot == player_robot)
 
 	selected_item_id = ""
 
@@ -763,6 +770,9 @@ func switch_robot(new_slot: int):
 		child.queue_free()
 
 	var old_robot = player_robot
+	
+	# salida del robot anterior
+	await battle_animator.animate_switch_out(true)
 
 	active_player_slot = new_slot
 	player_robot = RobotParty.party[new_slot]
@@ -779,6 +789,9 @@ func switch_robot(new_slot: int):
 	
 	# Actualizar UI
 	init_battle_boxes()
+	
+	# entrada del nuevo robot
+	await battle_animator.animate_switch_in(true)
 	
 	# ─────────────────────────────
 	# FORCED SWITCH
@@ -847,6 +860,9 @@ func attack(atk, def, ability) -> void:
 	var damage := 0
 
 	if ability.category == "Damage":
+		await battle_animator.animate_attack(atk == player_robot)
+		await battle_animator.animate_hit(def == player_robot)
+		await battle_animator.animate_shake(def == player_robot)
 		damage = BattleCalculator.calculate_damage(atk, def, ability)
 		await apply_damage(def, damage)
 
@@ -974,6 +990,8 @@ func execute_turn():
 				return
 			if await can_act(enemy_robot):
 				await attack(enemy_robot, player_robot, enemy_selected_ability)
+				if await check_win_condition():
+					return
 	else:
 		await attack(enemy_robot, player_robot, enemy_selected_ability)
 		if player_robot.current_hp > 0:
@@ -981,6 +999,8 @@ func execute_turn():
 				return
 			if await can_act(player_robot):
 				await attack(player_robot, enemy_robot, player_selected_ability)
+				if await check_win_condition():
+					return
 	
 	# ─────────────────────────────
 	# TURN END - STATUS CONDITIONS
@@ -1016,7 +1036,10 @@ func process_overheat(robot):
 			robot.display_name()
 		]
 	)
-
+	
+	battle_animator.animate_hit(robot == player_robot)
+	battle_animator.animate_shake(robot == player_robot)
+	
 	await apply_damage(robot, damage)
 	
 func process_short_circuit(robot):
@@ -1031,6 +1054,9 @@ func process_short_circuit(robot):
 			robot.display_name()
 		]
 	)
+	
+	battle_animator.animate_hit(robot == player_robot)
+	battle_animator.animate_shake(robot == player_robot)
 	
 	await spend_ep(robot, ep_loss)
 
@@ -1054,12 +1080,15 @@ func can_act(robot) -> bool:
 func check_win_condition() -> bool:
 	# Enemy KO
 	if enemy_robot.current_hp <= 0:
+		await battle_animator.animate_faint(false)
 		await log_and_wait("¡%s ha sido destruido!" % enemy_robot.display_name())
 		
+		await battle_animator.animate_switch_out(false)
 		var next_enemy = get_next_enemy_robot()
 		if next_enemy != null:
 			enemy_robot = next_enemy
 			await log_and_wait("¡El rival envía a %s!" % enemy_robot.display_name())
+			await battle_animator.animate_switch_in(false)
 			init_battle_boxes()
 			return false
 		
@@ -1074,6 +1103,7 @@ func check_win_condition() -> bool:
 
 	# Player KO
 	if player_robot.current_hp <= 0:
+		await battle_animator.animate_faint(true)
 		await log_and_wait("¡%s ha sido destruido!" % player_robot.display_name())
 		
 		# Quedan robots vivos
