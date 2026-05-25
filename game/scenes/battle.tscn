@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_q7dox"]
 [ext_resource type="Texture2D" uid="uid://btso4o28h1ko" path="res://assets/art/ui/battleCommand.png" id="3_1iry5"]
 [ext_resource type="Texture2D" uid="uid://dgox1aku3ssmd" path="res://assets/art/ui/enemybaseFieldGrass.png" id="4_ak62o"]
-[ext_resource type="Texture2D" uid="uid://dl45fl1uhlkin" path="res://assets/art/sprites/battlers/front/assault.png" id="5_5cged"]
+[ext_resource type="Texture2D" uid="uid://dl45fl1uhlkin" path="res://assets/art/sprites/battlers/assault.png" id="5_871wd"]
 [ext_resource type="Texture2D" uid="uid://dps4tvavaledi" path="res://assets/art/ui/battleCommandButtons.png" id="6_ak62o"]
-[ext_resource type="Texture2D" uid="uid://land53m4kkyp" path="res://assets/art/sprites/battlers/front/guardian.png" id="6_uuvcu"]
+[ext_resource type="Texture2D" uid="uid://land53m4kkyp" path="res://assets/art/sprites/battlers/guardian.png" id="6_uqqse"]
 [ext_resource type="Texture2D" uid="uid://hcdosd6c5t53" path="res://assets/art/ui/battlePlayerBoxS.png" id="8_yl0ul"]
 [ext_resource type="Texture2D" uid="uid://1eowrkwoxplh" path="res://assets/art/ui/battleFoeBoxS.png" id="9_871wd"]
 [ext_resource type="Texture2D" uid="uid://315ijfabr044" path="res://assets/art/ui/back_button.png" id="10_871wd"]
@@ -110,12 +110,12 @@ stretch_mode = 4
 [node name="EnemyRobot" type="Sprite2D" parent="." unique_id=411619326]
 position = Vector2(837, 294)
 scale = Vector2(2, 2)
-texture = ExtResource("5_5cged")
+texture = ExtResource("5_871wd")
 
 [node name="PlayerRobot" type="Sprite2D" parent="." unique_id=1799485215]
 position = Vector2(313, 297)
 scale = Vector2(2, 2)
-texture = ExtResource("6_uuvcu")
+texture = ExtResource("6_uqqse")
 flip_h = true
 
 [node name="BattleCommands" type="GridContainer" parent="." unique_id=740667587]
@@ -351,6 +351,7 @@ texture_normal = SubResource("AtlasTexture_shju3")
 texture_hover = SubResource("AtlasTexture_imxk3")
 
 [node name="AbilityInfoPanel" type="Panel" parent="." unique_id=139032601]
+visible = false
 layout_mode = 0
 offset_left = 314.0
 offset_top = 154.0
@@ -402,5 +403,101 @@ offset_bottom = 271.0
 theme_override_font_sizes/normal_font_size = 24
 text = "Description"
 
+[node name="RobotsInfoPanel" type="Panel" parent="." unique_id=1808054715]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 154.0
+offset_right = 838.0
+offset_bottom = 429.0
+
+[node name="RobotSprite" type="Sprite2D" parent="RobotsInfoPanel" unique_id=1758611176]
+position = Vector2(89, 110)
+texture = ExtResource("6_uqqse")
+flip_h = true
+
+[node name="StatusIcon" type="BoxContainer" parent="RobotsInfoPanel" unique_id=316492800]
+layout_mode = 0
+offset_left = 364.0
+offset_top = 10.0
+offset_right = 396.0
+offset_bottom = 42.0
+
+[node name="NameLabel" type="RichTextLabel" parent="RobotsInfoPanel" unique_id=703026823]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 209.0
+offset_bottom = 44.0
+theme_override_font_sizes/normal_font_size = 24
+text = "Robot Name"
+
+[node name="LevelLabel" type="RichTextLabel" parent="RobotsInfoPanel" unique_id=409654415]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 9.0
+offset_right = 521.0
+offset_bottom = 46.0
+theme_override_font_sizes/normal_font_size = 24
+text = "Lv"
+
+[node name="HPLabel" type="RichTextLabel" parent="RobotsInfoPanel" unique_id=1468186649]
+layout_mode = 0
+offset_left = 179.0
+offset_top = 63.0
+offset_right = 328.0
+offset_bottom = 97.0
+theme_override_font_sizes/normal_font_size = 24
+text = "HP/MAX_HP"
+
+[node name="HPBar" type="ProgressBar" parent="RobotsInfoPanel" unique_id=1836353264]
+layout_mode = 0
+offset_left = 328.0
+offset_top = 69.0
+offset_right = 510.0
+offset_bottom = 91.0
+theme_override_styles/background = SubResource("StyleBoxFlat_uqqse")
+theme_override_styles/fill = SubResource("StyleBoxFlat_stub7")
+show_percentage = false
+
+[node name="EPLabel" type="RichTextLabel" parent="RobotsInfoPanel" unique_id=1870909924]
+layout_mode = 0
+offset_left = 179.0
+offset_top = 104.0
+offset_right = 328.0
+offset_bottom = 138.0
+theme_override_font_sizes/normal_font_size = 24
+text = "EP/EP_MAX"
+
+[node name="EPBar" type="ProgressBar" parent="RobotsInfoPanel" unique_id=938395045]
+layout_mode = 0
+offset_left = 328.0
+offset_top = 110.0
+offset_right = 510.0
+offset_bottom = 132.0
+theme_override_styles/background = SubResource("StyleBoxFlat_shju3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_871wd")
+show_percentage = false
+
+[node name="StatsLabel" type="RichTextLabel" parent="RobotsInfoPanel" unique_id=1292284269]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 166.0
+offset_right = 159.0
+offset_bottom = 269.0
+theme_override_font_sizes/normal_font_size = 24
+text = "ATK:
+DEF:
+SPE:"
+
+[node name="MovesLabel" type="RichTextLabel" parent="RobotsInfoPanel" unique_id=225310838]
+layout_mode = 0
+offset_left = 179.0
+offset_top = 164.0
+offset_right = 510.0
+offset_bottom = 269.0
+theme_override_font_sizes/normal_font_size = 18
+text = "MOVE LIST"
+
 [connection signal="pressed" from="BattleCommands/Fight" to="." method="_on_fight_pressed"]
+[connection signal="pressed" from="BattleCommands/Robots" to="." method="_on_robots_pressed"]
 [connection signal="pressed" from="AbilityContainer/Back" to="." method="_on_back_pressed"]

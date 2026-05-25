@@ -121,6 +121,7 @@ class RobotInstance:
 var party: Array = []
 
 func _ready() -> void:
+	_add_demo_party()
 	if not _load():
 		_add_demo_party()
 
@@ -349,6 +350,16 @@ func add_robot(chassis_id: int, starting_exp: int = 1) -> bool:
 	party_changed.emit()
 	_save()
 	return true
+	
+func create_robot(chassis_id: int, starting_exp: int = 1) -> RobotInstance:
+	var robot := RobotInstance.new(chassis_id, starting_exp)
+
+	recalculate_stats(robot)
+
+	robot.current_hp = robot.max_hp
+	robot.current_ep = robot.max_ep
+
+	return robot
 
 # ─── Persistencia ─────────────────────────────────────────────────────────────
 

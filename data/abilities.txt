@@ -176,7 +176,7 @@ EffectID=RESTORE_EP_5
 
 [CAMPO_DE_POTENCIAL]
 Name=Campo de Potencial
-Category=Damage
+Category=Status
 Type=Energetic
 Target=Self
 Power=0
