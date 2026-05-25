@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b7052621oolon"]
+
+[ext_resource type="Texture2D" uid="uid://7qqhk2t7py21" path="res://assets/art/sprites/characters/NPC 03.png" id="1_ugorm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6vonu"]
+size = Vector2(15, 15)
+
+[node name="Kid2" type="CharacterBody2D" unique_id=493520151]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=327377980]
+texture = ExtResource("1_ugorm")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 51)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=275968179]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_6vonu")
