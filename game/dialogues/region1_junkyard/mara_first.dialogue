@@ -1,14 +1,27 @@
 ~ mara_first
-Mara: ¡Eh, tú! ¿Eres el nuevo ingeniero del que me hablaron?
-Mara: Me llamo Mara Voss. Llevo años arreglando y construyendo robots en este taller.
-Mara: Tienes pinta de tener talento... pero también de no haber dormido mucho.
 
-- Encantado, soy [Nombre del Jugador].
-    Mara: [sonrisa] Buen nombre. Bienvenido a Junkyard City.
-    Mara: Este es el mejor lugar para que los nuevos ingenieros empiecen su camino.
+Mecánica Mentora: ¡Hola, camarada! Veo que ya tienes listo tu prototipo tecnológico para Industry Wars. Como tu mentora, te daré una explicación detallada de cómo configurar tu robot para los duelos estratégicos.
+Mecánica Mentora: ¿Qué parte del sistema de componentes o del combate quieres que repasemos a fondo?
 
-- Solo estoy mirando...
-    Mara: Pues mira todo lo que quieras. Pero si quieres llegar lejos en Industry Wars, vas a necesitar más que suerte.
+- ¿Qué son el Chasis y el Núcleo?
+	Mecánica Mentora: El Chasis es la estructura física y determina tus estadísticas base de HP, EP, Ataque, Defensa y Velocidad al nivel 1. Tienes el Guardián enfocado en absorber daño con sus 100 de HP y 90 de Defensa; el Asalto para romper defensas con 95 de Ataque; el Explorador con 95 de Velocidad para golpear primero; y el Técnico con 80 de EP enfocado al soporte táctico.
+	Mecánica Mentora: El Núcleo se instala encima y define tu rol con una pasiva. El Logístico te da +25 de Velocidad, -10 de Defensa y un +20% de daño si atacas primero. El Productivo aporta +25 de Ataque, -15 de HP y un +30% de daño en el primer golpe del combate.
+	Mecánica Mentora: Por otro lado, el Reciclador otorga +30 de HP, -10 de EP y repara 5 HP al final de cada turno. Finalmente, el Energético te da +20 de EP, -10 de Ataque y reduce un 15% el coste de EP de todas tus habilidades.
+	=> mara_first
 
-Mara: Explora el taller si quieres. Cuando estés listo para construir tu primer robot, ven a hablar conmigo.
-Mara: No hay prisa, tómate tu tiempo.
+- ¿Cómo funcionan los Módulos?
+	Mecánica Mentora: Tienes 3 ranuras para equipar componentes distintos fuera de combate, sin repetir módulos idénticos. Los Activos te otorgan una habilidad y los Pasivos mejoran estadísticas o añaden efectos automáticos.
+	Mecánica Mentora: En los ofensivos puedes equipar el Sobrecargador Cinético para ganar +20 de Ataque a cambio de -10 de Defensa, o el Proyector de Impacto para usar Disparo Perforante, que cuesta 25 EP e ignora el 30% de la defensa enemiga. En los defensivos, las Placas Reforzadas dan +25 de Defensa y -10 de Velocidad, mientras que el Absorbedor de Impacto te hace completamente inmune a los ataques críticos.
+	Mecánica Mentora: Si buscas soporte, el Reactor Auxiliar te recupera 5 EP adicionales por turno. En los módulos tácticos, el Distorsionador Óptico te otorga Espejismo Ilusorio para aumentar tu evasión un 20% por 20 EP.
+	Mecánica Mentora: Eso sí, respeta las reglas de ensamblaje para evitar combinaciones rotas: solo puedes llevar un máximo de 1 Módulo de Habilidad Activa y un máximo de 1 Módulo de mejora directa de estadística principal. El tercer slot es completamente libre.
+	=> mara_first
+
+- ¿Cómo funciona el combate y los estados alterados?
+	Mecánica Mentora: El orden de los turnos se decide estrictamente por la estadística de Velocidad. En tu turno puedes realizar un ataque básico, usar habilidades especiales consumiendo EP, o abrir la Bolsa. En la Bolsa dispones de Recambios para restaurar HP y Cargadores para recuperar tus puntos de energía.
+	Mecánica Mentora: Ten muchísimo cuidado con los cuatro estados alterados tecnológicos. El Aturdimiento te sobrecarga y te hace perder el turno. El Sobrecalentamiento causa un daño continuo que reduce tus HP al final de cada ronda.
+	Mecánica Mentora: El Cortocircuito daña tus sistemas de energía y te hace perder EP en cada turno. Por último, la Descalibración corrompe tus sensores y te dejará totalmente inactivo de forma temporal, de manera similar a quedarse dormido.
+	=> mara_first
+
+- Prefiero repasar mis componentes más tarde.
+	Mecánica Mentora: Entendido, ingeniero. Tómate tu tiempo para organizar las piezas en el taller. ¡Aquí estaré si te surge cualquier duda técnica con el hardware!
+	=> END
