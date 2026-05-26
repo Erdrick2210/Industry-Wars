@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dlo5gq73w4ux5"]
+
+[ext_resource type="PackedScene" uid="uid://bnq87kss4diov" path="res://game/scenes/entities/signs/Sign.tscn" id="1_xeun7"]
+[ext_resource type="Texture2D" uid="uid://c6sk5n62k7e0n" path="res://assets/art/textures/tilesets/firstzone_tileset.png" id="2_gcliv"]
+
+[node name="Recambio_test" unique_id=223654149 instance=ExtResource("1_xeun7")]
+
+[node name="ItemInteract" parent="." index="0" unique_id=1442005765]
+item_id = "pieza_motor"
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1" unique_id=1118172539]
+texture = ExtResource("2_gcliv")
+region_enabled = true
+region_rect = Rect2(224, 0, 32, 34)

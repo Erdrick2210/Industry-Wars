@@ -8,10 +8,10 @@
 [ext_resource type="Script" uid="uid://07u7aredxr01" path="res://scripts/entities/rival/spawn_rival_trigger.gd" id="4_ycpq3"]
 [ext_resource type="Resource" uid="uid://co3gbh8kfjj5c" path="res://game/dialogues/region1_junkyard/npc_puzzle1.dialogue" id="5_l0wew"]
 [ext_resource type="PackedScene" uid="uid://ut0g37bo1ca3" path="res://game/scenes/entities/mentor.tscn" id="5_ofauc"]
-[ext_resource type="Resource" uid="uid://ciypdqcp5qba7" path="res://game/dialogues/region1_junkyard/first_small_rival.dialogue" id="6_upydp"]
 [ext_resource type="Resource" uid="uid://cww1clg7b5dp7" path="res://game/dialogues/region1_junkyard/mara_first.dialogue" id="7_dhxy6"]
 [ext_resource type="Script" uid="uid://dp5655p813nk5" path="res://scripts/warp_zones.gd" id="9_asq6h"]
 [ext_resource type="PackedScene" uid="uid://dbplhtvian17q" path="res://game/levels/level_1/home_door_outside.tscn" id="10_s721g"]
+[ext_resource type="PackedScene" uid="uid://dlo5gq73w4ux5" path="res://game/scenes/entities/items/recambio_test.tscn" id="12_l0wew"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ofauc"]
 size = Vector2(252, 86.5)
@@ -95,7 +95,6 @@ shape = SubResource("RectangleShape2D_ofauc")
 process_mode = 4
 visible = false
 position = Vector2(1465, -83)
-dialogue_resource = ExtResource("6_upydp")
 
 [node name="DetectionArea2" type="Area2D" parent="Rival" unique_id=1469242358]
 collision_layer = 4
@@ -114,7 +113,6 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("4_ycpq3")
 rival = NodePath("../Rival")
-dialogue_resource = ExtResource("6_upydp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnRivalTrigger" unique_id=1974720308]
 position = Vector2(1430, 16)
@@ -146,6 +144,9 @@ position = Vector2(-49, -27)
 
 [node name="HomeDoor" parent="." unique_id=223654149 instance=ExtResource("10_s721g")]
 position = Vector2(-47, -82)
+
+[node name="Recambio_test" parent="." unique_id=1956846526 instance=ExtResource("12_l0wew")]
+position = Vector2(-69, 479)
 
 [connection signal="body_entered" from="Rival/DetectionArea2" to="Rival" method="_on_detection_area_2_body_entered"]
 [connection signal="body_exited" from="Rival/DetectionArea2" to="Rival" method="_on_detection_area_2_body_exited"]
