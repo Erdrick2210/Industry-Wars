@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://jmlrq3gke4j4"]
+
+[ext_resource type="Script" uid="uid://cthcb3bg552b2" path="res://scripts/managers/options_menu.gd" id="1_vch7e"]
+[ext_resource type="Texture2D" uid="uid://bhdv0ee4pbatx" path="res://assets/art/ui/battlebgField.png" id="2_tliag"]
+
+[node name="OptionsMenu" type="Control" unique_id=2076923139]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vch7e")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=716422142]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_tliag")
+
+[node name="Panel" type="Panel" parent="." unique_id=50266719]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=2107522887]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -456.0
+offset_top = -166.0
+offset_right = 456.0
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="RichTextLabel" parent="Panel/VBoxContainer" unique_id=1741039511]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "Opciones de Audio"
+horizontal_alignment = 1
+
+[node name="MasterRow" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1627587543]
+layout_mode = 2
+
+[node name="MasterLabel" type="RichTextLabel" parent="Panel/VBoxContainer/MasterRow" unique_id=1667868348]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master"
+
+[node name="MasterSlider" type="HSlider" parent="Panel/VBoxContainer/MasterRow" unique_id=2080383372]
+custom_minimum_size = Vector2(750, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.05
+
+[node name="Spacer" type="Control" parent="Panel/VBoxContainer/MasterRow" unique_id=1187600425]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="MasterValue" type="RichTextLabel" parent="Panel/VBoxContainer/MasterRow" unique_id=1293439992]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "X %"
+
+[node name="MusicRow" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1322070256]
+layout_mode = 2
+
+[node name="MusicLabel" type="RichTextLabel" parent="Panel/VBoxContainer/MusicRow" unique_id=938880693]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Panel/VBoxContainer/MusicRow" unique_id=1409179116]
+custom_minimum_size = Vector2(750, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.05
+
+[node name="Spacer" type="Control" parent="Panel/VBoxContainer/MusicRow" unique_id=192807585]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="MusicValue" type="RichTextLabel" parent="Panel/VBoxContainer/MusicRow" unique_id=2032325033]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "X %"
+
+[node name="SFXRow" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=807861262]
+layout_mode = 2
+
+[node name="SFXLabel" type="RichTextLabel" parent="Panel/VBoxContainer/SFXRow" unique_id=1122349719]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="Panel/VBoxContainer/SFXRow" unique_id=808452934]
+custom_minimum_size = Vector2(750, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.05
+
+[node name="Spacer" type="Control" parent="Panel/VBoxContainer/SFXRow" unique_id=811307785]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="SFXValue" type="RichTextLabel" parent="Panel/VBoxContainer/SFXRow" unique_id=1450989054]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "X %"
+
+[node name="Spacer" type="Control" parent="Panel/VBoxContainer" unique_id=1844152364]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer" unique_id=1297079662]
+layout_mode = 2
+text = "Volver"
