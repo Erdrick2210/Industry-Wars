@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://c27ltqjr5csmm" path="res://ui/title_screen/background.png" id="1_0vna2"]
 [ext_resource type="Texture2D" uid="uid://c1573eyxjc5ub" path="res://ui/buttons/button1.png" id="2_6e4ah"]
 [ext_resource type="Script" uid="uid://b8mxloejxqevj" path="res://scripts/core/new_game.gd" id="3_oeb76"]
-[ext_resource type="Script" uid="uid://6br6gcyrq7bq" path="res://scripts/core/load_game.gd" id="4_4xqfl"]
 [ext_resource type="Script" uid="uid://4mjysj5mywj6" path="res://scripts/core/config.gd" id="4_4xqfl"]
 [ext_resource type="Script" uid="uid://b4su8r0wbf074" path="res://scripts/core/exit.gd" id="4_7lbcs"]
 

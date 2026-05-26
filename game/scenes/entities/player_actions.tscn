@@ -36,8 +36,8 @@ shape = SubResource("CircleShape2D_1eu2y")
 [node name="Interact" type="Sprite2D" parent="." unique_id=913174938]
 visible = false
 z_index = 10
-position = Vector2(-0.99999994, -23.999998)
-scale = Vector2(0.07, 0.07)
+position = Vector2(-1, -35)
+scale = Vector2(0.86, 0.86)
 texture = ExtResource("3_4lxu8")
 
 [connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_area_entered"]
