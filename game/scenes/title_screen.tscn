@@ -9,14 +9,8 @@
 script/source = "extends Control
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	AudioManager.play_music(\"res://assets/audio/music/intro.mp3\")
 "
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oeb76"]

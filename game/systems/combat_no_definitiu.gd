@@ -6,7 +6,7 @@ extends Node
 # ENUM ESTADO
 # ─────────────────────────────────────────────────────────────
 
-enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, FORCED_SWITCH, END_BATTLE }
+enum CombatState { START, DETERMINE_TURN, PLAYER_TURN, END_BATTLE }
 
 var state: CombatState = CombatState.START
 
@@ -435,7 +435,7 @@ func _init_battle() -> void:
 	
 	print("Iniciando duelo...")
 	await log_and_wait("Iniciando duelo...")
-	change_state(CombatState.DETERMINE_TURN)
+	await change_state(CombatState.DETERMINE_TURN)
 	
 func create_enemy_party() -> Array:
 	return [
@@ -460,14 +460,15 @@ func process_state() -> void:
 			_determine_turn()
 
 		CombatState.PLAYER_TURN:
-			print("¿Qué hará el robot?")
-			await log_and_wait("¿Qué hará el robot?")
-			player_can_act = true
-			
-		CombatState.FORCED_SWITCH:
-			print("¿Quieres cambiar de robot?")
-			await log_and_wait("¿Quieres cambiar de robot?")
-			player_can_act = true
+			if not waiting_for_switch:
+				print("¿Qué hará el robot?")
+				await log_and_wait("¿Qué hará el robot?")
+				player_can_act = true
+			else:
+				show_robot_menu()
+				print("¿Quieres cambiar de robot?")
+				await log_and_wait("¿Quieres cambiar de robot?")
+				player_can_act = true
 
 		CombatState.END_BATTLE:
 			await log_and_wait("Combate terminado.")
@@ -497,7 +498,7 @@ func _determine_turn() -> void:
 	enemy_selected_ability = get_enemy_ability()
 
 	# Esperamos la acción del jugador
-	change_state(CombatState.PLAYER_TURN)
+	await change_state(CombatState.PLAYER_TURN)
 
 # ─────────────────────────────────────────────────────────────
 # PLAYER INPUT
@@ -731,7 +732,7 @@ func use_battle_item(item_id: String, robot_slot: int):
 	await process_status_effects()
 
 	if not await check_win_condition():
-		change_state(CombatState.DETERMINE_TURN)
+		await change_state(CombatState.DETERMINE_TURN)
 
 # ─────────────────────────────────────────────────────────────
 # ROBOTS MENU
@@ -813,7 +814,7 @@ func switch_robot(new_slot: int):
 	
 	if waiting_for_switch:
 		waiting_for_switch = false
-		change_state(CombatState.DETERMINE_TURN)
+		await change_state(CombatState.DETERMINE_TURN)
 		return
 	
 	# ─────────────────────────────
@@ -833,7 +834,7 @@ func switch_robot(new_slot: int):
 	# Estados alterados
 	await process_status_effects()
 	if not await check_win_condition():
-		change_state(CombatState.DETERMINE_TURN)
+		await change_state(CombatState.DETERMINE_TURN)
 
 # ─────────────────────────────────────────────────────────────
 # ATTACK SYSTEM
@@ -915,6 +916,7 @@ func spend_ep(robot, amount):
 	
 func show_player_abilities():
 	print(player_robot.learned_abilities)
+	back_button.visible = not waiting_for_switch
 	battle_commands.visible = false
 	ability_container.visible = true
 	
@@ -970,8 +972,8 @@ func use_ability(ability):
 	player_selected_ability = null
 	enemy_selected_ability = null
 
-	if state != CombatState.END_BATTLE:
-		change_state(CombatState.DETERMINE_TURN)
+	if state != CombatState.END_BATTLE and not waiting_for_switch:
+		await change_state(CombatState.DETERMINE_TURN)
 
 # ─────────────────────────────────────────────────────────────
 # TURN EXECUTION
@@ -1125,8 +1127,7 @@ func check_win_condition() -> bool:
 		# Quedan robots vivos
 		if has_alive_player_robots():
 			waiting_for_switch = true
-			state = CombatState.FORCED_SWITCH
-			show_robot_menu()
+			await change_state(CombatState.PLAYER_TURN)
 			return true
 		
 		# Derrota
