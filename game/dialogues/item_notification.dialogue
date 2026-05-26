@@ -1,0 +1,3 @@
+~ recogido
+¡Has obtenido {{Inventory.last_picked_name}} x [{{Inventory.last_picked_qty}}]!
+=> END
