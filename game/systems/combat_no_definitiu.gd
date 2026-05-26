@@ -704,20 +704,23 @@ func use_battle_item(item_id: String, robot_slot: int):
 
 	await log_and_wait("Usaste el objeto en %s." % robot.display_name())
 
-	var item = ItemDB.get_item(selected_item_id)
-	if item.use_effect.has("heal_hp"):
-		battle_animator.animate_heal(robot == player_robot)
-	if item.use_effect.has("heal_ep"):
-		battle_animator.animate_ep_restore(robot == player_robot)
-
-	selected_item_id = ""
+	if robot == player_robot:
+		var item = ItemDB.get_item(selected_item_id)
+		if item.use_effect.has("heal_hp"):
+			battle_animator.animate_heal(robot == player_robot)
+		if item.use_effect.has("heal_ep"):
+			battle_animator.animate_ep_restore(robot == player_robot)
 
 	# Actualizar UI
-	await animate_bar(player_hpbar, robot.current_hp)
-	update_hp_color(player_hpbar, robot.current_hp, robot.max_hp)
-	update_player_hp_ui()
-	await animate_bar(player_epbar, robot.current_ep)
-	update_player_ep_ui()
+		await animate_bar(player_hpbar, robot.current_hp)
+		update_hp_color(player_hpbar, robot.current_hp, robot.max_hp)
+		update_player_hp_ui()
+		await animate_bar(player_epbar, robot.current_ep)
+		update_player_ep_ui()
+	else:
+		AudioManager.play_sfx("res://assets/audio/sfx/heal.wav")
+		
+	selected_item_id = ""
 
 	player_can_act = false
 
