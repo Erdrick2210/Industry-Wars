@@ -1,0 +1,11 @@
+~ rival_encuentro_r2
+Rival: ¡Eh, alto ahí! Pensabas que me iba a quedar de brazos cruzados tras lo de la última vez, ¿verdad?
+Rival: He modificado los componentes de mi robot y esta vez la victoria va a ser mía. ¡Exijo una revancha aquí mismo!
+
+- ¡Venga, demuéstrame qué tienes!
+	Rival: ¡Así me gusta! ¡A ver si aguantas la presión en el Distrito Industrial!
+	do GameManager.start_battle()
+
+- Ahora mismo no puedo, tengo que ver a la Coordinadora.
+	Rival: ¿Qué pasa, te tiemblan los circuitos? Aquí te espero, de aquí no te mueves sin pelear conmigo.
+	do GameEvents.cancel_battle("Rival")

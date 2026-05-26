@@ -1,0 +1,13 @@
+rival_novato:
+    Novato: ¡Eh! Tú eres el nuevo de Mara, ¿verdad?
+    Novato: Llevo dos semanas aquí y ya gané tres duelos. ¿Te atreves a un combate rápido?
+    
+    - Claro, vamos a probar mi robot.
+        do start_small_rival_battle()
+    
+    - Ahora no, estoy configurando módulos.
+        Novato: ¡Cobarde! Cuando estés listo me encuentras cerca del taller grande.
+    
+    after_victory:
+        Novato: ¡Vaya! Eres mejor de lo que pensaba.
+        Novato: Sigue así y llegarás lejos en la Liga.

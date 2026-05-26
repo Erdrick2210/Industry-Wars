@@ -1,0 +1,24 @@
+mara_intro:
+    Mara: ¡Ey, novato! ¿Tú eres el ingeniero independiente del que todo el mundo habla?
+    Mara: Tienes cara de haber pasado la noche soldando piezas. ¿Quieres ser alguien en Industry Wars o solo vienes a curiosear?
+    
+    - Quiero construir mi primer robot y competir.
+        Mara: [sonrisa] Buena respuesta. Me recuerdas a mí cuando empecé.
+        Mara: Ven, te voy a ayudar a armar tu primer chasis.
+        -> build_robot
+    
+    - Solo estoy explorando el taller…
+        Mara: Entonces no me hagas perder el tiempo. Vuelve cuando tengas ganas de trabajar de verdad.
+        -> mara_intro
+
+build_robot:
+    Mara: Todo robot empieza con un Núcleo. Elige bien, porque define su rol base.
+    Mara: Te daré un chasis básico y un núcleo de prueba. El resto tendrás que salir a buscarlo por el mundo.
+    do start_tutorial_battle()
+    
+    after_tutorial:
+        Mara: ¡No está nada mal para tu primer combate por turnos!
+        Mara: Ya estás listo para la Liga. Mañana mismo te inscribo en la primera ronda oficial.
+        Mara: Pero… ten los ojos bien abiertos.
+        Mara: [baja la voz] Últimamente hay demasiados “accidentes técnicos” en los combates.
+        set conspiracy_level = 1
