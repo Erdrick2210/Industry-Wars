@@ -19,7 +19,7 @@ const CATEGORY_DATA: Array = [
 	{ "name": "Energía",     "bag": "res://assets/art/ui/bag2.PNG", "bg": "res://assets/art/ui/bagbg2.png" },
 	{ "name": "Componentes", "bag": "res://assets/art/ui/bag3.PNG", "bg": "res://assets/art/ui/bagbg3.png" },
 	{ "name": "Módulos",     "bag": "res://assets/art/ui/bag4.PNG", "bg": "res://assets/art/ui/bagbg4.png" },
-	{ "name": "Obj. Clave",  "bag": "res://assets/art/ui/bag1.PNG", "bg": "res://assets/art/ui/bagbg1.png" },
+	{ "name": "Obj. Clave",  "bag": "res://assets/art/ui/bag5.PNG", "bg": "res://assets/art/ui/bagbg5.png" },
 ]
 
 # ─── Refs de nodos ────────────────────────────────────────────────────────────
@@ -103,6 +103,7 @@ func _switch_category(idx: int) -> void:
 	feedback_label.text = ""
 	var data: Dictionary = CATEGORY_DATA[idx]
 	bag_sprite.texture   = load(data["bag"]) as Texture2D
+	bag_bg.texture       = load(data["bg"]) as Texture2D
 	category_label.text  = data["name"]
 	_refresh_list()
 
