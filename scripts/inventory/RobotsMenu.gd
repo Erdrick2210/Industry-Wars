@@ -45,8 +45,9 @@ signal closed
 
 var _selected_slot:    int    = -1
 var _cards:            Array  = []
-var _popup_mode:       String = ""   # "core" | "module" | "move_swap"
+var _popup_mode:       String = ""   # "core" | "module" | "move_swap" | "move_info"
 var _pending_move_slot:int    = -1   # slot de active_moves a sustituir
+var _pending_robot_slot:int   = -1   # robot al que pertenece el swap en curso
 
 # ─── Ready ────────────────────────────────────────────────────────────────────
 
@@ -249,28 +250,38 @@ func _refresh_moves(slot: int) -> void:
 	# 4 slots de ataque activo
 	for c in active_moves_list.get_children(): c.queue_free()
 	for i in 4:
-		var row       := HBoxContainer.new()
+		var row      := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 6)
 
-		var slot_lbl  := Label.new()
-		slot_lbl.text  = "%d." % (i + 1)
+		var slot_lbl := Label.new()
+		slot_lbl.text = "%d." % (i + 1)
 		slot_lbl.custom_minimum_size = Vector2(18, 0)
 
-		var move_lbl  := Label.new()
+		var move_lbl := Label.new()
 		move_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		move_lbl.add_theme_font_size_override("font_size", 12)
 
-		var swap_btn  := Button.new()
-		swap_btn.text  = "↔"
+		var has_move: bool = i < robot.active_moves.size() and not robot.active_moves[i].is_empty()
+
+		# Botón info — solo si hay ataque en el slot
+		var info_btn := Button.new()
+		info_btn.text = "?"
+		info_btn.custom_minimum_size = Vector2(28, 28)
+		info_btn.visible = has_move
+
+		# Botón swap
+		var swap_btn := Button.new()
+		swap_btn.text = "↔"
 		swap_btn.custom_minimum_size = Vector2(28, 28)
 
-		if i < robot.active_moves.size() and not robot.active_moves[i].is_empty():
-			move_lbl.text = robot.active_moves[i]
+		if has_move:
+			var ability_id: String = robot.active_moves[i]
+			move_lbl.text = ability_id
+			info_btn.pressed.connect(_open_move_info_popup.bind(ability_id))
 			swap_btn.pressed.connect(_open_move_swap_popup.bind(slot, i))
 		else:
-			move_lbl.text    = "— vacío —"
+			move_lbl.text     = "— vacío —"
 			move_lbl.modulate = Color(0.5, 0.5, 0.5)
-			# Permitir asignar si hay disponibles
 			if not robot.available_moves().is_empty():
 				swap_btn.pressed.connect(_open_move_swap_popup.bind(slot, i))
 			else:
@@ -278,6 +289,7 @@ func _refresh_moves(slot: int) -> void:
 
 		row.add_child(slot_lbl)
 		row.add_child(move_lbl)
+		row.add_child(info_btn)
 		row.add_child(swap_btn)
 		active_moves_list.add_child(row)
 
@@ -285,19 +297,25 @@ func _refresh_moves(slot: int) -> void:
 	for c in available_list.get_children(): c.queue_free()
 	var available := robot.available_moves()
 	if available.is_empty():
-		var lbl      := Label.new()
-		lbl.text      = "Todos los ataques aprendidos están activos."
+		var lbl     := Label.new()
+		lbl.text     = "Todos los ataques aprendidos están activos."
 		lbl.add_theme_font_size_override("font_size", 11)
-		lbl.modulate  = Color(0.6, 0.6, 0.6)
+		lbl.modulate = Color(0.6, 0.6, 0.6)
 		available_list.add_child(lbl)
 	else:
 		for ab_id in available:
-			var row   := HBoxContainer.new()
-			var lbl   := Label.new()
-			lbl.text   = ab_id
+			var row  := HBoxContainer.new()
+			row.add_theme_constant_override("separation", 6)
+			var lbl  := Label.new()
+			lbl.text  = ab_id
 			lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			lbl.add_theme_font_size_override("font_size", 12)
+			var info_btn := Button.new()
+			info_btn.text = "?"
+			info_btn.custom_minimum_size = Vector2(28, 28)
+			info_btn.pressed.connect(_open_move_info_popup.bind(ab_id))
 			row.add_child(lbl)
+			row.add_child(info_btn)
 			available_list.add_child(row)
 
 # ─── Popup núcleo ─────────────────────────────────────────────────────────────
@@ -311,9 +329,11 @@ func _open_core_popup() -> void:
 	for core in ModuleDB.get_all_cores():
 		var btn    := Button.new()
 		var active: bool = robot.equipped_core == core.id
-		btn.text    = "%s %s (%s)  %s" % [core.icon, core.name, core.subtitle,
+		btn.text = "%s %s (%s)  %s" % [core.icon, core.name, core.subtitle,
 			ModuleDB.modifiers_summary(core.modifiers)]
-		if active: btn.text += "  ←"; btn.modulate = Color(1.2,1.2,0.6)
+		if active:
+			btn.text    += "  ←"
+			btn.modulate = Color(1.2, 1.2, 0.6)
 		btn.pressed.connect(_on_core_selected.bind(core.id))
 		equip_popup_items.add_child(btn)
 	equip_popup.show()
@@ -368,12 +388,13 @@ func _on_module_selected(module_id: String) -> void:
 # ─── Popup intercambio de ataque ─────────────────────────────────────────────
 
 func _open_move_swap_popup(robot_slot: int, move_slot: int) -> void:
-	_popup_mode        = "move_swap"
-	_pending_move_slot = move_slot
+	_popup_mode         = "move_swap"
+	_pending_move_slot  = move_slot
+	_pending_robot_slot = robot_slot
 	equip_popup_title.text = "Elige ataque para el slot %d" % (move_slot + 1)
 	for c in equip_popup_items.get_children(): c.queue_free()
 
-	var robot    := RobotParty.party[robot_slot] as RobotParty.RobotInstance
+	var robot     := RobotParty.party[robot_slot] as RobotParty.RobotInstance
 	var available := robot.available_moves()
 
 	if available.is_empty():
@@ -383,8 +404,8 @@ func _open_move_swap_popup(robot_slot: int, move_slot: int) -> void:
 		equip_popup_items.add_child(lbl)
 	else:
 		for ab_id in available:
-			var btn   := Button.new()
-			btn.text   = ab_id
+			var btn  := Button.new()
+			btn.text  = ab_id
 			btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			btn.pressed.connect(_on_move_selected.bind(ab_id))
 			equip_popup_items.add_child(btn)
@@ -400,21 +421,72 @@ func _open_move_swap_popup(robot_slot: int, move_slot: int) -> void:
 	equip_popup.show()
 
 func _on_move_selected(ability_id: String) -> void:
-	RobotParty.set_active_move(_selected_slot, _pending_move_slot, ability_id)
+	var rs: int = _pending_robot_slot
+	var ms: int = _pending_move_slot
 	_hide_popup()
+	RobotParty.set_active_move(rs, ms, ability_id)
 
 func _on_move_removed(robot_slot: int, move_slot: int) -> void:
 	_hide_popup()
 	var robot := RobotParty.party[robot_slot] as RobotParty.RobotInstance
-	if move_slot < robot.active_moves.size():
+	if move_slot < robot.active_moves.size() and not robot.active_moves[move_slot].is_empty():
 		RobotParty.remove_active_move(robot_slot, robot.active_moves[move_slot])
+
+# ─── Popup info de habilidad ──────────────────────────────────────────────────
+
+func _open_move_info_popup(ability_id: String) -> void:
+	_popup_mode = "move_info"
+	for c in equip_popup_items.get_children(): c.queue_free()
+
+	equip_popup_title.text = ability_id
+
+	var rows: Array = []   # [[clave, valor], ...]
+
+	if get_node_or_null("/root/AbilityDB") != null:
+		var ab = AbilityDB.get_ability(ability_id)
+		if ab:
+			equip_popup_title.text = ab.get("name")
+			if ab.get("power")  > 0:  rows.append(["Potencia",  str(ab.power)])
+			if ab.get("accuracy")  > 0:  rows.append(["Precisión", "%d%%" % ab.accuracy])
+			if ab.get("ep_cost")  > 0:  rows.append(["Coste EP",  str(ab.ep_cost)])
+			if ab.get("effect") != "": rows.append(["Efecto",    ab.effect])
+		else:
+			rows.append(["", "No encontrado en AbilityDB."])
+	else:
+		rows.append(["", "AbilityDB no implementado aún."])
+
+	for row in rows:
+		var hbox := HBoxContainer.new()
+		hbox.add_theme_constant_override("separation", 12)
+		hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		hbox.custom_minimum_size   = Vector2(360, 0)  # ← añadir esto
+
+		if row[0] != "":
+			var key_lbl := Label.new()
+			key_lbl.text = row[0] + ":"
+			key_lbl.add_theme_font_size_override("font_size", 12)
+			key_lbl.add_theme_color_override("font_color", Color(0.75, 0.75, 0.75))
+			key_lbl.custom_minimum_size = Vector2(90, 0)  # ← un poco más ancho
+			key_lbl.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN  # ← no expandir la clave
+			hbox.add_child(key_lbl)
+
+		var val_lbl := Label.new()
+		val_lbl.text = row[1]
+		val_lbl.add_theme_font_size_override("font_size", 12)
+		val_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		val_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		hbox.add_child(val_lbl)
+		
+		equip_popup_items.add_child(hbox)
+	equip_popup.show()
 
 # ─── Popup helpers ────────────────────────────────────────────────────────────
 
 func _hide_popup() -> void:
 	equip_popup.hide()
-	_popup_mode        = ""
-	_pending_move_slot = -1
+	_popup_mode         = ""
+	_pending_move_slot  = -1
+	_pending_robot_slot = -1
 
 # ─── Input ────────────────────────────────────────────────────────────────────
 

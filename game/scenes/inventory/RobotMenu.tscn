@@ -192,8 +192,7 @@ text = "X"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1377296894]
 
 [node name="EquipPopup" type="Panel" parent="." unique_id=1532149932]
-visible = false
-custom_minimum_size = Vector2(500, 400)
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -226,6 +225,7 @@ size_flags_vertical = 3
 
 [node name="EquipPopupItems" type="VBoxContainer" parent="EquipPopup/VBox/EquipPopupList" unique_id=516329983]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="EquipPopupCancel" type="Button" parent="EquipPopup/VBox" unique_id=1389911277]
 layout_mode = 2
