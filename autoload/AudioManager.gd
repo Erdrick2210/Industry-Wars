@@ -8,6 +8,7 @@ extends Node
 	$SFXPlayer3
 ]
 
+const SAVE_PATH := "user://audio_settings.json"
 const UI_CLICK_PATH = "res://assets/audio/sfx/select.WAV"
 
 # ─────────────────────────────
@@ -22,7 +23,7 @@ func _ready():
 	_load_settings()
 	_apply_volumes()
   
-  process_mode = Node.PROCESS_MODE_ALWAYS
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().node_added.connect(_on_node_added)
 	
 func _apply_volumes():
@@ -88,7 +89,7 @@ func play_sfx(path: String):
 			player.stream = stream
 			player.play()
 			return
-      
+	  
 func _on_node_added(node: Node) -> void:
 	if node is BaseButton:
 		node.pressed.connect(func(): play_sfx(UI_CLICK_PATH))
