@@ -2,7 +2,6 @@ extends Node2D
 
 @export var level : Array[PackedScene]
 
-
 var _current_level: String 
 var _instantiated_level : Node
 var _level_cache : Dictionary = {}
@@ -36,6 +35,7 @@ func _change_level(level_path: String):
 	
 	# Esperamos un frame para que el Player y su cámara existan en el árbol
 	await get_tree().process_frame
+	AudioManager.play_music("res://assets/audio/music/overworld.mp3")
 	
 	if _instantiated_level.has_method("prepare_level"):
 		_instantiated_level.prepare_level()
@@ -116,6 +116,7 @@ func _end_battle_and_return():
 	# 2. Recuperamos el nivel donde se quedó el jugador usando la ruta guardada en '_current_level'
 	if _current_level != "":
 		_change_level(_current_level)
+		AudioManager.play_music("res://assets/audio/music/overworld.mp3")
 		print("[Main] Devuelto con éxito al mapa: ", _current_level)
 	await get_tree().process_frame
 	_is_returning_from_battle = false
