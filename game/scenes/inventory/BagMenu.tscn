@@ -28,9 +28,12 @@ script = ExtResource("1_skg8j")
 
 [node name="BagBG" type="TextureRect" parent="." unique_id=343070493]
 custom_minimum_size = Vector2(520, 0)
-layout_mode = 0
-offset_right = 1147.0
-offset_bottom = 642.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_6e1fk")
 
 [node name="MainContainer" type="HBoxContainer" parent="." unique_id=465114830]
@@ -38,7 +41,7 @@ layout_mode = 0
 offset_left = 4.0
 offset_top = 34.0
 offset_right = 1032.0
-offset_bottom = 461.0
+offset_bottom = 440.0
 
 [node name="LeftPanel" type="Control" parent="MainContainer" unique_id=666916584]
 custom_minimum_size = Vector2(400, 0)
@@ -51,9 +54,9 @@ anchors_preset = -1
 anchor_top = 0.88
 anchor_bottom = 1.0
 offset_left = 82.0
-offset_top = -359.12
+offset_top = -334.28
 offset_right = 122.880005
-offset_bottom = -372.12
+offset_bottom = -347.28
 scale = Vector2(6, 6)
 localize_numeral_system = false
 texture = ExtResource("3_xlwhc")
@@ -63,9 +66,9 @@ expand_mode = 2
 layout_direction = 2
 layout_mode = 0
 offset_left = 40.0
-offset_top = 278.0
+offset_top = 282.0
 offset_right = 368.0
-offset_bottom = 309.0
+offset_bottom = 313.0
 
 [node name="ArrowLeft" type="Button" parent="MainContainer/LeftPanel/TopBar" unique_id=769741654]
 layout_mode = 2
@@ -182,10 +185,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -100.0
-offset_right = 250.0
-offset_bottom = 200.0
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 
