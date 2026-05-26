@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bqw4jmclqk6cp"]
+
+[ext_resource type="Texture2D" uid="uid://ri2iisveexh" path="res://assets/art/textures/tilesets/puzzle3_tileset.png" id="1_8cofw"]
+[ext_resource type="Script" uid="uid://bqpkda34fq1lj" path="res://scripts/puzzles/puzzle3/coin.gd" id="1_es274"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es274"]
+atlas = ExtResource("1_8cofw")
+region = Rect2(72, 8, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8cofw"]
+
+[node name="Coin" type="Node2D" unique_id=1541546512]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=919666823]
+script = ExtResource("1_es274")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=903655703]
+texture = SubResource("AtlasTexture_es274")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=204483852]
+shape = SubResource("CircleShape2D_8cofw")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
