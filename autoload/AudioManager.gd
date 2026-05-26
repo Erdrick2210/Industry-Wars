@@ -8,6 +8,8 @@ extends Node
 	$SFXPlayer3
 ]
 
+const UI_CLICK_PATH = "res://assets/audio/sfx/select.WAV"
+
 # ─────────────────────────────
 # VOLUMES (0.0 - 1.0)
 # ─────────────────────────────
@@ -16,11 +18,12 @@ var master_volume := 1.0
 var music_volume := 1.0
 var sfx_volume := 1.0
 
-const SAVE_PATH := "user://audio_settings.json"
-
 func _ready():
 	_load_settings()
 	_apply_volumes()
+  
+  process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().node_added.connect(_on_node_added)
 	
 func _apply_volumes():
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(master_volume))
@@ -85,3 +88,7 @@ func play_sfx(path: String):
 			player.stream = stream
 			player.play()
 			return
+      
+func _on_node_added(node: Node) -> void:
+	if node is BaseButton:
+		node.pressed.connect(func(): play_sfx(UI_CLICK_PATH))

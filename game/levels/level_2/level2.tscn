@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cqdyyfrkjfvyo" path="res://scripts/levels/level_2/level_2.gd" id="1_vtx6a"]
 [ext_resource type="PackedScene" uid="uid://dwi2l0fuc3o8o" path="res://game/scenes/entities/player_actions.tscn" id="2_vtx6a"]
 [ext_resource type="PackedScene" uid="uid://bw1j14y0vs7ef" path="res://game/scenes/entities/signs/sign_forest.tscn" id="3_d57i8"]
-[ext_resource type="PackedScene" uid="uid://cqkkw524r4joq" path="res://game/scenes/entities/items/test_item.tscn" id="3_jcd7h"]
+[ext_resource type="PackedScene" uid="uid://cqkkw524r4joq" path="res://game/scenes/entities/items/municion_leve.tscn" id="3_jcd7h"]
 [ext_resource type="PackedScene" uid="uid://fhi3k572nd1b" path="res://game/scenes/entities/signs/sign_stairs.tscn" id="4_jcd7h"]
 [ext_resource type="Script" uid="uid://c7hbjqsfa00vw" path="res://scripts/levels/level_2/bridge.gd" id="6_y27mx"]
 [ext_resource type="PackedScene" uid="uid://dmbtrtnh2lckd" path="res://game/scenes/entities/league_boss.tscn" id="7_6j5gc"]
