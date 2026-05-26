@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b8mxloejxqevj" path="res://scripts/core/new_game.gd" id="3_oeb76"]
 [ext_resource type="Script" uid="uid://4mjysj5mywj6" path="res://scripts/core/config.gd" id="4_4xqfl"]
 [ext_resource type="Script" uid="uid://b4su8r0wbf074" path="res://scripts/core/exit.gd" id="4_7lbcs"]
+[ext_resource type="Script" uid="uid://6br6gcyrq7bq" path="res://scripts/core/load_game.gd" id="4_vld5t"]
 
 [sub_resource type="GDScript" id="GDScript_7lbcs"]
 script/source = "extends Control
@@ -98,7 +99,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_oeb76")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_oeb76")
 theme_override_styles/hover = SubResource("StyleBoxTexture_6e4ah")
 text = "Cargar Partida"
-script = ExtResource("4_4xqfl")
+script = ExtResource("4_vld5t")
 
 [node name="Config" type="Button" parent="VBoxContainer" unique_id=1622967169]
 layout_mode = 2
