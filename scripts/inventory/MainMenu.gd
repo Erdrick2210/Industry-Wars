@@ -14,6 +14,7 @@ extends Control
 const BAG_SCENE    = preload("res://game/scenes/inventory/BagMenu.tscn")
 const TALLER_SCENE = preload("res://game/scenes/inventory/TallerMenu.tscn")
 const ROBOT_SCENE = preload("res://game/scenes/inventory/RobotMenu.tscn")
+const OPTIONS_SCENE = preload("res://game/scenes/options_menu.tscn")
 # ─── Menu entries ─────────────────────────────────────────────────────────────
 
 const ENTRIES = [
@@ -21,7 +22,7 @@ const ENTRIES = [
 	{"label": "Robots",         "subtitle": "Gestiona tu equipo de robots.",              "scene": "ROBOT"},
 	{"label": "Taller",         "subtitle": "Construye módulos con componentes.",         "scene": "TALLER"},
 	{"label": "Bolsa",          "subtitle": "Revisa y usa los objetos que llevas.",       "scene": "BAG"},
-	{"label": "Coleccionables", "subtitle": "Objetos únicos recopilados en tu viaje.",    "scene": ""},
+	{"label": "Configuración",  "subtitle": "Ajusta el volumen y otras opciones.",        "scene": "CONFIG"}
 ]
 
 var _selected_index := 0
@@ -114,6 +115,9 @@ func _on_entry_pressed(idx: int) -> void:
 		"ROBOT":
 			var robots := ROBOT_SCENE.instantiate()
 			_open_submenu(robots)
+		"CONFIG":
+			var options := OPTIONS_SCENE.instantiate()
+			_open_submenu(options)
 		"":
 			print("Menú '%s' no implementado aún." % ENTRIES[idx]["label"])
 

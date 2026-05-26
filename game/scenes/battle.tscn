@@ -206,7 +206,7 @@ offset_right = 576.0
 offset_bottom = 150.0
 
 [node name="BattleBox" type="Sprite2D" parent="PlayerPanel" unique_id=1869917375]
-position = Vector2(287.95, 76)
+position = Vector2(288, 76)
 scale = Vector2(2.2157693, 1.77)
 texture = ExtResource("8_yl0ul")
 
@@ -301,8 +301,8 @@ offset_right = 1152.0
 offset_bottom = 150.0
 
 [node name="BattleBox" type="Sprite2D" parent="EnemyPanel" unique_id=2137752590]
-position = Vector2(287.95, 68.49999)
-scale = Vector2(2.2157693, 2.2419355)
+position = Vector2(287.95, 76)
+scale = Vector2(2.216, 1.77)
 texture = ExtResource("9_871wd")
 
 [node name="NameLabel" type="RichTextLabel" parent="EnemyPanel" unique_id=1469550954]
@@ -327,10 +327,10 @@ text = "Lv"
 
 [node name="HPBar" type="ProgressBar" parent="EnemyPanel" unique_id=1680298660]
 layout_mode = 0
-offset_left = 261.0
-offset_top = 89.0
-offset_right = 474.0
-offset_bottom = 102.0
+offset_left = 212.0
+offset_top = 79.0
+offset_right = 472.0
+offset_bottom = 92.0
 theme_override_styles/background = SubResource("StyleBoxFlat_wd3if")
 theme_override_styles/fill = SubResource("StyleBoxFlat_meiey")
 show_percentage = false
