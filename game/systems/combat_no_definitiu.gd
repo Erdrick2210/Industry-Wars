@@ -51,6 +51,7 @@ var battle_item_page := 0
 const ITEMS_PER_PAGE := 4
 
 func _on_back_pressed() -> void:
+	AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 	prev_page_button.visible = false
 	next_page_button.visible = false
 	ability_container.visible = false
@@ -59,11 +60,13 @@ func _on_back_pressed() -> void:
 		child.queue_free()
 		
 func _on_prev_page_pressed():
+	AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 	if battle_item_page > 0:
 		battle_item_page -= 1
 		show_battle_items()
 
 func _on_next_page_pressed():
+	AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 	battle_item_page += 1
 	show_battle_items()
 		
@@ -337,6 +340,7 @@ func animate_exp_gain(old_exp: int):
 		if segment_target >= next_level_exp:
 			current_level += 1
 			player_level.text = "Lv " + str(current_level)
+			AudioManager.play_sfx("res://assets/audio/sfx/expfull.wav")
 
 			await log_and_wait(
 				"%s subió a nivel %d!" % [
@@ -409,6 +413,7 @@ func _ready():
 	ability_info.visible = false
 	robot_info.visible = false
 	battle_animator.setup(player_sprite, enemy_sprite)
+	AudioManager.play_music("res://assets/audio/music/battle_theme.mp3")
 	_init_battle()
 
 func _init_battle() -> void:
@@ -458,6 +463,11 @@ func process_state() -> void:
 			print("¿Qué hará el robot?")
 			await log_and_wait("¿Qué hará el robot?")
 			player_can_act = true
+			
+		CombatState.FORCED_SWITCH:
+			print("¿Quieres cambiar de robot?")
+			await log_and_wait("¿Quieres cambiar de robot?")
+			player_can_act = true
 
 		CombatState.END_BATTLE:
 			await log_and_wait("Combate terminado.")
@@ -498,19 +508,22 @@ func _on_fight_pressed() -> void:
 		return
 		
 	if player_can_act:
+		AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 		show_player_abilities()
 	
 func _on_bag_pressed() -> void:
 	if not player_can_act:
 		return
 	
+	AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 	battle_item_page = 0
 	show_battle_items()
 	
 func _on_robots_pressed() -> void:
 	if not player_can_act:
 		return
-		
+	
+	AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 	show_robot_menu()
 	
 func _on_giveup_pressed() -> void:
@@ -585,6 +598,7 @@ func show_battle_items():
 		)
 
 		btn.pressed.connect(func():
+			AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 			selected_item_id = slot.item_id
 			show_robot_menu_for_item()
 		)
@@ -649,6 +663,7 @@ func show_robot_menu_for_item():
 		)
 
 		btn.pressed.connect(func():
+			AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 			await use_battle_item(selected_item_id, i)
 		)
 
@@ -757,6 +772,7 @@ func show_robot_menu():
 		)
 
 		btn.pressed.connect(func():
+			AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 			await switch_robot(i)
 		)
 
@@ -770,9 +786,6 @@ func switch_robot(new_slot: int):
 		child.queue_free()
 
 	var old_robot = player_robot
-	
-	# salida del robot anterior
-	await battle_animator.animate_switch_out(true)
 
 	active_player_slot = new_slot
 	player_robot = RobotParty.party[new_slot]
@@ -780,16 +793,17 @@ func switch_robot(new_slot: int):
 	# Participó en combate
 	if not participating_slots.has(new_slot):
 		participating_slots.append(new_slot)
-
+		
 	# Sólo mostrar "vuelve" si no murió
 	if old_robot.current_hp > 0:
 		await log_and_wait("¡%s vuelve!" % old_robot.display_name())
-
-	await log_and_wait("¡Adelante, %s!" % player_robot.display_name())
+		AudioManager.play_sfx("res://assets/audio/sfx/switch.wav")
+	# salida del robot anterior
+	await battle_animator.animate_switch_out(true)
 	
+	await log_and_wait("¡Adelante, %s!" % player_robot.display_name())
 	# Actualizar UI
 	init_battle_boxes()
-	
 	# entrada del nuevo robot
 	await battle_animator.animate_switch_in(true)
 	
@@ -929,6 +943,7 @@ func show_player_abilities():
 		)
 		
 		btn.pressed.connect(func():
+			AudioManager.play_sfx("res://assets/audio/sfx/select.WAV")
 			await use_ability(ability)
 		)
 
@@ -1037,7 +1052,7 @@ func process_overheat(robot):
 		]
 	)
 	
-	battle_animator.animate_hit(robot == player_robot)
+	AudioManager.play_sfx("res://assets/audio/sfx/overheat.wav")
 	battle_animator.animate_shake(robot == player_robot)
 	
 	await apply_damage(robot, damage)
@@ -1055,7 +1070,7 @@ func process_short_circuit(robot):
 		]
 	)
 	
-	battle_animator.animate_hit(robot == player_robot)
+	AudioManager.play_sfx("res://assets/audio/sfx/short_circuit.ogg")
 	battle_animator.animate_shake(robot == player_robot)
 	
 	await spend_ep(robot, ep_loss)
@@ -1088,10 +1103,11 @@ func check_win_condition() -> bool:
 		if next_enemy != null:
 			enemy_robot = next_enemy
 			await log_and_wait("¡El rival envía a %s!" % enemy_robot.display_name())
-			await battle_animator.animate_switch_in(false)
 			init_battle_boxes()
+			await battle_animator.animate_switch_in(false)
 			return false
 		
+		AudioManager.play_music("res://assets/audio/music/victory.mp3")
 		await log_and_wait("¡Has ganado!")
 		var old_exp = player_robot.total_exp
 		give_battle_exp(enemy_robot, participating_slots)

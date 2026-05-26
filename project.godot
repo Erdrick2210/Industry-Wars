@@ -15,6 +15,10 @@ run/main_scene="uid://c04b48udsm1pe"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://bdj6itd1mmxj3"
+
 [autoload]
 
 ItemDB="*uid://bw2aorum66xyr"
@@ -27,6 +31,7 @@ AbilitiesDB="*uid://c0d6c31s5jptb"
 ModuleDB="*uid://y1gaxotmsogt"
 AbilityDB="*uid://c0d6c31s5jptb"
 GameEvents="*uid://chieddngn4os0"
+AudioManager="*uid://bbq2nbelsw3yv"
 
 [display]
 

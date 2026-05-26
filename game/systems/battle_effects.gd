@@ -97,6 +97,9 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 			if target.current_hp <= 0:
 				return
 			await battle.log_and_wait("¡Golpe adicional!")
+			await battle.battle_animator.animate_attack(user == battle.player_robot)
+			await battle.battle_animator.animate_hit(target == battle.player_robot)
+			await battle.battle_animator.animate_shake(target == battle.player_robot)
 			var second_damage = BattleCalculator.calculate_damage(user, target, ability)
 			await battle.apply_damage(target, second_damage)
 		
@@ -154,7 +157,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 				)
 				return
 			target.add_status("overheated")
-			battle.battle_animator.animate_hit(target == battle.player_robot)
+			AudioManager.play_sfx("res://assets/audio/sfx/overheat.wav")
 			battle.battle_animator.animate_shake(target == battle.player_robot)
 			await battle.log_and_wait(
 				"¡%s entra en sobrecalentamiento!" % [
@@ -171,7 +174,7 @@ static func apply_effect(battle, effect_id:String, user, target, ability):
 				)
 				return
 			target.add_status("short_circuited")
-			battle.battle_animator.animate_hit(target == battle.player_robot)
+			AudioManager.play_sfx("res://assets/audio/sfx/short_circuit.ogg")
 			battle.battle_animator.animate_shake(target == battle.player_robot)
 			await battle.log_and_wait(
 				"¡%s sufrió un cortocircuito!" % [
