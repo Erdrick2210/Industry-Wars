@@ -25,6 +25,7 @@ func interact():
 			_buy_vending()
 
 func pickup_item():
+	AudioManager.play_sfx("res://assets/audio/sfx/item_get.wav")
 	print("Item picked up")
 	if owner:
 		owner.queue_free()
@@ -32,9 +33,11 @@ func pickup_item():
 		queue_free()
 
 func _change_scene():
+	AudioManager.play_sfx("res://assets/audio/sfx/door.WAV")
 	GameEvents.emit_signal("change_level_request", target_level_path, target_spawn_name)
 
 func _buy_vending():
+	AudioManager.play_sfx("res://assets/audio/sfx/item_get.wav")
 	print("Item bought")
 	bought = true
 
