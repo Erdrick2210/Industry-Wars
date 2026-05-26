@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var PlayerAnimation: AnimatedSprite2D
 
+
 var interactable = null
 var _walking_speed : float = 120
 var _running_speed : float = _walking_speed * 2
@@ -11,6 +12,7 @@ var last_direction = "down"
 var is_frozen : bool = false 
 
 func _ready() -> void:
+	GameEvents.current_player = self
 	if GameManager.target_spawn_name != "":
 		var spawn_point = get_tree().current_scene.find_child(GameManager.target_spawn_name, true, false)
 		if spawn_point:

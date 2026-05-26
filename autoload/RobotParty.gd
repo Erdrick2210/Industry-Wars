@@ -121,9 +121,9 @@ class RobotInstance:
 var party: Array = []
 
 func _ready() -> void:
-	_add_demo_party()
 	if not _load():
-		_add_demo_party()
+		if party.is_empty():
+			_add_demo_party()
 
 # ─── Nivel / EXP ──────────────────────────────────────────────────────────────
 

@@ -13,7 +13,7 @@ func refresh_items():
 	item_list.clear()
 	filtered_ids.clear()
 	for item_id in Inventory.items:
-		var item = ItemDatabase.get_item(item_id)
+		var item = ItemDB.get_item(item_id)
 		if item.category != current_category:
 			continue
 				
@@ -30,7 +30,7 @@ func refresh_items():
 
 func _on_item_list_item_selected(index: int) -> void:
 	var item_id = filtered_ids[index]
-	var item = ItemDatabase.get_item(item_id)
+	var item = ItemDB.get_item(item_id)
 	
 	description.text = item.description
 
