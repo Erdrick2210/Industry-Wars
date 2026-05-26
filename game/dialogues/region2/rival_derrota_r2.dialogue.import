@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://i2fq8003qdcq"
+path="res://.godot/imported/rival_derrota_r2.dialogue-ba54e64b8e3f3f8e35483c570e58d3ee.tres"
+
+[deps]
+
+source_file="res://game/dialogues/region2/rival_derrota_r2.dialogue"
+dest_files=["res://.godot/imported/rival_derrota_r2.dialogue-ba54e64b8e3f3f8e35483c570e58d3ee.tres"]
+
+[params]
+
+defaults=true

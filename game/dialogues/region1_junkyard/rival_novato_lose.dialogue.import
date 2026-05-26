@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d1muf18gk8jf5"
+path="res://.godot/imported/rival_novato_lose.dialogue-6c859ae2b28a73aa2149cccc172ab13b.tres"
+
+[deps]
+
+source_file="res://game/dialogues/region1_junkyard/rival_novato_lose.dialogue"
+dest_files=["res://.godot/imported/rival_novato_lose.dialogue-6c859ae2b28a73aa2149cccc172ab13b.tres"]
+
+[params]
+
+defaults=true

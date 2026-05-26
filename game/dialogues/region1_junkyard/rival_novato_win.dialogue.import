@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dj6frc3cptxgg"
+path="res://.godot/imported/rival_novato_win.dialogue-b86a7ae16a7a1dbfbcca1e34ea560873.tres"
+
+[deps]
+
+source_file="res://game/dialogues/region1_junkyard/rival_novato_win.dialogue"
+dest_files=["res://.godot/imported/rival_novato_win.dialogue-b86a7ae16a7a1dbfbcca1e34ea560873.tres"]
+
+[params]
+
+defaults=true

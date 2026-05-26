@@ -1,0 +1,12 @@
+mechanic_talk:
+    Mechanic: ¡Hola! ¿Eres el nuevo al que Mara está entrenando?
+    Mechanic: Si necesitas recambios baratos o piezas de chatarra, aquí estoy.
+    Mechanic: Pero ten cuidado con los robots salvajes que rondan el vertedero.
+    
+    - ¿Robots salvajes?
+        Mechanic: Sí, algunos prototipos abandonados siguen funcionando solos. Son perfectos para practicar combates por turnos.
+    
+    - ¿Sabes algo raro sobre la Liga o la corporación?
+        Mechanic: [nervioso] Yo solo arreglo cosas… no hago preguntas.
+        Mechanic: Mejor concéntrate en mejorar tu núcleo y módulos.
+        set conspiracy_level = 1

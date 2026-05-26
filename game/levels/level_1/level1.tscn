@@ -95,6 +95,7 @@ shape = SubResource("RectangleShape2D_ofauc")
 process_mode = 4
 visible = false
 position = Vector2(1465, -83)
+dialogue_resource = ExtResource("6_upydp")
 
 [node name="DetectionArea2" type="Area2D" parent="Rival" unique_id=1469242358]
 collision_layer = 4

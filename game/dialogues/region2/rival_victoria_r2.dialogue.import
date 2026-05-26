@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b8lwjvrjp8omm"
+path="res://.godot/imported/rival_victoria_r2.dialogue-85c18074149720798c433088c1866637.tres"
+
+[deps]
+
+source_file="res://game/dialogues/region2/rival_victoria_r2.dialogue"
+dest_files=["res://.godot/imported/rival_victoria_r2.dialogue-85c18074149720798c433088c1866637.tres"]
+
+[params]
+
+defaults=true

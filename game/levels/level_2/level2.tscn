@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://c7hbjqsfa00vw" path="res://scripts/levels/level_2/bridge.gd" id="6_y27mx"]
 [ext_resource type="PackedScene" uid="uid://dmbtrtnh2lckd" path="res://game/scenes/entities/league_boss.tscn" id="7_6j5gc"]
 [ext_resource type="PackedScene" uid="uid://bmjty1bwwvqoo" path="res://game/scenes/entities/rival.tscn" id="8_v1e6q"]
+[ext_resource type="Resource" uid="uid://du51pvnrtdi5m" path="res://game/dialogues/region2/league_boss_intro.dialogue" id="9_4wv44"]
 [ext_resource type="Script" uid="uid://dp5655p813nk5" path="res://scripts/warp_zones.gd" id="10_5beai"]
 [ext_resource type="Script" uid="uid://dawpcvntdvo0m" path="res://scripts/entities/rival/rival_level2.gd" id="10_8dorb"]
 [ext_resource type="PackedScene" uid="uid://cxsw4dooasics" path="res://game/levels/level_2/puzzle_home_door_o.tscn" id="12_67o4f"]
@@ -110,10 +111,12 @@ limit_bottom = 2200
 
 [node name="LeagueBoss" parent="." unique_id=1838061329 instance=ExtResource("7_6j5gc")]
 position = Vector2(1927, 1841)
+dialogue_resource = ExtResource("9_4wv44")
 
 [node name="RivalLevel2" parent="." unique_id=1029693162 instance=ExtResource("8_v1e6q")]
 position = Vector2(61, -627)
 script = ExtResource("10_8dorb")
+dialogue_resource = null
 speed = 150.0
 look_distance = 300.0
 

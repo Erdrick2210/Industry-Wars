@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dhc1beyqcp1qb"
+path="res://.godot/imported/rival_encuentro_r2.dialogue-0225fb13ca099a2d6ee677290f91ad5a.tres"
+
+[deps]
+
+source_file="res://game/dialogues/region2/rival_encuentro_r2.dialogue"
+dest_files=["res://.godot/imported/rival_encuentro_r2.dialogue-0225fb13ca099a2d6ee677290f91ad5a.tres"]
+
+[params]
+
+defaults=true
