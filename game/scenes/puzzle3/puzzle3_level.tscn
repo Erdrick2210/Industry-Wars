@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://dut4r66lcgtks"]
 
+[ext_resource type="Script" uid="uid://c3ofrj3suoe51" path="res://scripts/puzzles/puzzle3/puzzle_3_level.gd" id="1_5atv1"]
 [ext_resource type="Texture2D" uid="uid://ri2iisveexh" path="res://assets/art/textures/tilesets/puzzle3_tileset.png" id="1_ctk0j"]
 [ext_resource type="Texture2D" uid="uid://b35qyxv4e717w" path="res://assets/art/textures/puzzles/puzzle3_background.png" id="1_gwl25"]
 [ext_resource type="PackedScene" uid="uid://bbtt5j1evnn5l" path="res://game/scenes/puzzle3/puzzle3_mc.tscn" id="2_ooghr"]
@@ -103,7 +104,11 @@ region = Rect2(0, 160, 32, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5atv1"]
 size = Vector2(32, 8)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ed1cs"]
+size = Vector2(4096, 27)
+
 [node name="Puzzle3Level" type="Node2D" unique_id=233528872]
+script = ExtResource("1_5atv1")
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=2024166501]
 modulate = Color(0.20784314, 0.21960784, 0.20784314, 1)
@@ -236,3 +241,11 @@ texture = SubResource("AtlasTexture_gwl25")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D7/StaticBody2D" unique_id=1294578479]
 shape = SubResource("RectangleShape2D_5atv1")
 one_way_collision = true
+
+[node name="Void" type="Area2D" parent="." unique_id=708234921]
+position = Vector2(1788, 711)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Void" unique_id=737913836]
+shape = SubResource("RectangleShape2D_ed1cs")
+
+[connection signal="body_entered" from="Void" to="." method="_on_void_zone_body_entered"]
