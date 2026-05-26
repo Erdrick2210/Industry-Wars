@@ -1,9 +1,12 @@
 extends Node
 
+var init_inventory : bool = false
+
 signal change_level_request(level_path : String, spawn_name : String)
 signal start_battle(battle_path : String)
 var rival_event_done = false
 var _world_node: Node = null
+
 
 signal combat_rival_finished(player_won: bool, enemy_name: String)
 signal combat_rival_cancelled(enemy_name: String) # --- NUEVA SEÑAL ---

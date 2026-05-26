@@ -3,6 +3,9 @@ class_name InteractableItem
 
 @export var int_id : int
 
+#Item id
+@export var item_id : String
+
 # Scene Transition Variables
 @export_file("*.tscn") var target_level_path : String
 @export var target_spawn_name : String
@@ -27,6 +30,7 @@ func interact():
 func pickup_item():
 	AudioManager.play_sfx("res://assets/audio/sfx/item_get.wav")
 	print("Item picked up")
+	Inventory.add_item(item_id)
 	if owner:
 		owner.queue_free()
 	else:

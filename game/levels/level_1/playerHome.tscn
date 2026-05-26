@@ -3,6 +3,7 @@
 [ext_resource type="TileSet" uid="uid://gnhbe38dmnqi" path="res://assets/art/textures/tilesets/playerHome.tres" id="1_gyygj"]
 [ext_resource type="PackedScene" uid="uid://dwi2l0fuc3o8o" path="res://game/scenes/entities/player_actions.tscn" id="2_42oe7"]
 [ext_resource type="PackedScene" uid="uid://6fdowpmchqqi" path="res://game/levels/level_1/home_door.tscn" id="3_42oe7"]
+[ext_resource type="PackedScene" uid="uid://b2lbinn5y028h" path="res://game/scenes/entities/items/chip_logica.tscn" id="4_61gph"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gyygj"]
 size = Vector2(16.5, 545)
@@ -66,3 +67,6 @@ position = Vector2(-112, 244)
 
 [node name="homeDoor" parent="." unique_id=223654149 instance=ExtResource("3_42oe7")]
 position = Vector2(-110, 290)
+
+[node name="Chip_Logica" parent="." unique_id=1413082710 instance=ExtResource("4_61gph")]
+position = Vector2(278, 141)
