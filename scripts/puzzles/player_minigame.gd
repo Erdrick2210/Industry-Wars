@@ -11,7 +11,7 @@ var max_fireballs: int = 100
 var fireballs_spawned: int = 0
 var fireballs_caught: int = 0
 var fireballs_resolved: int = 0
-var fireballs_needed_to_win: int = 60
+var fireballs_needed_to_win: int = 10
 
 func _ready():
 	progress_bar.value = 0

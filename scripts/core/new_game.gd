@@ -1,4 +1,4 @@
 extends Button
 
 func _on_pressed() -> void:
-	get_tree().change_scene_to_file("res://game/scenes/main.tscn")
+	GameEvents.emit_signal("change_level_request", "res://game/levels/level_1/playerHome.tscn", "DefaultSpawn")

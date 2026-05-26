@@ -10,16 +10,25 @@ const MINIGAME_SCENE = preload("res://game/scenes/puzzle1/minigame_puzzle1.tscn"
 
 var direction: int = 1
 var timer: float = 0.0
-var is_running: bool = true  # <--- NUEVA VARIABLE
 
+func _ready() -> void:
+	if GameEvents.lab_repaired:
+		if damaged_lab:
+			damaged_lab.visible = false
+		if area_int and area_int.has_node("CollisionShape2D"):
+			area_int.get_node("CollisionShape2D").disabled = true
+			
+	if not GameEvents.oldman_is_running:
+		velocity = Vector2.ZERO
+		if animation_sprite:
+			animation_sprite.play("idle_down")
 
 func _physics_process(delta):
-	# Si no debe correr, detenemos la velocidad y salimos de la función
-	if not is_running:
+	if not GameEvents.oldman_is_running:
 		velocity.x = 0
 		move_and_slide()
 		return
-
+		
 	timer += delta
 	
 	if timer >= switch_time or is_on_wall():
@@ -28,18 +37,19 @@ func _physics_process(delta):
 		
 	velocity.x = direction * speed
 	
-	if direction == 1:
-		animation_sprite.play("run_right")
-	else:
-		animation_sprite.play("run_left")
+	if animation_sprite:
+		if direction == 1:
+			animation_sprite.play("run_right")
+		else:
+			animation_sprite.play("run_left")
 		
 	move_and_slide()
 
 func interact() -> void:
-	is_running = false # <--- SE DETIENE AL HABLAR
+	GameEvents.oldman_is_running = false
 			
 	var minigame = MINIGAME_SCENE.instantiate()
-	print("¡Iniciando minijuego!")
+	print("Starting minigame!")
 	get_tree().root.add_child(minigame)
 	
 	var cam_minigame = minigame.get_node("Camera2D")
@@ -56,11 +66,13 @@ func _on_minigame_ended(win: bool, minigame_node: Node):
 	minigame_node.queue_free()
 	
 	if win:
-		print("¡El NPC dice: Bien hecho, superaste el puzzle!")
+		print("Minigame won!")
 		repair_lab()
-		is_running = false # <--- SE QUEDA QUIETO PARA SIEMPRE
-		animation_sprite.play("idle_down")  # <--- Asegúrate de tener una animación llamada "idle"
-		# === DIÁLOGO DE AGRADECIMIENTO ===
+		GameEvents.oldman_is_running = false
+		Inventory.add_item("gyro")
+		if animation_sprite:
+			animation_sprite.play("idle_down")
+			
 		if dialogue_resource:
 			if target_player and target_player.has_method("set_frozen"):
 				target_player.set_frozen(true)
@@ -69,17 +81,18 @@ func _on_minigame_ended(win: bool, minigame_node: Node):
 		
 			if target_player and target_player.has_method("set_frozen"):
 				target_player.set_frozen(false)
-	# ==================================
 	else:
-		print("¡El NPC dice: Has fallado, vuelve a intentarlo!")
-		is_running = true  # <--- VUELVE A CORRER SI FALLAS
+		print("Minigame failed!")
+		GameEvents.oldman_is_running = true
 	
 	if owner:
 		owner.visible = true
 		owner.process_mode = Node.PROCESS_MODE_INHERIT
-	
-	if area_int.has_node("CollisionShape2D"):
+		
+	if win and area_int and area_int.has_node("CollisionShape2D"):
 		area_int.get_node("CollisionShape2D").set_deferred("disabled", true)
 	
 func repair_lab():
-	damaged_lab.visible = false
+	if damaged_lab:
+		damaged_lab.visible = false
+	GameEvents.lab_repaired = true

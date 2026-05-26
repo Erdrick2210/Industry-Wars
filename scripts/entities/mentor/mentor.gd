@@ -4,11 +4,10 @@ extends InteractableNPC
 @export var dialogue_title: String = "mara_first"
 
 var is_moving : bool = false
-var event_finished : bool = false 
 
 func _ready() -> void:
 	# Estado inicial: oculto si el evento no ha ocurrido
-	if not event_finished:
+	if not GameEvents.mentor_event_finished:
 		visible = false
 		process_mode = Node.PROCESS_MODE_DISABLED
 
@@ -26,7 +25,7 @@ func _physics_process(_delta: float) -> void:
 
 func prepare_npc() -> void:
 	# Si ya terminó su caminata en una visita anterior, solo la mostramos
-	if event_finished:
+	if GameEvents.mentor_event_finished:
 		visible = true
 		process_mode = Node.PROCESS_MODE_INHERIT
 		return
@@ -56,7 +55,7 @@ func prepare_npc() -> void:
 	# 5. Finalización
 	is_moving = false
 	velocity = Vector2.ZERO
-	event_finished = true
+	GameEvents.mentor_event_finished = true
 	animation_sprite.play("idle_down")
 
 func interact() -> void:

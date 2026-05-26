@@ -17,7 +17,7 @@ const ROBOT_SCENE = preload("res://game/scenes/inventory/RobotMenu.tscn")
 # ─── Menu entries ─────────────────────────────────────────────────────────────
 
 const ENTRIES = [
-	{"label": "Guardar",        "subtitle": "Guarda el progreso de tu partida.",         "scene": ""},
+	{"label": "Guardar",        "subtitle": "Guarda el progreso de tu partida.",         "scene": "SAVE"},
 	{"label": "Robots",         "subtitle": "Gestiona tu equipo de robots.",              "scene": "ROBOT"},
 	{"label": "Taller",         "subtitle": "Construye módulos con componentes.",         "scene": "TALLER"},
 	{"label": "Bolsa",          "subtitle": "Revisa y usa los objetos que llevas.",       "scene": "BAG"},
@@ -103,6 +103,8 @@ func _on_entry_focused(idx: int) -> void:
 
 func _on_entry_pressed(idx: int) -> void:
 	match ENTRIES[idx]["scene"]:
+		"SAVE":
+			SaveManager.save_game()
 		"BAG":
 			var bag := BAG_SCENE.instantiate()
 			_open_submenu(bag)
