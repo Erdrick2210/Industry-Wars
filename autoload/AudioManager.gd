@@ -8,6 +8,16 @@ extends Node
 	$SFXPlayer3
 ]
 
+const UI_CLICK_PATH = "res://assets/audio/sfx/select.WAV"
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().node_added.connect(_on_node_added)
+	
+func _on_node_added(node: Node) -> void:
+	if node is BaseButton:
+		node.pressed.connect(func(): play_sfx(UI_CLICK_PATH))
+
 func play_music(path: String):
 	var stream = load(path)
 
