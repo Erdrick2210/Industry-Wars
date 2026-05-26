@@ -1,10 +1,16 @@
 extends InteractableNPC
 
+# Exportamos las variables para poder asignar el diálogo desde el Inspector de Godot
+@export var dialogue_resource: DialogueResource
+@export var dialogue_title: String = "league_boss_intro" #
 
-func interact() -> void: # TODO / Implementar diàleg o el que sigui
+func interact() -> void:
+	if not dialogue_resource:
+		print("Error: Diálogo no asignado en este NPC interactuable")
+		return
 	if target_player and target_player.has_method("set_frozen"):
 		target_player.set_frozen(true)
-	await get_tree().create_timer(2.0).timeout
+	await DialogueManager.show_dialogue_balloon(dialogue_resource, dialogue_title)
 	
-	if target_player:
+	if target_player and target_player.has_method("set_frozen"):
 		target_player.set_frozen(false)
