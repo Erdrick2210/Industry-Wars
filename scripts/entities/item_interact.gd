@@ -37,7 +37,29 @@ func pickup_item():
 		
 	AudioManager.play_sfx("res://assets/audio/sfx/item_get.wav")
 	print("Item picked up")
+	
+	# 1. Guardamos el nombre bonito y la cantidad en el Autoload global de Inventory
+	var def = ItemDB.get_item(item_id)
+	Inventory.last_picked_name = def.display_name if def else item_id
+	Inventory.last_picked_qty = 1 # Tu función añade de 1 en 1
+	
+	# 2. Añadimos el objeto de forma silenciosa al inventario real
 	Inventory.add_item(item_id)
+	
+	# 3. Cargamos y lanzamos el diálogo reteniendo al jugador
+	var dialogue_res = load("res://game/dialogues/item_notification.dialogue")
+	if dialogue_res:
+		var player = get_tree().get_first_node_in_group("Player")
+		if player and player.has_method("set_frozen"):
+			player.set_frozen(true)
+			
+		# Detiene la ejecución aquí hasta que el jugador pulse aceptar/avanzar
+		await DialogueManager.show_dialogue_balloon(dialogue_res, "recogido")
+		
+		if player and player.has_method("set_frozen"):
+			player.set_frozen(false)
+			
+	# 4. Una vez cerrado el diálogo, el objeto se destruye limpiamente de la escena
 	_self_destruct()
 
 func _change_scene():

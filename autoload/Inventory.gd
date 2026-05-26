@@ -3,6 +3,9 @@
 
 extends Node
 
+var last_picked_name: String = ""
+var last_picked_qty: int = 1
+
 signal inventory_changed
 signal item_used(item_id: String, robot_slot: int)
 signal module_equipped(item_id: String, robot_slot: int)
