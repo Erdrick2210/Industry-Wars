@@ -116,6 +116,7 @@ dialogue_resource = ExtResource("9_4wv44")
 [node name="RivalLevel2" parent="." unique_id=1029693162 instance=ExtResource("8_v1e6q")]
 position = Vector2(61, -627)
 script = ExtResource("10_8dorb")
+dialogue_resource = null
 speed = 150.0
 look_distance = 300.0
 

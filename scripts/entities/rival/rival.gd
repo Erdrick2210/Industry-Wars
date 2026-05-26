@@ -120,8 +120,8 @@ func _on_combat_finished(player_won: bool = true, enemy_name: String = "") -> vo
 		if lose_dialog:
 			await DialogueManager.show_dialogue_balloon(lose_dialog, "rival_novato_lose")
 		
-		if player_ref and player_ref.has_method("set_frozen"):
-			player_ref.set_frozen(false)
+	if player_ref and player_ref.has_method("set_frozen"):
+		player_ref.set_frozen(false)
 
 # --- SEÑALES DE ÁREA ---
 func _on_detection_area_2_body_entered(body: Node2D) -> void:

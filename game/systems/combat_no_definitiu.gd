@@ -434,8 +434,7 @@ func _init_battle() -> void:
 	
 func create_enemy_party() -> Array:
 	return [
-		RobotParty.create_robot(2, 520),
-		RobotParty.create_robot(3, 520)
+		RobotParty.create_robot(2, 1)
 	]
 
 # ─────────────────────────────────────────────────────────────
