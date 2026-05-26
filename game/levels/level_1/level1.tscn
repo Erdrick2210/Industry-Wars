@@ -4,10 +4,12 @@
 [ext_resource type="TileSet" uid="uid://c5dgjo5qhvc34" path="res://assets/art/textures/tilesets/first_zone.tres" id="1_rfis5"]
 [ext_resource type="PackedScene" uid="uid://dwi2l0fuc3o8o" path="res://game/scenes/entities/player_actions.tscn" id="2_rfis5"]
 [ext_resource type="PackedScene" uid="uid://bmjty1bwwvqoo" path="res://game/scenes/entities/rival.tscn" id="3_huo5n"]
-[ext_resource type="PackedScene" uid="uid://dff6hymdg42hp" path="res://game/scenes/puzzle1/npc_puzzle1.tscn" id="3_iddtf"]
+[ext_resource type="PackedScene" uid="uid://dff6hymdg42hp" path="res://game/scenes/puzzle1/npc_puzzle1_thanks.tscn" id="3_iddtf"]
 [ext_resource type="Script" uid="uid://07u7aredxr01" path="res://scripts/entities/rival/spawn_rival_trigger.gd" id="4_ycpq3"]
+[ext_resource type="Resource" uid="uid://co3gbh8kfjj5c" path="res://game/dialogues/region1_junkyard/npc_puzzle1.dialogue" id="5_l0wew"]
 [ext_resource type="PackedScene" uid="uid://ut0g37bo1ca3" path="res://game/scenes/entities/mentor.tscn" id="5_ofauc"]
 [ext_resource type="Resource" uid="uid://ciypdqcp5qba7" path="res://game/dialogues/region1_junkyard/first_small_rival.dialogue" id="6_upydp"]
+[ext_resource type="Resource" uid="uid://cww1clg7b5dp7" path="res://game/dialogues/region1_junkyard/mara_first.dialogue" id="7_dhxy6"]
 [ext_resource type="Script" uid="uid://dp5655p813nk5" path="res://scripts/warp_zones.gd" id="9_asq6h"]
 [ext_resource type="PackedScene" uid="uid://dbplhtvian17q" path="res://game/levels/level_1/home_door_outside.tscn" id="10_s721g"]
 
@@ -79,6 +81,7 @@ limit_bottom = 1000
 
 [node name="NpcPuzzle1" parent="." unique_id=1060618669 instance=ExtResource("3_iddtf")]
 position = Vector2(956, -619)
+dialogue_resource = ExtResource("5_l0wew")
 
 [node name="Area2D" type="Area2D" parent="NpcPuzzle1" unique_id=1262964568]
 collision_layer = 4
@@ -103,6 +106,7 @@ shape = SubResource("RectangleShape2D_s721g")
 
 [node name="Mentor" parent="." unique_id=483285337 instance=ExtResource("5_ofauc")]
 position = Vector2(432, -45)
+dialogue_resource = ExtResource("7_dhxy6")
 
 [node name="SpawnRivalTrigger" type="Area2D" parent="." unique_id=178654184 node_paths=PackedStringArray("rival")]
 collision_layer = 0

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cww1clg7b5dp7"
+path="res://.godot/imported/mara_first.dialogue-9250def4b0453151b433cf841d1dffa8.tres"
+
+[deps]
+
+source_file="res://game/dialogues/region1_junkyard/mara_first.dialogue"
+dest_files=["res://.godot/imported/mara_first.dialogue-9250def4b0453151b433cf841d1dffa8.tres"]
+
+[params]
+
+defaults=true

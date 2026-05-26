@@ -1,6 +1,7 @@
 extends InteractableNPC
 
-
+@export var dialogue_resource: DialogueResource
+@export var dialogue_title: String = "mara_first"
 
 var is_moving : bool = false
 var event_finished : bool = false 
@@ -59,13 +60,17 @@ func prepare_npc() -> void:
 	animation_sprite.play("idle_down")
 
 func interact() -> void:
-	# Usamos la referencia que ya tenemos o buscamos al jugador
+	if not dialogue_resource:
+		print("Error: Diálogo no asignado en Mara")
+		return
+	
+	# Congelar jugador
 	if target_player and target_player.has_method("set_frozen"):
 		target_player.set_frozen(true)
-		
-	print("¡Hola! Soy la mentora.") # TODO Diàleg
 	
-	await get_tree().create_timer(2.0).timeout
+	# Mostrar diálogo (misma forma que usas en el rival)
+	await DialogueManager.show_dialogue_balloon(dialogue_resource, dialogue_title)
 	
-	if target_player:
+	# Descongelar jugador
+	if target_player and target_player.has_method("set_frozen"):
 		target_player.set_frozen(false)

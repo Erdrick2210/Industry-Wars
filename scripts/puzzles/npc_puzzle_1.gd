@@ -5,6 +5,9 @@ const MINIGAME_SCENE = preload("res://game/scenes/puzzle1/minigame_puzzle1.tscn"
 @onready var damaged_lab : TileMapLayer = $"../DamagedLab"
 @export var switch_time: float = 1.5
 
+@export var dialogue_resource: DialogueResource
+@export var dialogue_title: String = "npc_puzzle1_thanks"
+
 var direction: int = 1
 var timer: float = 0.0
 var is_running: bool = true  # <--- NUEVA VARIABLE
@@ -34,7 +37,7 @@ func _physics_process(delta):
 
 func interact() -> void:
 	is_running = false # <--- SE DETIENE AL HABLAR
-	
+			
 	var minigame = MINIGAME_SCENE.instantiate()
 	print("¡Iniciando minijuego!")
 	get_tree().root.add_child(minigame)
@@ -57,6 +60,16 @@ func _on_minigame_ended(win: bool, minigame_node: Node):
 		repair_lab()
 		is_running = false # <--- SE QUEDA QUIETO PARA SIEMPRE
 		animation_sprite.play("idle_down")  # <--- Asegúrate de tener una animación llamada "idle"
+		# === DIÁLOGO DE AGRADECIMIENTO ===
+		if dialogue_resource:
+			if target_player and target_player.has_method("set_frozen"):
+				target_player.set_frozen(true)
+		
+			await DialogueManager.show_dialogue_balloon(dialogue_resource, "npc_puzzle1_thanks")
+		
+			if target_player and target_player.has_method("set_frozen"):
+				target_player.set_frozen(false)
+	# ==================================
 	else:
 		print("¡El NPC dice: Has fallado, vuelve a intentarlo!")
 		is_running = true  # <--- VUELVE A CORRER SI FALLAS
