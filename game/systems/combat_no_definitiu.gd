@@ -528,7 +528,9 @@ func _on_robots_pressed() -> void:
 	
 func _on_giveup_pressed() -> void:
 	if player_can_act:
-		print("Rendirse no implementado")
+		player_victory = false
+		await log_and_wait("Te has rendido.")
+		await change_state(CombatState.END_BATTLE)
 	
 func get_enemy_ability():
 	var available_abilities = []

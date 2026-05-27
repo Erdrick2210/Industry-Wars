@@ -455,11 +455,11 @@ position = Vector2(89, 110)
 texture = ExtResource("6_uqqse")
 flip_h = true
 
-[node name="StatusIcon" type="BoxContainer" parent="RobotsInfoPanel" unique_id=316492800]
+[node name="StatusIcon" type="TextureRect" parent="RobotsInfoPanel" unique_id=1157239666]
 layout_mode = 0
-offset_left = 364.0
+offset_left = 410.0
 offset_top = 10.0
-offset_right = 396.0
+offset_right = 442.0
 offset_bottom = 42.0
 
 [node name="NameLabel" type="RichTextLabel" parent="RobotsInfoPanel" unique_id=703026823]
@@ -541,6 +541,7 @@ text = "MOVE LIST"
 [connection signal="pressed" from="BattleCommands/Fight" to="." method="_on_fight_pressed"]
 [connection signal="pressed" from="BattleCommands/Bag" to="." method="_on_bag_pressed"]
 [connection signal="pressed" from="BattleCommands/Robots" to="." method="_on_robots_pressed"]
+[connection signal="pressed" from="BattleCommands/GiveUp" to="." method="_on_giveup_pressed"]
 [connection signal="pressed" from="AbilityContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="AbilityContainer/PrevPage" to="." method="_on_prev_page_pressed"]
 [connection signal="pressed" from="AbilityContainer/NextPage" to="." method="_on_next_page_pressed"]
