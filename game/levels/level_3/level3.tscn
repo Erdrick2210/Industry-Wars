@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://jfxvggr4l7e0" path="res://game/scenes/entities/car.tscn" id="5_ja8sj"]
 [ext_resource type="Script" uid="uid://dvoylqq17jc2n" path="res://scripts/levels/level_3/policeman.gd" id="5_uck6h"]
 [ext_resource type="PackedScene" uid="uid://c2pmggym53b26" path="res://game/scenes/entities/kid.tscn" id="6_e7o5h"]
+[ext_resource type="Resource" uid="uid://dki3avb4oakx0" path="res://game/dialogues/jefa_encuentro.dialogue" id="7_07lwv"]
 [ext_resource type="PackedScene" uid="uid://c2aq6yvvd80la" path="res://game/scenes/entities/policeman.tscn" id="7_ogix2"]
 [ext_resource type="PackedScene" uid="uid://d0cdjkhe7e5cg" path="res://game/levels/level_3/vending_machine.tscn" id="8_2ll30"]
 [ext_resource type="PackedScene" uid="uid://b7052621oolon" path="res://game/scenes/entities/kid_2.tscn" id="11_2ll30"]
@@ -120,6 +121,7 @@ shape = SubResource("RectangleShape2D_g5bxb")
 [node name="LeagueBoss" parent="." unique_id=1838061329 instance=ExtResource("4_lbja3")]
 y_sort_enabled = true
 position = Vector2(-3407, 1533)
+dialogue_resource = ExtResource("7_07lwv")
 
 [node name="Kid" parent="." unique_id=334230962 node_paths=PackedStringArray("path_node") instance=ExtResource("6_e7o5h")]
 path_node = NodePath("../KidPath")

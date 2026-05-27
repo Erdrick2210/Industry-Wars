@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b2hd2j0fb4umw"
+path="res://.godot/imported/jefa_derrotada.dialogue-92ec22c465a8dd353a17caed08c4e31a.tres"
+
+[deps]
+
+source_file="res://game/dialogues/jefa_derrotada.dialogue"
+dest_files=["res://.godot/imported/jefa_derrotada.dialogue-92ec22c465a8dd353a17caed08c4e31a.tres"]
+
+[params]
+
+defaults=true

@@ -4,17 +4,11 @@ extends CharacterBody2D
 
 @onready var target_player : CharacterBody2D = $"../Player"
 @onready var trigger_area: Area2D = $TriggerPoliceman
-@onready var vending_node: Node2D = $"../Vending_Machine"
 @onready var barricade : TileMapLayer = $"../Walls/Barricade"
-var vending_area: Area2D = null
+
 var animation_sprite: AnimatedSprite2D = null
 
 func _ready():
-	if vending_node:
-		for child in vending_node.get_children():
-			if child is Area2D:
-				vending_area = child
-				break
 	for child in get_children():
 		if child is AnimatedSprite2D:
 			animation_sprite = child
@@ -47,7 +41,8 @@ func _on_body_entered(body: Node2D) -> void:
 			
 		await get_tree().create_timer(freeze_time).timeout
 		
-		if vending_area.has_bought():
+		# Comprobación limpia usando el estado global del juego
+		if GameEvents.bought:
 			barricade.visible = false
 			barricade.collision_enabled = false
 			trigger_area.monitoring = false

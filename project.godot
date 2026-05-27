@@ -91,7 +91,7 @@ map_toggle={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://game/dialogues/region1_junkyard/first_small_rival.dialogue", "res://game/dialogues/region1_junkyard/mara_first.dialogue", "res://game/dialogues/region1_junkyard/npc_puzzle1.dialogue", "res://game/dialogues/region1_junkyard/rival_novato_win.dialogue", "res://game/dialogues/region1_junkyard/rival_novato_lose.dialogue", "res://game/dialogues/region2/league_boss_intro.dialogue", "res://game/dialogues/region2/rival_derrota_r2.dialogue", "res://game/dialogues/region2/rival_encuentro_r2.dialogue", "res://game/dialogues/region2/rival_victoria_r2.dialogue", "res://game/dialogues/item_notification.dialogue")
+locale/translations_pot_files=PackedStringArray("res://game/dialogues/region1_junkyard/first_small_rival.dialogue", "res://game/dialogues/region1_junkyard/mara_first.dialogue", "res://game/dialogues/region1_junkyard/npc_puzzle1.dialogue", "res://game/dialogues/region1_junkyard/rival_novato_win.dialogue", "res://game/dialogues/region1_junkyard/rival_novato_lose.dialogue", "res://game/dialogues/region2/league_boss_intro.dialogue", "res://game/dialogues/region2/rival_derrota_r2.dialogue", "res://game/dialogues/region2/rival_encuentro_r2.dialogue", "res://game/dialogues/region2/rival_victoria_r2.dialogue", "res://game/dialogues/item_notification.dialogue", "res://game/dialogues/league_boss_intro.dialogue", "res://game/dialogues/jefa_derrotada.dialogue", "res://game/dialogues/jefa_encuentro.dialogue", "res://game/dialogues/jefa_victoria.dialogue")
 
 [layer_names]
 

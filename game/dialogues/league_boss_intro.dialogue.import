@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cg0y58opli8y5"
+path="res://.godot/imported/league_boss_intro.dialogue-44d445fefaa22eb13d857d366abc6543.tres"
+
+[deps]
+
+source_file="res://game/dialogues/league_boss_intro.dialogue"
+dest_files=["res://.godot/imported/league_boss_intro.dialogue-44d445fefaa22eb13d857d366abc6543.tres"]
+
+[params]
+
+defaults=true
