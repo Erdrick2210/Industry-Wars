@@ -16,7 +16,9 @@ var previous_scene: String = ""
 # ─────────────────────────────────────────────
 # NAVEGACIÓN
 # ─────────────────────────────────────────────
-
+func go_to_credits():
+	get_tree().change_scene_to_file("res://game/scenes/credits_scene.tscn")
+	
 func go_to_overworld():
 	get_tree().change_scene_to_file(OVERWORLD_SCENE)
 

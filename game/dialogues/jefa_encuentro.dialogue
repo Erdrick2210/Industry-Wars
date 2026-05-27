@@ -1,0 +1,15 @@
+~ league_boss_intro
+
+Jefa Final: Vaya, vaya... Miren quién ha conseguido llegar hasta el servidor central. El ingeniero estrella.
+
+Jugador: Se acabó. Lo sé todo. Sé que has estado alterando las métricas y amañando todos los resultados del sistema.
+
+Jefa Final: [wait=0.5] ¿Y qué si lo hice? A nadie le importa la verdad, muchacho. Solo les importan los gráficos verdes y los informes perfectos que yo les presento.
+
+Jefa Final: El sistema entero funciona porque yo decido quién aprueba, quién fracasa y qué datos sobreviven.
+
+Jugador: Pues tus simulaciones se acaban hoy.
+
+- ¡Terminemos esto!
+	Jefa Final: ¿Ah, sí? [wait=0.8] ¡Pues veamos cómo superas un test de estrés en tiempo real! ¡A COMBATIR!
+	do GameManager.go_to_credits()

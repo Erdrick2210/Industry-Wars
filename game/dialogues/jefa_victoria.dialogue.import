@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cpvko28gsv7nk"
+path="res://.godot/imported/jefa_victoria.dialogue-479733d7f0fb8ba91fc08d5648c65532.tres"
+
+[deps]
+
+source_file="res://game/dialogues/jefa_victoria.dialogue"
+dest_files=["res://.godot/imported/jefa_victoria.dialogue-479733d7f0fb8ba91fc08d5648c65532.tres"]
+
+[params]
+
+defaults=true
