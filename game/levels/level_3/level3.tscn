@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c2aq6yvvd80la" path="res://game/scenes/entities/policeman.tscn" id="7_ogix2"]
 [ext_resource type="PackedScene" uid="uid://d0cdjkhe7e5cg" path="res://game/levels/level_3/vending_machine.tscn" id="8_2ll30"]
 [ext_resource type="PackedScene" uid="uid://b7052621oolon" path="res://game/scenes/entities/kid_2.tscn" id="11_2ll30"]
+[ext_resource type="PackedScene" uid="uid://bxoly2l4bk0q4" path="res://game/scenes/puzzle3/npc_puzzle_3.tscn" id="13_wgepg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g5bxb"]
 size = Vector2(227, 48)
@@ -61,6 +62,9 @@ b = Vector2(1079, 2429)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ja8sj"]
 size = Vector2(467, 99)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wgepg"]
+radius = 30.265491
 
 [node name="level3" type="Node2D" unique_id=1882445945]
 y_sort_enabled = true
@@ -216,5 +220,15 @@ scale = Vector2(0.2, 0.2)
 
 [node name="Kid2" parent="." unique_id=493520151 instance=ExtResource("11_2ll30")]
 position = Vector2(-1074, 927)
+
+[node name="NpcPuzzle3" parent="." unique_id=1112024478 instance=ExtResource("13_wgepg")]
+position = Vector2(2040, -263)
+
+[node name="Area2D" type="Area2D" parent="NpcPuzzle3" unique_id=362945626]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NpcPuzzle3/Area2D" unique_id=1317770814]
+shape = SubResource("CircleShape2D_wgepg")
 
 [connection signal="body_entered" from="Policeman/TriggerPoliceman" to="Policeman" method="_on_body_entered"]
